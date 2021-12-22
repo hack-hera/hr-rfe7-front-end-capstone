@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "version": "",
+  "name": "fec",
+  "version": "1.0",
   "description": "",
   "author": "",
   "license": "",
@@ -8,10 +8,33 @@
     "node": ">=6.13.0"
   },
   "scripts": {
+    "start": "node server/index.js",
+    "start-dev": "nodemon server/index.js",
+    "react-dev": "webpack --watch",
+    "test": "jest",
+    "lint": "eslint 'tests/**' 'client/**' --max-warnings=0"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "dependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-react": "^7.16.5",
+    "babel-jest": "^27.4.5",
+    "babel-loader": "^8.2.3",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "jest": "^27.4.5",
+    "pre-commit": "^1.2.2",
+    "react-test-renderer": "^17.0.2",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
   }
 }

@@ -24,3 +24,6 @@ coverage
 build/
 dist/
 
+#Test Snapshots
+tests/__snapshots__
+
