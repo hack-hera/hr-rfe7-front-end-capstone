@@ -2,13 +2,13 @@
 
 Front End Capstone
 
-[Link to Trello Board] (https://trello.com/b/PS0E1PSC/front-end-capstone)
+[Link to Trello Board](https://trello.com/b/PS0E1PSC/front-end-capstone)
 
 [Mocks](https://xd.adobe.com/view/e600dc0f-454c-44e3-5075-7872d04189ff-9031/?fullscreen)
 
-[Business Requirements Doc] (https://docs.google.com/document/d/1KAqduzY8ae3DYrSoCL1i23qHe95zJRYFulqMk-sGLWY/edit#)
+[Business Requirements Doc](https://docs.google.com/document/d/1KAqduzY8ae3DYrSoCL1i23qHe95zJRYFulqMk-sGLWY/edit#)
 
-[API Documentation] (https://learn-2.galvanize.com/cohorts/3052/blocks/94/content_files/Front%20End%20Capstone/project-atelier-catwalk/API_Overview.md)
+[API Documentation](https://learn-2.galvanize.com/cohorts/3052/blocks/94/content_files/Front%20End%20Capstone/project-atelier-catwalk/API_Overview.md)
 
 ## Related Projects
 
