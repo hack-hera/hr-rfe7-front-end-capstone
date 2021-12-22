@@ -38,27 +38,22 @@ npm run start-dev
 
 # start the prod server (node)
 npm start
+
+## running the linter
+npm lint
+
+## checkout a feature branch
+git checkout -b yourname-name-of-feature
+git add .
+git commit -m 'finished awesome feature'
+git push origin HEAD
+git branch -D yourname-name-of-feature
+
+## run the test suite
+
+npm test
 ```
 
-## Usage
 
-> Some usage instructions
 
-## Requirements
-
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-npm install -g webpack
-npm install
-```
 
