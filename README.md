@@ -1,6 +1,6 @@
 # Project Name
 
-Front End Capstone
+Front End Capstone.  Team Hera: Manny, Daniel, Jinyan and Alex S.
 
 [Link to Trello Board](https://trello.com/b/PS0E1PSC/front-end-capstone)
 
