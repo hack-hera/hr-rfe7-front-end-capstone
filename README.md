@@ -2,8 +2,6 @@
 
 Front End Capstone.  Team Hera: Manny, Daniel, Jinyan and Alex S.
 
-December 22.
-
 [Link to Trello Board](https://trello.com/b/PS0E1PSC/front-end-capstone)
 
 [Mocks](https://xd.adobe.com/view/e600dc0f-454c-44e3-5075-7872d04189ff-9031/?fullscreen)
@@ -12,16 +10,8 @@ December 22.
 
 [API Documentation](https://learn-2.galvanize.com/cohorts/3052/blocks/94/content_files/Front%20End%20Capstone/project-atelier-catwalk/API_Overview.md)
 
-## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-
-## Table of Contents
-
-Installation
+## Installation and helpful commands
 
 ```bash
 git clone https://github.com/hack-hera/hr-rfe7-front-end-capstone.git
