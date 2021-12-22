@@ -30,7 +30,7 @@ npm run start-dev
 npm start
 
 ## running the linter
-npm lint
+npm run lint
 
 ## checkout a feature branch
 git checkout -b yourname-name-of-feature
