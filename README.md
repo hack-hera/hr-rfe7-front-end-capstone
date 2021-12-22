@@ -2,6 +2,8 @@
 
 Front End Capstone.  Team Hera: Manny, Daniel, Jinyan and Alex S.
 
+December 22.
+
 [Link to Trello Board](https://trello.com/b/PS0E1PSC/front-end-capstone)
 
 [Mocks](https://xd.adobe.com/view/e600dc0f-454c-44e3-5075-7872d04189ff-9031/?fullscreen)
