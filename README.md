@@ -21,9 +21,24 @@ December 22.
 
 ## Table of Contents
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+Installation
+
+```bash
+git clone https://github.com/hack-hera/hr-rfe7-front-end-capstone.git
+
+cd hr-rfe7-front-end-capstone
+
+npm install
+
+# Start Webpack
+npm run react-dev
+
+# Start dev server (nodemon)
+npm run start-dev
+
+# start the prod server (node)
+npm start
+```
 
 ## Usage
 
