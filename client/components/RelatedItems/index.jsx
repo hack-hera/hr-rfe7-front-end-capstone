@@ -1,3 +1,3 @@
-import RelatedItems from './RelatedItems'
+import RelatedItems from './RelatedItems';
 
-export { RelatedItems }
+export { RelatedItems };

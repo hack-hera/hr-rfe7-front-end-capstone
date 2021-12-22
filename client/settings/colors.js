@@ -3,4 +3,4 @@ export const COLORS = {
   button: '#2ecc71',
   hover: '#27ae60',
   logo: '#2980b9'
-}
+};

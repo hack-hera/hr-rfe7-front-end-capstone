@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import { ProductDetail } from './ProductDetail'
-import { QuestionsAnswers } from './QuestionsAnswers'
-import { RatingsReviews } from './RatingsReviews'
-import { RelatedItems } from './RelatedItems'
-import { Header } from './Header'
+import { ProductDetail } from './ProductDetail';
+import { QuestionsAnswers } from './QuestionsAnswers';
+import { RatingsReviews } from './RatingsReviews';
+import { RelatedItems } from './RelatedItems';
+import { Header } from './Header';
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -20,8 +20,8 @@ class App extends Component {
         <RatingsReviews />
         <RelatedItems />
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;

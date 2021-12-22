@@ -1,3 +1,3 @@
-import RatingsReviews from './RatingsReviews'
+import RatingsReviews from './RatingsReviews';
 
-export { RatingsReviews }
+export { RatingsReviews };

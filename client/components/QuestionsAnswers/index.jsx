@@ -1,3 +1,3 @@
-import QuestionsAnswers from './QuestionsAnswers'
+import QuestionsAnswers from './QuestionsAnswers';
 
-export { QuestionsAnswers }
+export { QuestionsAnswers };

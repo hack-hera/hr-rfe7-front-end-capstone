@@ -16,7 +16,7 @@
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"COLORS\": () => (/* binding */ COLORS)\n/* harmony export */ });\nconst COLORS = {\n  bg: '#ecf0f1',\n  button: '#2ecc71',\n  hover: '#27ae60',\n  logo: '#2980b9'\n}\n\n//# sourceURL=webpack:///./client/settings/colors.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"COLORS\": () => (/* binding */ COLORS)\n/* harmony export */ });\nconst COLORS = {\n  bg: '#ecf0f1',\n  button: '#2ecc71',\n  hover: '#27ae60',\n  logo: '#2980b9'\n};\n\n//# sourceURL=webpack:///./client/settings/colors.js?");
 
 /***/ }),
 
