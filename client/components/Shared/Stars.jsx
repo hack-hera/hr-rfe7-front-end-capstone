@@ -14,18 +14,12 @@ export const Stars = ({ number }) => {
   number = Math.max(0, Math.min(5, Math.round(number * 2) / 2));
 
   return (
-    <Container>
+    <div>
       <FontAwesomeIcon icon={number >= 1 ? full : number === 0.5 ? half : empty} />
       <FontAwesomeIcon icon={number >= 2 ? full : number === 1.5 ? half : empty} />
       <FontAwesomeIcon icon={number >= 3 ? full : number === 2.5 ? half : empty} />
       <FontAwesomeIcon icon={number >= 4 ? full : number === 3.5 ? half : empty} />
       <FontAwesomeIcon icon={number === 5 ? full : number === 4.5 ? half : empty} />
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div`
-  svg{
-    color: ${props => props.theme.text};
-  }
-`;
