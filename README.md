@@ -45,5 +45,50 @@ npm test
 ```
 
 
+## Dev Instructions
 
+### Styled Components & Theming
 
+Any time you are defining a color (or any other CSS property that should be shared across components), you can make a property in the THEMES object.  If you need to add a property, you should add across all themes such that the themes (default, darkMode etc) all have the same structure.
+
+In `settings/colors.js` a set of themes are defined e.g.
+
+```javascript
+export const THEMES = {
+  default: {
+    bg: '#ecf0f1',
+    button: '#2ecc71',
+    ...
+  },
+
+  darkMode: {
+    bg: '#000',
+    button: '#2ecc71',
+    ...
+  }
+};
+```
+
+These themes are them passed down to all the child components via a `ThemeProvider` Component.  In this way we can easily change the theme prop in the top level component.
+
+```HTML
+<ThemeProvider theme={THEMES.default}>
+  <Navigation>
+  <ProductDetail>
+  ...
+</ThemeProvider>
+
+```
+
+Accessing the theme properties from child components:
+
+```javascript
+//Define a style component
+const Navbar = styled.div`
+  color: ${props => props.theme.navbarText};
+  background-color: ${props => props.theme.navbarBackground};
+`;
+
+//Use a styled component in your code
+<Navbar />
+```
