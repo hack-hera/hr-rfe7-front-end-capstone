@@ -14,7 +14,8 @@ export const THEMES = {
     hover: '#27ae60',
     logo: '#2980b9',
     navbarBackground: '#333333',
-    navbarText: '#eeeeee'
+    navbarText: '#eeeeee',
+    text: '#000'
   },
 
   darkMode: {
@@ -23,6 +24,7 @@ export const THEMES = {
     hover: '#27ae60',
     logo: '#2980b9',
     navbarBackground: '#333333',
-    navbarText: '#eeeeee'
+    navbarText: '#eeeeee',
+    text: '#fff'
   }
 };

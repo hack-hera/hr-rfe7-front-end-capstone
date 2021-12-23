@@ -11,13 +11,14 @@
     "start": "node server/index.js",
     "start-dev": "nodemon server/index.js",
     "react-dev": "webpack --watch",
-    "test": "jest",
+    "test": "jest --verbose",
     "lint": "eslint 'tests/**' 'client/**' --max-warnings=0"
   },
   "pre-commit": [
     "lint"
   ],
   "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
     "express": "^4.17.2",
