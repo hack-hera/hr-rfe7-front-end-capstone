@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { COLORS } from '../settings/colors';
+import styled from 'styled-components';
 import { ProductDetail } from './ProductDetail';
 import { QuestionsAnswers } from './QuestionsAnswers';
 import { RatingsReviews } from './RatingsReviews';
@@ -13,15 +14,26 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <Header />
-        <ProductDetail />
-        <QuestionsAnswers />
-        <RatingsReviews />
-        <RelatedItems />
-      </div>
+        <Container>
+          <ProductDetail />
+          <QuestionsAnswers />
+          <RatingsReviews />
+          <RelatedItems />
+        </Container>
+      </>
     );
   }
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 100px);
+  min-height: calc(100% - 100px);
+  padding: 20px;
+  background-color: ${COLORS.bg};
+`;
 
 export default App;

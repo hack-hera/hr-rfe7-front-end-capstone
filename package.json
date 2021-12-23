@@ -18,6 +18,8 @@
     "lint"
   ],
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
     "react": "^17.0.2",
