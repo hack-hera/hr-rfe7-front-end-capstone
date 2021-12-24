@@ -10,6 +10,8 @@ class ActionButton extends React.Component {
     };
 
   }
+
+
   render() {
     const isInYourOutfit = this.state.isInYourOutfit;
     let button;
@@ -27,3 +29,5 @@ class ActionButton extends React.Component {
     );
   }
 }
+
+export default ActionButton;

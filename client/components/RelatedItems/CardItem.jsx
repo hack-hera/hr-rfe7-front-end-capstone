@@ -1,14 +1,15 @@
 import React from 'react';
+import ActionButton from './ActionButton.jsx';
 
 var CardItem = (props) => {
   return (
     <div className="card-item">
-      <div className="product-category"></div>
-      <div className="product-name"></div>
-      <div className="product-price"></div>
-      <div className="product-picture"></div>
+      <div className="product-category">{props.item.category}</div>
+      <div className="product-name">{props.item.name}</div>
+      <div className="product-price">{props.item.default_price}</div>
+      <div className="product-picture">picture</div>
       {/* insert star rating component */}
-      {/* insert action button */}
+      <ActionButton type={props.inOutfit} />
     </div>
   );
 };
