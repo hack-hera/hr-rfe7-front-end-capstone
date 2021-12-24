@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import api from '../../api.js';
+
 
 
 class QuestionsAnswers extends React.Component {
@@ -14,21 +16,17 @@ class QuestionsAnswers extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/qa/questions')
-      .then((data) => {
+    api.getQuestions({id: 37312})
+      .then((res) => {
+        console.log(res);
         this.setState({
-          questions: data.results
+          questions: res.results
         });
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
-
-
-
-
 
   render() {
     return (
@@ -40,8 +38,7 @@ class QuestionsAnswers extends React.Component {
           {this.state.questions.map((question, i) => {
             return (
               <div key={i} size='4'>
-                <div>{question.question_body}</div>
-                <div>Helpful?<a href="#">Yes</a>(1){question.results.question_helpfuless}</div>
+                <div>Q:{question.question_body} <span>Helpful?{question.question_helpfuless}</span></div>
               </div>
             );
           })}
