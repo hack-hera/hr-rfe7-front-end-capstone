@@ -3,28 +3,44 @@ import { COLORS } from '../../settings/colors';
 import styled from 'styled-components';
 import RelatedItemsList from './RelatedItemsList.jsx';
 import YourOutfitList from './YourOutfitList.jsx';
+import api from '../../api.js';
 
 class RelatedItems extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      relatedItems: [], //make one get request for both ID and product info
-      outfitData: []
+      currentProduct: null
+      // currentProduct: props.product,
+      // relatedItems: [], //make one get request for both ID and product info
+      // outfitData: []
     };
+  }
+
+
+  getRelatedProducts(currentProduct) {
+    api.getRelatedProducts(currentProduct);
   }
 
   render() {
     return (
-      <div className="related-items">
+      <Container>
         <Header>RelatedItems</Header>
-        <RelatedItemsList />
+        {/* <RelatedItemsList
+          relatedItems={this.state.relatedItems}
+        />
         <Header>YourOutfit</Header>
-        <YourOutfitList />
-      </div>
+        <YourOutfitList
+          outfitData={this.state.outfitData}
+        /> */}
+      </Container>
     );
   }
 }
+
+const Container = styled.div`
+  color: ${COLORS.hover};
+`;
 
 const Header = styled.h1`
   color: ${COLORS.bg};

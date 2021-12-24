@@ -6,16 +6,14 @@ class RelatedItemsList extends React.Component {
     super(props);
 
     this.state = {
-      itemsData: props.data
+      currentItem: props.product
     };
   }
 
   render() {
     return (
       <div className="related-items-list">
-        <CardItem
-          isRelatedItem={props.related}
-        />
+        {this.state.currentItem}
       </div>
     );
   }
