@@ -9,18 +9,20 @@ class RelatedItems extends React.Component {
     super(props);
 
     this.state = {
-      relatedData: [],
+      relatedItems: [], //make one get request for both ID and product info
       outfitData: []
     };
   }
 
   render() {
-    <div className="related-items">
-      <Header>RelatedItems</Header>
-      <RelatedItemsList />
-      <Header>YourOutfit</Header>
-      <YourOutfitList />
-    </div>;
+    return (
+      <div className="related-items">
+        <Header>RelatedItems</Header>
+        <RelatedItemsList />
+        <Header>YourOutfit</Header>
+        <YourOutfitList />
+      </div>
+    );
   }
 }
 

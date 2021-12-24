@@ -5,13 +5,17 @@ class RelatedItemsList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = [];
+    this.state = {
+      itemsData: props.data
+    };
   }
 
   render() {
     return (
       <div className="related-items-list">
-        <CardItem />
+        <CardItem
+          isRelatedItem={props.related}
+        />
       </div>
     );
   }
