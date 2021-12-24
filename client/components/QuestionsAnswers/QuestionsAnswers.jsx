@@ -10,7 +10,7 @@ class QuestionsAnswers extends React.Component {
     super(props);
     this.state = {
       questions: []
-    }
+    };
   }
 
   componentDidMount() {
@@ -18,11 +18,11 @@ class QuestionsAnswers extends React.Component {
       .then((data) => {
         this.setState({
           questions: data.results
-        })
+        });
       })
       .catch((err) => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
 
 
@@ -43,13 +43,13 @@ class QuestionsAnswers extends React.Component {
                 <div>{question.question_body}</div>
                 <div>Helpful?<a href="#">Yes</a>(1){question.results.question_helpfuless}</div>
               </div>
-            )
+            );
           })}
         </div>
 
 
       </div>
-    )
+    );
 
   }
 
