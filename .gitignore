@@ -29,3 +29,4 @@ public/bundle.js
 #Test Snapshots
 tests/__snapshots__
 
+config.js
