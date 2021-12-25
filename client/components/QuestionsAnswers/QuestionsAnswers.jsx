@@ -5,6 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import api from '../../api.js';
 
+const Hidden = styled.div`
+  display: none
+`;
+
+const AlignRight = styled.span`
+  float: right
+`;
+
 
 
 class QuestionsAnswers extends React.Component {
@@ -16,7 +24,8 @@ class QuestionsAnswers extends React.Component {
   }
 
   componentDidMount() {
-    api.getQuestions({id: 37312})
+    api.getQuestions({id: 37323, page: 1, count: 100})
+
       .then((res) => {
         console.log(res);
         this.setState({
@@ -35,16 +44,26 @@ class QuestionsAnswers extends React.Component {
         <input type='text' placeholder='Enter your question here'></input>
         <button><FontAwesomeIcon icon={faSearch} /></button>
         <div>
-          {this.state.questions.map((question, i) => {
+          {this.state.questions.slice(0, 4).map((question, i) => {
             return (
-              <div key={i} size='4'>
-                <div>Q:{question.question_body} <span>Helpful?{question.question_helpfuless}</span></div>
+              <div key={i}>
+                <div>
+                  <div>Q:{question.question_body} <AlignRight>Helpful?{question.question_helpfuless}</AlignRight></div>
+
+                </div>
               </div>
             );
           })}
+          {this.state.questions.slice(4, 100).map((question, i) => {
+            return (
+              <Hidden key={i} >
+                <div>
+                  <div>Q:{question.question_body} <span >Helpful?{question.question_helpfuless}</span></div>
+                </div>
+              </Hidden>
+            );
+          })}
         </div>
-
-
       </div>
     );
 

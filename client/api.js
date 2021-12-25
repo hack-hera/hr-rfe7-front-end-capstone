@@ -76,7 +76,7 @@ const api = {
   // count	integer	Specifies how many results per page to return. Default 5.
 
   getQuestions: ({ id, page, count }) => {
-    return axios.get(host + '/qa/questions?product_id=' + id, headers)
+    return axios.get(`${host}/qa/questions?product_id=${id}&page=${page}&count=${count}`, headers)
       .then(res => res.data)
       .catch(err => { throw new Error(err); });
   },
