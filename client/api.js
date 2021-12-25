@@ -86,8 +86,16 @@ const api = {
   // GET /qa/questions/:question_id/answers
   // Parameter	Type	Description
   // question_id	integer	Required ID of the question for wich answers are needed
-  getAnswers: ({ question_id }) => {
-    return axios.get(host + '/qa/questions/' + question_id + '/answers', headers)
+  getAnswers: ({ question_id, page, count }) => {
+    return axios.get(`${host}/qa/questions/${question_id}/answers?page=${page}&count=${count}`, headers)
+      .then(res => res.data)
+      .catch(err => { throw new Error(err); });
+  },
+
+  //question_id	integer	Required ID of the question to update
+  markQuestionAsHelpful: ({question_id}) => {
+    //to change
+    return axios.put(`${host}/qa/questions/:${question_id}/helpful`, headers)
       .then(res => res.data)
       .catch(err => { throw new Error(err); });
   },
