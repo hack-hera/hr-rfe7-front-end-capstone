@@ -14,7 +14,11 @@ class YourOutfitList extends React.Component {
     return (
       <div className="your-outfit-list">
         {props.relatedItems.map(item => (
-          <CardItem item={item} inOutfit={true} />
+          <CardItem
+            item={item}
+            inOutfit={true}
+            remove={props.removeItem}
+          />
         ))}
       </div>
     );

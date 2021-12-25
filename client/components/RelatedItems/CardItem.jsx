@@ -9,7 +9,11 @@ var CardItem = (props) => {
       <div className="product-price">{props.item.default_price}</div>
       <div className="product-picture">picture</div>
       {/* insert star rating component */}
-      <ActionButton type={props.inOutfit} />
+      <ActionButton
+        handleAdd={props.add}
+        id={props.item.id}
+        type={props.inOutfit}
+      />
     </div>
   );
 };

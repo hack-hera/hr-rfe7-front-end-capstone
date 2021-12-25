@@ -25,9 +25,16 @@ class RelatedItems extends Component {
     // set this.relatedItems equal to promised Array
   }
 
-  addToOutfit(clickedProduct) {
+  addToOutfit(clickedProductId) {
     // figure out where to save current outfit list even on refreshes
-    this.state.outfitData.push(clickedProduct);
+    // make get request with that product ID
+    // push result into outfit array
+  }
+
+  removeFromOutfit(clickedProductId) {
+    // i = index of clickedProductId
+    // array.splice(i, 1)
+    // and update in unchanged data
   }
 
   render() {
@@ -36,11 +43,12 @@ class RelatedItems extends Component {
         <Header>RelatedItems</Header>
         <RelatedItemsList
           relatedItems={this.state.relatedItems}
+          addOutfit={this.addToOutfit.bind(this)}
         />
         <Header>YourOutfit</Header>
         <YourOutfitList
           outfitData={this.state.outfitData}
-          addOutfit={this.addToOutfit.bind(this)}
+          removeItem={this.removeFromOutfit.bind(this)}
         />
       </Container>
     );

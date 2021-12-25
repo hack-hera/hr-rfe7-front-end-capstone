@@ -11,6 +11,13 @@ class ActionButton extends React.Component {
 
   }
 
+  handleStartClick() {
+    this.props.handleAdd(this.props.id);
+  }
+
+  handleXClick() {
+    this.props.handleRemove(this.props.id);
+  }
 
   render() {
     const isInYourOutfit = this.state.isInYourOutfit;
