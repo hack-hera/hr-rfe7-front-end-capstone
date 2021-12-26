@@ -15,7 +15,10 @@ export const THEMES = {
     logo: '#2980b9',
     navbarBackground: '#333333',
     navbarText: '#eeeeee',
-    text: '#000'
+    bodyTextDark: '#22222',
+    bodyTextLight: '#666666',
+    text: '#000',
+    graph: '#6ab04c'
   },
 
   darkMode: {
@@ -25,6 +28,9 @@ export const THEMES = {
     logo: '#2980b9',
     navbarBackground: '#333333',
     navbarText: '#eeeeee',
-    text: '#fff'
+    bodyTextDark: '#22222',
+    bodyTextLight: '#55555',
+    text: '#fff',
+    graph: '#6ab04c'
   }
 };

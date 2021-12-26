@@ -5,17 +5,28 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-export const Header = () => {
+export const Header = ({ product, products, updateProduct }) => {
+  if (!product) {
+    return <></>;
+  }
+
   return (
     <Navbar>
       <div>
         <h1>CatWalk</h1>
       </div>
       <div>
+        <select defaultValue={product.id} onChange={(e) => updateProduct(e.target.value)}>
+          {products.map((x, i) => (
+            <option key={x.id} value={x.id}>{x.id} - {x.name}</option>
+          ))}
+        </select>
+      </div>
+      <div>
         <StyledInput type='text'></StyledInput>
         <FontAwesomeIcon icon={faSearch} />
       </div>
-    </Navbar>
+    </Navbar >
   );
 };
 

@@ -14,14 +14,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentProduct: null
+      products: [],
+      currentProduct: null,
+      reviews: null,
+      reviewMeta: null
     };
   }
 
   componentDidMount() {
-    api.getProducts()
+    api.getProducts({ count: 20 })
       .then(res => {
-        this.setState({ currentProduct: res[0] });
+        this.setState({ currentProduct: res[0], products: res });
+        this.updateProduct(res[0].id);
       });
   }
 
@@ -30,15 +34,24 @@ class App extends Component {
     api.getProduct({ product_id: id }).then(res => {
       this.setState({ currentProduct: res });
     });
+    api.getReviews({ product_id: id, count: 100 }).then(res => {
+      this.setState({ reviews: res.results });
+    });
+    api.getReviewMeta({ product_id: id }).then(res => {
+      this.setState({ reviewMeta: res });
+    });
+
   }
 
   render() {
-    const { currentProduct } = this.state;
+    const { products, currentProduct, reviews, reviewMeta } = this.state;
     return (
       <ThemeProvider theme={THEMES.default}>
-        <Header />
-        <h3>HTML DEBUGGER</h3>
-        <Debugger>{JSON.stringify(this.state.currentProduct)}</Debugger>
+        <Header
+          products={products}
+          product={currentProduct}
+          updateProduct={(id) => this.updateProduct(id)}
+        />
         <Container>
           <ProductDetail
             product={currentProduct}
@@ -51,6 +64,8 @@ class App extends Component {
           <RatingsReviews
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
+            reviews={reviews}
+            reviewMeta={reviewMeta}
           />
           <RelatedItems
             product={currentProduct}
@@ -65,17 +80,8 @@ class App extends Component {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100% - 100px);
-  min-height: calc(100% - 100px);
   padding: 20px;
   background-color: ${props => props.theme.bg};
-`;
-
-const Debugger = styled.pre`
-  width: 800px;
-  background-color: black;
-  color: green;
-  white-space: pre-wrap;
 `;
 
 export default App;
