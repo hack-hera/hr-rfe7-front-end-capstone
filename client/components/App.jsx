@@ -38,7 +38,7 @@ class App extends Component {
       <ThemeProvider theme={THEMES.default}>
         <Header />
         <h3>HTML DEBUGGER</h3>
-        <Debugger>{JSON.stringify(this.state.currentProduct)}</Debugger>
+        {/* <Debugger>{JSON.stringify(this.state.currentProduct)}</Debugger> */}
         <Container>
           <ProductDetail
             product={currentProduct}
@@ -53,7 +53,7 @@ class App extends Component {
             updateProduct={(id) => this.updateProduct(id)}
           />
           <RelatedItems
-            product={currentProduct}
+            product={this.state.currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
         </Container>

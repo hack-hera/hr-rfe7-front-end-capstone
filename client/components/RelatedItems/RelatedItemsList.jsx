@@ -6,14 +6,14 @@ class RelatedItemsList extends React.Component {
     super(props);
 
     this.state = {
-      relatedItems: props.relatedItems
+      relatedItems: this.props.relatedItems
     };
   }
 
   render() {
     return (
       <div className="related-items-list">
-        {props.relatedItems.map(item => (
+        {this.state.relatedItems.map(item => (
           <CardItem
             item={item}
             inOutfit={false}

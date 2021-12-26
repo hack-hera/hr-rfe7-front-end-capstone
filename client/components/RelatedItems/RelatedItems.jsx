@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { COLORS } from '../../settings/colors';
 import styled from 'styled-components';
+import { Header } from '../Header.jsx';
 import RelatedItemsList from './RelatedItemsList.jsx';
 import YourOutfitList from './YourOutfitList.jsx';
 import api from '../../api.js';
@@ -10,15 +11,26 @@ class RelatedItems extends Component {
     super(props);
 
     this.state = {
-      currentProduct: props.product,
-      relatedItems: [], //make one get request for both ID and product info
+      currentProduct: this.props.product,
+      relatedItems: [],
       outfitData: []
     };
   }
 
+  componentDidMount() {
+    this.getRelatedProducts(this.state.currentProduct);
+  }
 
   getRelatedProducts(currentProduct) {
-    api.getRelatedProducts(currentProduct);
+    api.getRelatedProducts(currentProduct)
+      .then(results => {
+        this.setState({
+          relatedItems: results
+        });
+      })
+      .catch(err => {
+        new Error('error retrieving related products');
+      });
     // return array of related item ids
     // for each put into array of promises
     // promise.all
@@ -57,10 +69,6 @@ class RelatedItems extends Component {
 
 const Container = styled.div`
   color: ${COLORS.hover};
-`;
-
-const Header = styled.h1`
-  color: ${COLORS.bg};
 `;
 
 export default RelatedItems;

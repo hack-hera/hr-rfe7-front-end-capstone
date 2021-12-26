@@ -6,14 +6,14 @@ class YourOutfitList extends React.Component {
     super(props);
 
     this.state = {
-      outfitArray: props.outfitData
+      outfitArray: this.props.outfitData
     };
   }
 
   render() {
     return (
       <div className="your-outfit-list">
-        {props.relatedItems.map(item => (
+        {this.state.outfitArray.map(item => (
           <CardItem
             item={item}
             inOutfit={true}
