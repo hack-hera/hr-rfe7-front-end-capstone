@@ -11,6 +11,7 @@ var CardItem = (props) => {
       {/* insert star rating component */}
       <ActionButton
         handleAdd={props.add}
+        handleRemove={props.remove}
         id={props.item.id}
         type={props.inOutfit}
       />
