@@ -177,6 +177,52 @@ class QuestionsAnswers extends React.Component {
     var questionsHidden = this.state.questions.slice(4, 100).map((question) => {
       const answers = Object.values(question.answers);
 
+      const answersShow = answers.slice(0, 2).map((answer) => {
+        let timeArr = answer.date.split('T')[0].split('-');
+        return (
+          <div key={answer.id}>
+            <div>{answer.body}</div>
+            <div>
+              {answer.photos.map((photo, index) => {
+                return (
+                  <Photos key={index}>
+                    <img src={photo.index} alt='photo'/>
+                  </Photos>
+                );
+              })}
+            </div>
+            <ByUser>
+              <span>by {answer.answerer_name}, {months[timeArr[1]]} {timeArr[2]}, {timeArr[0]}&emsp;|&emsp;</span>
+              <span>Helpful?{question.question_helpfuless} <YesLink onClick={this.addHelpful}>Yes</YesLink>({question.question_helpfulness})&emsp;|&emsp;</span>
+              <span><YesLink onClick={this.addHelpful}>Report</YesLink></span>
+            </ByUser>
+          </div>
+        );
+      });
+
+      const answersHidden = answers.slice(2, 100).map((answer) => {
+        let timeArr = answer.date.split('T')[0].split('-');
+        return (
+          <div key={answer.id}>
+            <div>{answer.body}</div>
+            <div>
+              {answer.photos.map((photo, index) => {
+                return (
+                  <Photos key={index}>
+                    <img src={photo.index} alt='photo'/>
+                  </Photos>
+                );
+              })}
+            </div>
+            <ByUser>
+              <span>by {answer.answerer_name}, {months[timeArr[1]]} {timeArr[2]}, {timeArr[0]}&emsp;|&emsp;</span>
+              <span>Helpful?{question.question_helpfuless} <YesLink onClick={this.addHelpful}>Yes</YesLink>({question.question_helpfulness})&emsp;|&emsp;</span>
+              <span><YesLink onClick={this.addHelpful}>Report</YesLink></span>
+            </ByUser>
+          </div>
+        );
+      });
+
 
       return (
         <QuestionsHidden key={question.question_id}>
@@ -187,51 +233,9 @@ class QuestionsAnswers extends React.Component {
           <Wrapper>
             <div>A:</div>
             <div>
-              {answers.slice(0, 2).map((answer) => {
-                let timeArr = answer.date.split('T')[0].split('-');
-                return (
-                  <div key={answer.id}>
-                    <div>{answer.body}</div>
-                    <div>
-                      {answer.photos.map((photo, index) => {
-                        return (
-                          <Photos key={index}>
-                            <img src={photo.index} alt='photo'/>
-                          </Photos>
-                        );
-                      })}
-                    </div>
-                    <ByUser>
-                      <span>by {answer.answerer_name}, {months[timeArr[1]]} {timeArr[2]}, {timeArr[0]}&emsp;|&emsp;</span>
-                      <span>Helpful?{question.question_helpfuless} <YesLink onClick={this.addHelpful}>Yes</YesLink>({question.question_helpfulness})&emsp;|&emsp;</span>
-                      <span><YesLink onClick={this.addHelpful}>Report</YesLink></span>
-                    </ByUser>
-                  </div>
-                );
-              })}
+              {answersShow}
               <AnswersHidden>
-                {answers.slice(2, 100).map((answer) => {
-                  let timeArr = answer.date.split('T')[0].split('-');
-                  return (
-                    <div key={answer.id}>
-                      <div>{answer.body}</div>
-                      <div>
-                        {answer.photos.map((photo, index) => {
-                          return (
-                            <Photos key={index}>
-                              <img src={photo.index} alt='photo'/>
-                            </Photos>
-                          );
-                        })}
-                      </div>
-                      <ByUser>
-                        <span>by {answer.answerer_name}, {months[timeArr[1]]} {timeArr[2]}, {timeArr[0]}&emsp;|&emsp;</span>
-                        <span>Helpful?{question.question_helpfuless} <YesLink onClick={this.addHelpful}>Yes</YesLink>({question.question_helpfulness})&emsp;|&emsp;</span>
-                        <span><YesLink onClick={this.addHelpful}>Report</YesLink></span>
-                      </ByUser>
-                    </div>
-                  );
-                })}
+                {answersHidden}
               </AnswersHidden>
             </div>
           </Wrapper>
