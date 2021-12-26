@@ -19,6 +19,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    api.getProducts()
+      .then(res => {
+        this.setState({ currentProduct: res[0] });
+      });
   }
 
   //Handler to update the main product
