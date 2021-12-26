@@ -19,14 +19,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    api.getProduct({ id: 37312 }).then(res => {
-      this.setState({ currentProduct: res });
-    });
   }
 
   //Handler to update the main product
   updateProduct(id) {
-    api.getProduct({ id: id }).then(res => {
+    api.getProduct({ product_id: id }).then(res => {
       this.setState({ currentProduct: res });
     });
   }
