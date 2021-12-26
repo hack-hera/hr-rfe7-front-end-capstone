@@ -17,7 +17,7 @@ class YourOutfitList extends React.Component {
           <CardItem
             item={item}
             inOutfit={true}
-            remove={props.removeItem}
+            remove={this.props.removeItem}
           />
         ))}
       </div>

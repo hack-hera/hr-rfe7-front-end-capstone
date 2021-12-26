@@ -2,7 +2,7 @@ import React from 'react';
 
 var StarButton = (props) => {
   return (
-    <button className="star-button">
+    <button>
       {/* star icon */}
     </button>
   );

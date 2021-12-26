@@ -2,7 +2,7 @@ import React from 'react';
 
 var XButton = (props) => {
   return (
-    <button className="x-button">
+    <button >
       {/* X icon */}
     </button>
   );

@@ -17,7 +17,7 @@ class RelatedItemsList extends React.Component {
           <CardItem
             item={item}
             inOutfit={false}
-            add={props.addOutfit}
+            add={this.props.addOutfit}
           />
         ))}
       </div>
