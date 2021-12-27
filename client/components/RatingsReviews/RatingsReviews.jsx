@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import api from '../../api';
+import { getRatingFilters, allTrue } from '../../lib/ratingFunctions';
 
 import Ratings from './Ratings';
 import Characteristics from './Characteristics';
 import ReviewList from './ReviewList';
-import Sort from './Sort';
 import AddReview from './AddReview';
 
 class RatingsReviews extends Component {
@@ -15,7 +15,8 @@ class RatingsReviews extends Component {
       reviewMeta: null,
       reviews: null,
       reviewsShowing: 2,
-      modalShowing: false
+      modalShowing: false,
+      filters: { ...allTrue }
     };
   }
 
@@ -31,8 +32,14 @@ class RatingsReviews extends Component {
     }
   }
 
+  //only show star ratings with X stars
+  updateFilter(stars) {
+    let temp = getRatingFilters(this.state.filters, stars);
+    this.setState({ filters: temp }, () => console.log(Object.values(this.state.filters)));
+  }
+
   render() {
-    const { reviewMeta, reviews, reviewsShowing, modalShowing } = this.state;
+    const { reviewMeta, reviews, reviewsShowing, modalShowing, filters } = this.state;
 
     return (
       <Container>
@@ -40,15 +47,23 @@ class RatingsReviews extends Component {
         <h3>Ratings and Reviews</h3>
         <MainContainer>
           <LeftContainer>
-            {reviewMeta && <Ratings meta={reviewMeta} />}
+            {reviewMeta && (
+              <Ratings
+                meta={reviewMeta}
+                updateFilter={(s) => this.updateFilter(s)}
+                filters={filters}
+              />
+            )}
             {reviewMeta && <Characteristics meta={reviewMeta} />}
           </LeftContainer>
           <RightContainer>
-            {reviews && <Sort />}
             {reviews && (
               <ReviewList
-                reviews={reviews.slice(0, reviewsShowing)}
+                reviews={reviews}
+                reviewsShowing={reviewsShowing}
+                filters={filters}
                 showMore={() => this.setState({ reviewsShowing: reviewsShowing + 2 })}
+                addReview={() => this.setState({ modalShowing: true })}
               />
             )}
           </RightContainer>

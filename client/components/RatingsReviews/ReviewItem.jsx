@@ -20,9 +20,9 @@ import { Stars } from '../Shared/Stars';
 //TODO - add some better date parsing logic
 
 const ReviewItem = ({ review }) => {
-  review.summary = lorem.generateSentences(1);
-  review.body = lorem.generateSentences(5);
-  review.response = Math.random() > 0.5 ? lorem.generateSentences(2) : null;
+  // review.summary = lorem.generateSentences(1);
+  // review.body = lorem.generateSentences(5);
+  // review.response = Math.random() > 0.5 ? lorem.generateSentences(2) : null;
 
   return (
     <Container>

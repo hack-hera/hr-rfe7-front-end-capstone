@@ -5,14 +5,16 @@ import {
   recommendedPercentage,
   ratingPercentages,
   totalRating,
+  filtersToText
 } from '../../lib/ratingFunctions';
 
-const Ratings = (props) => {
+const Ratings = ({ meta, updateFilter, filters }) => {
 
-  const { recommended, ratings } = props.meta;
+  const { recommended, ratings } = meta;
   const displayRatings = ratingPercentages(ratings);
   const displayTotalRating = totalRating(ratings);
   const displayRecommended = recommendedPercentage(recommended);
+  const displayFilterText = filtersToText(filters);
 
   return (
     <Container>
@@ -29,7 +31,7 @@ const Ratings = (props) => {
           <tbody>
             {displayRatings.map((v, k) => (
               <tr key={k}>
-                <th>{5 - k} Stars</th>
+                <th onClick={() => updateFilter(5 - k)}>{5 - k} Stars</th>
                 <td>
                   <Bar width={v} />
                 </td>
@@ -37,8 +39,15 @@ const Ratings = (props) => {
             ))}
           </tbody>
         </table>
+        {displayFilterText && (
+          <p>
+            {displayFilterText}{' | '}
+            <Link onClick={() => updateFilter(-1)}>Remove Filters</Link>
+          </p>
+        )}
       </TableContainer>
-    </Container>
+
+    </Container >
   );
 };
 
@@ -46,6 +55,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 20px 20px 20px;
+`;
+
+const Link = styled.a`
+  :hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 const Header = styled.div`
@@ -73,8 +89,11 @@ const TableContainer = styled.div`
     font-weight: normal;
   }
   th {
-    text-decoration: underline;
     width: 40px;
+  }
+  th:hover {
+    text-decoration: underline;
+    cursor: pointer;
   }
   td {
     padding: 5px 0px;
