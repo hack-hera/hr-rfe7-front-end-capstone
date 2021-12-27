@@ -110,3 +110,21 @@ const Navbar = styled.div`
 - ![#111111](https://via.placeholder.com/15/111111/000000?text=+) `#111111 - theme.textDark`
 - ![#2c3e50](https://via.placeholder.com/15/2c3e50/000000?text=+) `#2c3e50 - theme.textHeading`
 
+### Shared Components
+`Stars` Pass the star rating component a number.  Anything <0 will round up to 0.  Anything >5 will automatically round down to 5.  Will round to nearest half-star.  Component inherets the parent components font size and color.
+```HTML
+<Stars number={5}>
+```
+
+`Modal` The Modal componet sits on top of other HTML (z-index: 1) and will render whatever children are nested inside (see example).  The component has a built in [x] (40x40px in the upper right).  When clicked it will run the onClose function.  Recommended usage:
+1. Set state to `showing=false`.
+2. Conditionally render modal on `showing`.
+3. Pass the modal a function that updates the state to false when the user clicks the x.
+
+```HTML
+<Modal onClose={onClose}>
+  <form action="/dosomething">
+    ....
+  </form>
+<Modal>
+```
