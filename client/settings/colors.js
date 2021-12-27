@@ -10,6 +10,7 @@ export const COLORS = {
 export const THEMES = {
   default: {
     bg: '#ecf0f1',
+    bgLight: '#f7f7f7',
     bgDark: '#d3d9dd',
     bgNav: '#2c3e50',
     graph: '#8e44ad',
@@ -27,6 +28,7 @@ export const THEMES = {
 
   darkMode: {
     bg: '#ecf0f1',
+    bgLight: '#f7f7f7',
     bgDark: '#d3d9dd',
     bgNav: '#2c3e50',
     graph: '#8e44ad',

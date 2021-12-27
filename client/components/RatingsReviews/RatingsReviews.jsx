@@ -49,7 +49,7 @@ class RatingsReviews extends Component {
             )}
           </RightContainer>
         </MainContainer>
-      </Container>
+      </Container >
     );
   }
 }

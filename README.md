@@ -110,3 +110,16 @@ const Navbar = styled.div`
 - ![#111111](https://via.placeholder.com/15/111111/000000?text=+) `#111111 - theme.textDark`
 - ![#2c3e50](https://via.placeholder.com/15/2c3e50/000000?text=+) `#2c3e50 - theme.textHeading`
 
+### Shared Components
+
+Form Elements.  `Input` `Dropdown` `Button` are standard input, select and button tags that are styled to be consistent.  Usage is the same as any other HTML element in JSX.
+
+```HTML
+import { Input, Dropdown, Button } from '../Shared/Form'
+
+<Input type='text' placeholder='Your text here'>
+<Button onclick={something()}>Add a Review!</Button>
+<Dropdown>
+  <option value="1">{'Option 1'}</option>
+</Dropdown>
+```
