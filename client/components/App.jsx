@@ -33,7 +33,7 @@ class App extends Component {
   }
 
   render() {
-    const { products, currentProduct, reviews, reviewMeta } = this.state;
+    const { products, currentProduct } = this.state;
     return (
       <ThemeProvider theme={THEMES.default}>
         <Header
@@ -43,12 +43,12 @@ class App extends Component {
         />
         <Container>
           <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          <RelatedItems product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
           <RatingsReviews product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
-          <RelatedItems product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
         </Container>
       </ThemeProvider>
     );
