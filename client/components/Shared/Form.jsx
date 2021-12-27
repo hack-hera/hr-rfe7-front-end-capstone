@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const Input = styled.input`
   background-color: ${props => props.theme.bgLight};
+  text-transform: uppercase;
   font-size: 0.8em;
   padding: 10px;
   border: 0px;
@@ -12,6 +13,7 @@ export const Input = styled.input`
 
 export const Dropdown = styled.select`
   background-color: ${props => props.theme.bgLight};
+  text-transform: uppercase;
   font-size: 0.8em;
   padding: 10px;
   border: 0px;
@@ -23,6 +25,7 @@ export const Dropdown = styled.select`
 
 export const Button = styled.button`
   background-color: ${props => props.theme.bgLight};
+  text-transform: uppercase;
   font-size: 0.8em;
   padding: 10px;
   border: 0px;
