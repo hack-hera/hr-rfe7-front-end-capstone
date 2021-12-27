@@ -16,7 +16,6 @@ import api from '../../api.js';
 
 const Wrapper = styled.div`
   display: flex
-
 `;
 
 const Photos = styled.div`
@@ -66,28 +65,6 @@ class QuestionsAnswers extends React.Component {
       .catch((err) => {
         console.log(err);
       });
-  }
-
-
-  // getAnswers(question_id) {
-  //   api.getAnswers({question_id: question_id, page: 1, count: 10})
-  //     .then((res) => {
-  //       console.log(res)
-  //       this.setState({
-  //         answers: res.results
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  // }
-
-
-
-
-  addHelpful() {
-    //to change
-
   }
 
   render() {
@@ -169,10 +146,14 @@ class QuestionsAnswers extends React.Component {
                 {answersHidden}
               </AnswersHidden>
             </div>
+            <div>LOAD MORE ANSWERS</div>
           </Wrapper>
         </div>
       );
     });
+
+
+
 
     var questionsHidden = this.state.questions.slice(4, 100).map((question) => {
       const answers = Object.values(question.answers);
