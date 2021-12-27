@@ -1,7 +1,7 @@
 
 
 export const recommendedPercentage = (recommended) => {
-  if (!recommended.true && !recommended.false) {
+  if (!recommended.true || !recommended.false) {
     return '0%';
   }
   let t = parseInt(recommended.true);

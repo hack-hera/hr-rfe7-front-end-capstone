@@ -45,7 +45,6 @@ const Bar = styled.div`
 `;
 
 const Container = styled.div`
-  background-color: white;
   display: flex;
   flex-direction: column;
   padding: 0px 20px 20px 20px;

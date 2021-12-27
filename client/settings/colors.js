@@ -4,7 +4,7 @@ export const COLORS = {
   hover: '#27ae60',
   logo: '#2980b9',
   navbarBackground: '#333333',
-  navbarText: '#eeeeee'
+  navbarText: '#eeeeee',
 };
 
 export const THEMES = {
@@ -18,7 +18,8 @@ export const THEMES = {
     bodyTextDark: '#22222',
     bodyTextLight: '#666666',
     text: '#000',
-    graph: '#6ab04c'
+    graph: '#6ab04c',
+    lightbg: '#eeeeee',
   },
 
   darkMode: {
@@ -31,6 +32,7 @@ export const THEMES = {
     bodyTextDark: '#22222',
     bodyTextLight: '#55555',
     text: '#fff',
-    graph: '#6ab04c'
-  }
+    graph: '#6ab04c',
+    lightbg: '#eeeeee',
+  },
 };

@@ -37,9 +37,8 @@ const Graph = ({ name, value }) => {
 const Bar = styled.div`
   positition: relative;
   width: 100%;
-  background-color: #ffcc33;
   height: 10px;
-  background: linear-gradient(90deg, #ccc 90%, #fff 90%);
+  background: linear-gradient(90deg, #ccc 90%, ${props => props.theme.bg} 90%);
   background-repeat: repeat-x;
   background-size: 35%;
 `;
@@ -65,7 +64,6 @@ const Arrow = styled.div`
 
 const Container = styled.div`
   color: ${props => props.theme.bodyTextLight};
-  background-color: white;
   display: flex;
   flex-direction: column;
   padding: 0px 20px 20px 20px;

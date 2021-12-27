@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Ratings from './Ratings';
 import Characteristics from './Characteristics';
+import ReviewList from './ReviewList';
 
 class RatingsReviews extends Component {
   constructor(props) {
@@ -9,25 +10,24 @@ class RatingsReviews extends Component {
   }
 
   render() {
+    const { reviewMeta, reviews } = this.props;
+
     return (
       <Container>
         <h3>Ratings and Reviews</h3>
         <ReviewContainer>
           <LeftContainer>
-            <Ratings meta={this.props.reviewMeta} />
-            <Characteristics meta={this.props.reviewMeta} />
+            <Ratings meta={reviewMeta} />
+            <Characteristics meta={reviewMeta} />
           </LeftContainer>
           <MainContainer>
-            <pre>
-              {JSON.stringify(this.props.product)}
-            </pre>
+            <ReviewList reviews={reviews} />
           </MainContainer>
         </ReviewContainer>
-      </Container >
+      </Container>
     );
   }
 }
-
 
 const Container = styled.div`
   h3 {
