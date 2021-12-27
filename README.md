@@ -111,6 +111,7 @@ const Navbar = styled.div`
 - ![#2c3e50](https://via.placeholder.com/15/2c3e50/000000?text=+) `#2c3e50 - theme.textHeading`
 
 ### Shared Components
+
 `Stars` Pass the star rating component a number.  Anything <0 will round up to 0.  Anything >5 will automatically round down to 5.  Will round to nearest half-star.  Component inherets the parent components font size and color.
 ```HTML
 <Stars number={5}>
@@ -127,4 +128,16 @@ const Navbar = styled.div`
     ....
   </form>
 <Modal>
+```
+
+Form Elements.  `Input` `Dropdown` `Button` are standard input, select and button tags that are styled to be consistent.  Usage is the same as any other HTML element in JSX.
+
+```HTML
+import { Input, Dropdown, Button } from '../Shared/Form'
+
+<Input type='text' placeholder='Your text here'>
+<Button onclick={something()}>Add a Review!</Button>
+<Dropdown>
+  <option value="1">{'Option 1'}</option>
+</Dropdown>
 ```
