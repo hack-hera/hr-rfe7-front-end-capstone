@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import api from '../../api';
+
 import Ratings from './Ratings';
 import Characteristics from './Characteristics';
 import ReviewList from './ReviewList';
 import Sort from './Sort';
-import api from '../../api';
+import AddReview from './AddReview';
 
 class RatingsReviews extends Component {
   constructor(props) {
@@ -12,7 +14,8 @@ class RatingsReviews extends Component {
     this.state = {
       reviewMeta: null,
       reviews: null,
-      showing: 2,
+      reviewsShowing: 2,
+      modalShowing: false
     };
   }
 
@@ -29,10 +32,11 @@ class RatingsReviews extends Component {
   }
 
   render() {
-    const { reviewMeta, reviews, showing } = this.state;
+    const { reviewMeta, reviews, reviewsShowing, modalShowing } = this.state;
 
     return (
       <Container>
+        {modalShowing === true && <AddReview onClose={() => this.setState({ modalShowing: false })} />}
         <h3>Ratings and Reviews</h3>
         <MainContainer>
           <LeftContainer>
@@ -43,8 +47,8 @@ class RatingsReviews extends Component {
             {reviews && <Sort />}
             {reviews && (
               <ReviewList
-                reviews={reviews.slice(0, showing)}
-                showMore={() => this.setState({ showing: showing + 2 })}
+                reviews={reviews.slice(0, reviewsShowing)}
+                showMore={() => this.setState({ reviewsShowing: reviewsShowing + 2 })}
               />
             )}
           </RightContainer>
