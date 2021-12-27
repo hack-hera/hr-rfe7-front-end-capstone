@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Ratings from './Ratings';
 import Characteristics from './Characteristics';
 import ReviewList from './ReviewList';
+import Sort from './Sort';
 import api from '../../api';
 
 class RatingsReviews extends Component {
@@ -33,21 +34,21 @@ class RatingsReviews extends Component {
     return (
       <Container>
         <h3>Ratings and Reviews</h3>
-        <ReviewContainer>
+        <MainContainer>
           <LeftContainer>
-            <Ratings meta={reviewMeta} />
-            <Characteristics meta={reviewMeta} />
+            {reviewMeta && <Ratings meta={reviewMeta} />}
+            {reviewMeta && <Characteristics meta={reviewMeta} />}
           </LeftContainer>
-          <MainContainer>
-            {reviews && <Header>{reviews.length} sorted by 'newest'</Header>}
+          <RightContainer>
+            {reviews && <Sort />}
             {reviews && (
               <ReviewList
                 reviews={reviews.slice(0, showing)}
                 showMore={() => this.setState({ showing: showing + 2 })}
               />
             )}
-          </MainContainer>
-        </ReviewContainer>
+          </RightContainer>
+        </MainContainer>
       </Container>
     );
   }
@@ -56,16 +57,12 @@ class RatingsReviews extends Component {
 const Container = styled.div`
   h3 {
     margin-left: 10px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: normal;
   }
 `;
 
-const Header = styled.div`
-  padding: 0px 20px 20px 10px;
-`;
-
-const ReviewContainer = styled.div`
+const MainContainer = styled.div`
   display: flex;
 `;
 
@@ -75,7 +72,7 @@ const LeftContainer = styled.div`
   flex-direction: column;
 `;
 
-const MainContainer = styled.div`
+const RightContainer = styled.div`
   width: 70%;
   display: flex;
   flex-direction: column;

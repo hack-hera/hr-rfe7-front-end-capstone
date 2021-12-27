@@ -60,7 +60,7 @@ const ReviewItem = ({ review }) => {
 const Container = styled.div`
   margin: 10px 0px 20px 0px;
   padding: 0px 10px 10px 10px;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid ${(props) => props.theme.bgDark};
 `;
 
 const Header = styled.div`
@@ -72,7 +72,7 @@ const Text = styled.div`
   margin: 0px 0px 10px 0px;
   padding: 0px;
   font-size: 0.7em;
-  color: ${(props) => props.theme.bodyTextLight};
+  color: ${(props) => props.theme.textLight};
   h1 {
     font-size: 1.1em;
     font-weight: bold;
@@ -80,7 +80,7 @@ const Text = styled.div`
 `;
 
 const Response = styled.div`
-  background-color: #ccc;
+  background-color: ${(props) => props.theme.bgDark};
   margin: 10px 0px 5px 0px;
   padding: 10px;
   font-size: 0.7em;

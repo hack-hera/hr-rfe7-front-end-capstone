@@ -8,26 +8,22 @@ import {
 } from '../../lib/ratingFunctions';
 
 const Ratings = (props) => {
-  if (!props.meta) {
-    return <></>;
-  }
 
   const { recommended, ratings } = props.meta;
   const displayRatings = ratingPercentages(ratings);
   const displayTotalRating = totalRating(ratings);
+  const displayRecommended = recommendedPercentage(recommended);
 
   return (
     <Container>
-      <Heading>
+      <Header>
         <h1>{displayTotalRating}</h1>
-        <div>
-          <Stars number={displayTotalRating} />
-        </div>
-      </Heading>
+        <Stars number={displayTotalRating} />
+      </Header>
 
       <TableContainer>
         <p>
-          {recommendedPercentage(recommended)} of people recommend this product
+          {displayRecommended} of people recommend this product
         </p>
         <table>
           <tbody>
@@ -46,29 +42,20 @@ const Ratings = (props) => {
   );
 };
 
-const Bar = styled.div`
-  widht: 100%;
-  height: 10px;
-  background: ${(props) => {
-    return `linear-gradient(to left, #ccc ${100 - props.width}%,
-      ${props.theme.graph} ${100 - props.width}%)`;
-  }};
-`;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 20px 20px 20px;
 `;
 
-const Heading = styled.div`
+const Header = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
   h1 {
     margin: 0px;
     padding: 0px;
-    color: ${(props) => props.theme.bodyTextLight};
+    color: ${(props) => props.theme.textDark};
   }
   div {
     margin: 4px 0px 0px 4px;
@@ -81,7 +68,7 @@ const Heading = styled.div`
 const TableContainer = styled.div`
   p,
   th {
-    color: ${(props) => props.theme.bodyTextLight};
+    color: ${(props) => props.theme.textLight};
     font-size: 0.7em;
     font-weight: normal;
   }
@@ -96,6 +83,15 @@ const TableContainer = styled.div`
   table {
     width: 100%;
   }
+`;
+
+const Bar = styled.div`
+  widht: 100%;
+  height: 10px;
+  background: ${(props) => {
+    return `linear-gradient(to left, ${props.theme.bgDark} ${100 - props.width}%,
+      ${props.theme.graph} ${100 - props.width}%)`;
+  }};
 `;
 
 export default Ratings;

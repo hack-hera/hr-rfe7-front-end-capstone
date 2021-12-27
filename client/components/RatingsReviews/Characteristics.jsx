@@ -1,12 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Characteristics = (props) => {
-  if (!props.meta) {
-    return <></>;
-  }
+const Characteristics = ({ meta }) => {
 
-  const { characteristics } = props.meta;
+  const { characteristics } = meta;
 
   return (
     <Container>
@@ -33,13 +30,21 @@ const Graph = ({ name, value }) => {
   );
 };
 
+const Container = styled.div`
+  color: ${(props) => props.theme.textDark};
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px 20px 20px;
+  font-size: 0.7em;
+`;
+
 const Bar = styled.div`
   positition: relative;
   width: 100%;
   height: 10px;
   background: linear-gradient(
     90deg,
-    #ccc 90%,
+    ${(props) => props.theme.bgDark} 90%,
     ${(props) => props.theme.bg} 90%
   );
   background-repeat: repeat-x;
@@ -51,7 +56,7 @@ const Labels = styled.div`
   margin-top: 4px;
   justify-content: space-around;
   font-size: 0.6em;
-  color: ${(props) => props.theme.bodyTextLight};
+  color: ${(props) => props.theme.textLight};
   width: 100%;
 `;
 
@@ -65,12 +70,6 @@ const Arrow = styled.div`
   border-top: 12px solid ${(props) => props.theme.graph};
 `;
 
-const Container = styled.div`
-  color: ${(props) => props.theme.bodyTextLight};
-  display: flex;
-  flex-direction: column;
-  padding: 0px 20px 20px 20px;
-  font-size: 0.7em;
-`;
+
 
 export default Characteristics;
