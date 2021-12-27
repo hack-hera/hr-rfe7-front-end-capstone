@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ReviewItem from './ReviewItem';
 
-const ReviewList = ({ reviews }) => {
+const ReviewList = ({ reviews, showMore }) => {
   if (!reviews || reviews.length === 0) {
     return (
       <Container>
@@ -16,17 +16,13 @@ const ReviewList = ({ reviews }) => {
 
   return (
     <Container>
-      <Header>{reviews.length} sorted by 'newest'</Header>
       {display.map((r, i) => (
         <ReviewItem review={r} key={i} />
       ))}
+      <button onClick={showMore}>Show More</button>
     </Container>
   );
 };
-
-const Header = styled.div`
-  padding: 0px 20px 20px 10px;
-`;
 
 const Container = styled.div`
   width: 100%;
