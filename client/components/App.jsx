@@ -41,22 +41,13 @@ class App extends Component {
           updateProduct={(id) => this.updateProduct(id)}
         />
         <Container>
-          {/* <ProductDetail
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
-          <RelatedItems
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
+          <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          <RelatedItems product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
-          /> */}
-          <RatingsReviews
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
           />
+          <RatingsReviews product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
         </Container>
       </ThemeProvider>
     );
