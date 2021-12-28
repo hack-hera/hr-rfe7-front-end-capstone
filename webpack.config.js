@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   entry: {
-    main: path.resolve(__dirname, './client/index.jsx'),
+    bundle: path.resolve(__dirname, './client/index.jsx'),
+    components: path.resolve(__dirname, './client/components/Shared/index.jsx'),
   },
   module: {
     rules: [
@@ -21,7 +22,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './public'),
-    filename: 'bundle.js',
+    filename: '[name].js',
   },
   resolve: { extensions: [".jsx", ".js"] }
 };
