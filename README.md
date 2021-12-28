@@ -114,23 +114,26 @@ const Navbar = styled.div`
 `Stars` Pass the star rating component a number. Anything <0 will round up to 0. Anything >5 will automatically round down to 5. Will round to nearest half-star. Size(px) and number will default to 24px and 0 if not set explicitly.
 
 ```HTML
+import { Stars } from '../Shared/Stars'
 <Stars number={5} size={24}>
 ```
 
 `StarForm` will accept an initial number, a size for the entire element, and an onClick function.
 
 ```HTML
+import { StarForm } from '../Shared/Stars'
 <StarForm number={3.56} size={120} onClick={(e) => alert(e)} />
 ```
 
-`Modal` The Modal componet sits on top of other HTML (z-index: 1) and will render whatever children are nested inside (see example). The component has a built in [x] (40x40px in the upper right). When clicked it will run the onClose function. Recommended usage:
+`Modal` The Modal componet sits on top of other HTML (z-index: 1) and will render whatever children are nested inside (see example). The component has a built in [x] (40x40px in the upper right). When clicked it will run the onClose function. Takes a default size that represents % of the DOM to cover. Default is 50, but will accept any value 10-90. Recommended usage:
 
 1. Set state to `showing=false`.
 2. Conditionally render modal on `showing`.
 3. Pass the modal a function that updates the state to false when the user clicks the x.
 
 ```HTML
-<Modal onClose={onClose}>
+import { Stars } from '../Shared/Stars'
+<Modal onClose={onClose} size={80}>
   <form action="/dosomething">
     ....
   </form>

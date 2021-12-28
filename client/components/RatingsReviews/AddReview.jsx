@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Modal from '../Shared/Modal';
+import { Modal } from '../Shared/Modal';
 import { Input, Dropdown, Button } from '../Shared/Form';
 
 class AddReview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      submitted: false
+      submitted: false,
     };
   }
 
@@ -21,8 +21,10 @@ class AddReview extends Component {
   render() {
     const { onClose } = this.props;
     return (
-      <Modal onClose={onClose}>
-        {this.state.submitted ? <h1>Thanks</h1> : (
+      <Modal onClose={onClose} size={80}>
+        {this.state.submitted ? (
+          <h1>Thanks</h1>
+        ) : (
           <div>
             <h1>Add a Review</h1>
             <Button onClick={() => this.submitForm()}>Finish Review</Button>
