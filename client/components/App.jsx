@@ -9,45 +9,52 @@ import { RelatedItems } from './RelatedItems';
 import { Header } from './Header';
 import api from '../api';
 
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentProduct: null
+      products: [],
+      currentProduct: null,
     };
   }
 
   componentDidMount() {
-    api.getProducts()
-      .then(res => {
-        this.setState({ currentProduct: res[0] });
-      });
+    api.getProducts({ count: 20 }).then((res) => {
+      this.setState({ currentProduct: res[0], products: res });
+      this.updateProduct(res[0].id);
+    });
   }
 
   //Handler to update the main product
   updateProduct(id) {
-    api.getProduct({ product_id: id }).then(res => {
+    api.getProduct({ product_id: id }).then((res) => {
       this.setState({ currentProduct: res });
     });
   }
 
   render() {
-    const { currentProduct } = this.state;
+    const { products, currentProduct } = this.state;
     return (
       <ThemeProvider theme={THEMES.default}>
+<<<<<<< HEAD
         <Header />
         <h3>HTML DEBUGGER</h3>
         {/* <Debugger>{JSON.stringify(this.state.currentProduct)}</Debugger> */}
+=======
+        <Header
+          products={products}
+          product={currentProduct}
+          updateProduct={(id) => this.updateProduct(id)}
+        />
+>>>>>>> master
         <Container>
-          <ProductDetail
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
+          <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          <RelatedItems product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
+<<<<<<< HEAD
           <RatingsReviews
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
@@ -56,8 +63,11 @@ class App extends Component {
             product={this.state.currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
+=======
+          <RatingsReviews product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+>>>>>>> master
         </Container>
-      </ThemeProvider >
+      </ThemeProvider>
     );
   }
 }
@@ -65,17 +75,8 @@ class App extends Component {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100% - 100px);
-  min-height: calc(100% - 100px);
   padding: 20px;
-  background-color: ${props => props.theme.bg};
-`;
-
-const Debugger = styled.pre`
-  width: 800px;
-  background-color: black;
-  color: green;
-  white-space: pre-wrap;
+  background-color: ${(props) => props.theme.bg};
 `;
 
 export default App;
