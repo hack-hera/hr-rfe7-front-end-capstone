@@ -4,7 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import api from '../../api.js';
-import { months } from './lib/dataFunctions.js';
+import QuestionList from './QuestionList.jsx';
 
 
 
@@ -13,165 +13,41 @@ class QuestionsAnswers extends React.Component {
     super(props);
 
     this.state = {
-      answers: [],
-      questions: []
+      questionsShow: 2,
+      answersShow: 2,
+      questions: [],
+      answers: []
     };
   }
 
-  componentDidMount() {
-    api.getQuestions({product_id: 37323, page: 1, count: 100})
-      .then((res) => {
-        this.setState({
-          questions: res.results
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+  // componentDidMount() {
+  //   api.getQuestions({product_id: 37323, page: 1, count: 100})
+  //     .then((res) => {
+  //       this.setState({
+  //         questions: res.results
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+
+
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { id } = this.props.product;
+    if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+      api.getQuestions({ product_id: 37323, count: 100 }).then((res) => {
+        this.setState({ questions: res.results });
       });
+      // api.getAnswers({ question_id: id }).then((res) => {
+      //   this.setState({ answers: res.results });
+      // });
+    }
   }
 
   render() {
-    let {questions} = this.state;
-
-    var questionsShow = this.state.questions.slice(0, 4).map((question) => {
-      const answers = Object.values(question.answers);
-
-      const answersShow = answers.slice(0, 2).map((answer) => {
-        let timeArr = answer.date.split('T')[0].split('-');
-        return (
-          <div key={answer.id}>
-            <div>{answer.body}</div>
-            <div>
-              {answer.photos.map((photo, index) => {
-                return (
-                  <Photos key={index}>
-                    <img src={photo.index} alt='photo'/>
-                  </Photos>
-                );
-              })}
-            </div>
-            <ByUser>
-              <span>by {answer.answerer_name}, {months[timeArr[1]]} {timeArr[2]}, {timeArr[0]}&emsp;|&emsp;</span>
-              <span>Helpful?{question.question_helpfuless} <YesLink >Yes</YesLink>({question.question_helpfulness})&emsp;|&emsp;</span>
-              <span><YesLink >Report</YesLink></span>
-            </ByUser>
-          </div>
-        );
-      });
-
-      const answersHidden = answers.slice(2, 100).map((answer) => {
-        let timeArr = answer.date.split('T')[0].split('-');
-        return (
-          <div key={answer.id}>
-            <div>{answer.body}</div>
-            <div>
-              {answer.photos.map((photo, index) => {
-                return (
-                  <Photos key={index}>
-                    <img src={photo.index} alt='photo'/>
-                  </Photos>
-                );
-              })}
-            </div>
-            <ByUser>
-              <span>by {answer.answerer_name}, {months[timeArr[1]]} {timeArr[2]}, {timeArr[0]}&emsp;|&emsp;</span>
-              <span>Helpful?{question.question_helpfuless} <YesLink>Yes</YesLink>({question.question_helpfulness})&emsp;|&emsp;</span>
-              <span><YesLink >Report</YesLink></span>
-            </ByUser>
-          </div>
-        );
-      });
-
-      return (
-        <div key={question.question_id}>
-          <div>Q: {question.question_body}
-            <AlignRight>Helpful?{question.question_helpfuless} <YesLink >Yes</YesLink>({question.question_helpfulness})</AlignRight>
-          </div>
-          <Wrapper>
-            <div>A:</div>
-            <div>
-              {answersShow}
-              <AnswersHidden>
-                {answersHidden}
-              </AnswersHidden>
-            </div>
-
-          </Wrapper>
-        </div>
-      );
-    });
-
-
-
-
-    var questionsHidden = this.state.questions.slice(4, 100).map((question) => {
-      const answers = Object.values(question.answers);
-
-      const answersShow = answers.slice(0, 2).map((answer) => {
-        let timeArr = answer.date.split('T')[0].split('-');
-        return (
-          <div key={answer.id}>
-            <div>{answer.body}</div>
-            <div>
-              {answer.photos.map((photo, index) => {
-                return (
-                  <Photos key={index}>
-                    <img src={photo.index} alt='photo'/>
-                  </Photos>
-                );
-              })}
-            </div>
-            <ByUser>
-              <span>by {answer.answerer_name}, {months[timeArr[1]]} {timeArr[2]}, {timeArr[0]}&emsp;|&emsp;</span>
-              <span>Helpful?{question.question_helpfuless} <YesLink >Yes</YesLink>({question.question_helpfulness})&emsp;|&emsp;</span>
-              <span><YesLink >Report</YesLink></span>
-            </ByUser>
-          </div>
-        );
-      });
-
-      const answersHidden = answers.slice(2, 100).map((answer) => {
-        let timeArr = answer.date.split('T')[0].split('-');
-        return (
-          <div key={answer.id}>
-            <div>{answer.body}</div>
-            <div>
-              {answer.photos.map((photo, index) => {
-                return (
-                  <Photos key={index}>
-                    <img src={photo.index} alt='photo'/>
-                  </Photos>
-                );
-              })}
-            </div>
-            <ByUser>
-              <span>by {answer.answerer_name}, {months[timeArr[1]]} {timeArr[2]}, {timeArr[0]}&emsp;|&emsp;</span>
-              <span>Helpful?{question.question_helpfuless} <YesLink >Yes</YesLink>({question.question_helpfulness})&emsp;|&emsp;</span>
-              <span><YesLink >Report</YesLink></span>
-            </ByUser>
-          </div>
-        );
-      });
-
-
-      return (
-        <QuestionsHidden key={question.question_id}>
-          <div>Q: {question.question_body}
-            <AlignRight>Helpful?{question.question_helpfuless} <YesLink >Yes</YesLink>({question.question_helpfulness})</AlignRight>
-          </div>
-
-          <Wrapper>
-            <div>A:</div>
-            <div>
-              {answersShow}
-              <AnswersHidden>
-                {answersHidden}
-              </AnswersHidden>
-            </div>
-          </Wrapper>
-        </QuestionsHidden>
-      );
-    });
+    const {questionsShow, answersShow, questions, answers} = this.state;
 
     return (
       <div>
@@ -179,44 +55,21 @@ class QuestionsAnswers extends React.Component {
         <input type='text' placeholder='Enter your question here'></input>
         <button><FontAwesomeIcon icon={faSearch} /></button>
         <div>
-          {questionsShow}
-          {questionsHidden}
+          <QuestionList
+            questions={questions}
+            questionsShow={questionsShow}
+            answersShow={answersShow}
+            showMoreA={() => this.setState({answersShow: answersShow + 2})}
+            showMoreQ={() => this.setState({questionsShow: questionsShow + 2})}
+          />
         </div>
       </div>
     );
   }
 }
 
-const Header = styled.h1`
-  color: ${props => props.theme.navbarText};
-`;
 
-const Wrapper = styled.div`
-  display: flex
-`;
 
-const Photos = styled.div`
-  float: left
-`;
 
-const ByUser = styled.div`
-  clear: both
-`;
-
-const QuestionsHidden = styled.div`
-  display: none
-`;
-
-const AnswersHidden = styled.div`
-  display: none
-`;
-
-const AlignRight = styled.span`
-  float: right
-`;
-
-const YesLink = styled.u`
-
-`;
 
 export default QuestionsAnswers;
