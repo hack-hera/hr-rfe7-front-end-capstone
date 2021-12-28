@@ -92,3 +92,52 @@ const Navbar = styled.div`
 //Use a styled component in your code
 <Navbar />
 ```
+
+### Theme Colors
+
+- ![#ecf0f1](https://via.placeholder.com/15/ecf0f1/000000?text=+) `#ecf0f1 - theme.bg`
+- ![#d3d9dd](https://via.placeholder.com/15/d3d9dd/000000?text=+) `#d3d9dd - theme.bgDark`
+- ![#2c3e50](https://via.placeholder.com/15/2c3e50/000000?text=+) `#2c3e50 - theme.bgNav`
+- ![#8e44ad](https://via.placeholder.com/15/8e44ad/000000?text=+) `#8e44ad - theme.graph`
+- ![#c0392b](https://via.placeholder.com/15/c0392b/000000?text=+) `#c0392b - theme.error`
+- ![#27ae60](https://via.placeholder.com/15/27ae60/000000?text=+) `#27ae60 - theme.success`
+- ![#f1c40f](https://via.placeholder.com/15/f1c40f/000000?text=+) `#f1c40f - theme.warning`
+- ![#2980b9](https://via.placeholder.com/15/2980b9/000000?text=+) `#2980b9 - theme.button`
+- ![#f39c12](https://via.placeholder.com/15/f39c12/000000?text=+) `#f39c12 - theme.highlight`
+- ![#333333](https://via.placeholder.com/15/333333/000000?text=+) `#333333 - theme.text`
+- ![#f3f3f3](https://via.placeholder.com/15/f3f3f3/000000?text=+) `#f3f3f3 - theme.textInv`
+- ![#666666](https://via.placeholder.com/15/666666/000000?text=+) `#666666 - theme.textLight`
+- ![#111111](https://via.placeholder.com/15/111111/000000?text=+) `#111111 - theme.textDark`
+- ![#2c3e50](https://via.placeholder.com/15/2c3e50/000000?text=+) `#2c3e50 - theme.textHeading`
+
+### Shared Components
+
+`Stars` Pass the star rating component a number.  Anything <0 will round up to 0.  Anything >5 will automatically round down to 5.  Will round to nearest half-star.  Component inherets the parent components font size and color.
+```HTML
+<Stars number={5}>
+```
+
+`Modal` The Modal componet sits on top of other HTML (z-index: 1) and will render whatever children are nested inside (see example).  The component has a built in [x] (40x40px in the upper right).  When clicked it will run the onClose function.  Recommended usage:
+1. Set state to `showing=false`.
+2. Conditionally render modal on `showing`.
+3. Pass the modal a function that updates the state to false when the user clicks the x.
+
+```HTML
+<Modal onClose={onClose}>
+  <form action="/dosomething">
+    ....
+  </form>
+<Modal>
+```
+
+Form Elements.  `Input` `Dropdown` `Button` are standard input, select and button tags that are styled to be consistent.  Usage is the same as any other HTML element in JSX.
+
+```HTML
+import { Input, Dropdown, Button } from '../Shared/Form'
+
+<Input type='text' placeholder='Your text here'>
+<Button onclick={something()}>Add a Review!</Button>
+<Dropdown>
+  <option value="1">{'Option 1'}</option>
+</Dropdown>
+```

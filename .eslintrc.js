@@ -14,6 +14,6 @@ module.exports = {
     'func-style': [2, 'expression'],
   },
   parserOptions: {
-    ecmaVersion: 8
+    ecmaVersion: 2020,
   }
 };

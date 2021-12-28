@@ -5,17 +5,28 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-export const Header = () => {
+export const Header = ({ product, products, updateProduct }) => {
+  if (!product) {
+    return <></>;
+  }
+
   return (
     <Navbar>
       <div>
         <h1>CatWalk</h1>
       </div>
       <div>
+        <select defaultValue={product.id} onChange={(e) => updateProduct(e.target.value)}>
+          {products.map((x, i) => (
+            <option key={x.id} value={x.id}>{x.id} - {x.name}</option>
+          ))}
+        </select>
+      </div>
+      <div>
         <StyledInput type='text'></StyledInput>
         <FontAwesomeIcon icon={faSearch} />
       </div>
-    </Navbar>
+    </Navbar >
   );
 };
 
@@ -26,24 +37,24 @@ const Navbar = styled.div`
   width: calc(100%-50px);
   padding: 0px 25px;
   align-items: center;
-  color: ${props => props.theme.navbarText};
+  color: ${props => props.theme.textInv};
   height: 60px;
-  background-color: ${props => props.theme.navbarBackground};
+  background-color: ${props => props.theme.bgNav};
   h1 {
     font-size: 22px;
   }
   svg {
-    color: ${props => props.theme.navbarText};
+    color: ${props => props.theme.textInv};
   }
 `;
 
 const StyledInput = styled.input`
   background-color: transparent;
   border: 0px;
-  border-bottom: 2px solid ${props => props.theme.navbarText};
+  border-bottom: 2px solid ${props => props.theme.textInv};
   margin-right: 20px;
   outline: none;
-  color: ${props => props.theme.navbarText};
+  color: ${props => props.theme.textInv};
 `;
 
 
