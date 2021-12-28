@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from '../Shared/Modal';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { Stars } from '../Shared/Stars';
+
+import { MarkHelpfulReport } from './MarkHelpfulReport';
 
 //TODO - add some better date parsing logic
 
@@ -23,7 +22,7 @@ const ReviewItem = ({ review }) => {
       )}
       <Header>
         <Text>
-          <Stars number={review.rating} />
+          <Stars number={review.rating} size={16} />
         </Text>
         <Text>
           {review.reviewer_name}, {review.date.substr(0, 10)}
@@ -58,7 +57,7 @@ const ReviewItem = ({ review }) => {
             />
           ))}
         </ImageContainer>
-        <Text>Helpful? Yes (10) | Report</Text>
+        <MarkHelpfulReport review={review} />
       </Body>
     </Container>
   );
@@ -101,6 +100,7 @@ const Body = styled.div`
 const ImageContainer = styled.div`
   display: flex;
   flex-direction: row;
+  margin-bottom: 8px;
   img {
     height: 50px;
     margin-right: 10px;
