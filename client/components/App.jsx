@@ -36,17 +36,11 @@ class App extends Component {
     const { products, currentProduct } = this.state;
     return (
       <ThemeProvider theme={THEMES.default}>
-<<<<<<< HEAD
-        <Header />
-        <h3>HTML DEBUGGER</h3>
-        {/* <Debugger>{JSON.stringify(this.state.currentProduct)}</Debugger> */}
-=======
         <Header
           products={products}
           product={currentProduct}
           updateProduct={(id) => this.updateProduct(id)}
         />
->>>>>>> master
         <Container>
           <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
           <RelatedItems product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
@@ -54,18 +48,7 @@ class App extends Component {
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
-<<<<<<< HEAD
-          <RatingsReviews
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
-          <RelatedItems
-            product={this.state.currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
-=======
           <RatingsReviews product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
->>>>>>> master
         </Container>
       </ThemeProvider>
     );
