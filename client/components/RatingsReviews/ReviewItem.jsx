@@ -7,7 +7,7 @@ import { MarkHelpfulReport } from './MarkHelpfulReport';
 
 //TODO - add some better date parsing logic
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, reFetch, product }) => {
   const [showing, setShowing] = useState(false);
   const [url, setUrl] = useState();
 
@@ -57,7 +57,7 @@ const ReviewItem = ({ review }) => {
             />
           ))}
         </ImageContainer>
-        <MarkHelpfulReport review={review} />
+        <MarkHelpfulReport review={review} reFetch={reFetch} product={product} />
       </Body>
     </Container>
   );
