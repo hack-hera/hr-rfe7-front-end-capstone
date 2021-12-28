@@ -25,6 +25,7 @@ build/
 dist/
 
 public/bundle.js
+public/component.js
 
 #Test Snapshots
 tests/__snapshots__
