@@ -11,5 +11,9 @@ module.exports = {
     // Rules here will override the 'hackreactor' configuration
     // http://eslint.org/docs/rules/
     'camelcase': 'off',
+    'func-style': [2, 'expression'],
+  },
+  parserOptions: {
+    ecmaVersion: 2020,
   }
 };
