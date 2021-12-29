@@ -9,6 +9,17 @@ const headers = {
   },
 };
 
+const cache = (key, id, value) => {
+  let obj = ls.get(key) || {};
+  obj[id] = value;
+  ls.set(key, obj);
+};
+
+const getCache = (key, id) => {
+  let obj = ls.get(key) || {};
+  return obj[id];
+};
+
 const host = `https://app-hrsei-api.herokuapp.com/api/fec2/${campus}`;
 
 const api = {
@@ -76,6 +87,50 @@ const api = {
       .get(host + '/products/' + product_id + '/related', headers)
       .then((res) => this.getMultipleProducts({ product_ids: res.data }))
       .catch((err) => Promise.reject(new Error(err)));
+  },
+
+  getProductData: async function (params = {}) {
+    const { product_id } = params;
+    let productUrl = host + '/products/' + product_id;
+    let stylesUrl = host + '/products/' + product_id + '/styles';
+    try {
+      let cachedProduct = getCache('product', product_id);
+      if (cachedProduct) {
+        return cachedProduct;
+      }
+      let productRes = await axios.get(productUrl, headers);
+      let obj = productRes.data;
+      let stylesRes = await axios.get(stylesUrl, headers);
+      obj.styles = stylesRes.data.results;
+      cache('product', product_id, obj);
+      return obj;
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
+
+  getRelatedProductData: async function (params = {}) {
+    const { product_id } = params;
+    let relatedUrl = host + '/products/' + product_id + '/related';
+    try {
+      let obj = {};
+      let related = getCache('related', product_id);
+      if (!related) {
+        let res = await axios.get(relatedUrl, headers);
+        cache('related', product_id, res.data);
+        related = res.data;
+      }
+      obj.related_product_ids = related;
+      obj.related = [];
+      related.forEach(async (product_id) => {
+        let temp = await this.getProductData({ product_id });
+        obj.related.push(temp);
+      });
+
+      return obj;
+    } catch (err) {
+      throw new Error(err);
+    }
   },
 
   /******************************************************************************
