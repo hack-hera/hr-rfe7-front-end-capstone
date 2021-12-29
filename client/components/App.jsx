@@ -20,8 +20,7 @@ class App extends Component {
 
   componentDidMount() {
     api.getProducts({ count: 20 }).then((res) => {
-      this.setState({ currentProduct: res[0], products: res });
-      this.updateProduct(res[0].id);
+      this.setState({ currentProduct: res[8], products: res });
     });
   }
 
@@ -42,22 +41,13 @@ class App extends Component {
           updateProduct={(id) => this.updateProduct(id)}
         />
         <Container>
-          <ProductDetail
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
-          <RelatedItems
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
+          <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          <RelatedItems product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
-          <RatingsReviews
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
+          <RatingsReviews product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
         </Container>
       </ThemeProvider>
     );

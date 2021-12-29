@@ -39,9 +39,7 @@ class RatingsReviews extends Component {
   //only show star ratings with X stars
   updateFilter(stars) {
     let temp = getRatingFilters(this.state.filters, stars);
-    this.setState({ filters: temp }, () =>
-      console.log(Object.values(this.state.filters))
-    );
+    this.setState({ filters: temp }, () => console.log(Object.values(this.state.filters)));
   }
 
   submitReview(data) {
@@ -50,8 +48,7 @@ class RatingsReviews extends Component {
   }
 
   render() {
-    const { reviewMeta, reviews, reviewsShowing, modalShowing, filters } =
-      this.state;
+    const { reviewMeta, reviews, reviewsShowing, modalShowing, filters } = this.state;
 
     const { product } = this.props;
 
@@ -83,10 +80,10 @@ class RatingsReviews extends Component {
                 reviews={reviews}
                 reviewsShowing={reviewsShowing}
                 filters={filters}
-                showMore={() =>
-                  this.setState({ reviewsShowing: reviewsShowing + 2 })
-                }
+                showMore={() => this.setState({ reviewsShowing: reviewsShowing + 2 })}
                 addReview={() => this.setState({ modalShowing: true })}
+                reFetch={(id) => this.fetch(id)}
+                product={product}
               />
             )}
           </RightContainer>
