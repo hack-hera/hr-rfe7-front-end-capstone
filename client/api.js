@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import ls from 'local-storage';
+import ls from 'local-storage';
 
 const { github_token, campus } = require('./env/config.js');
 
@@ -83,33 +83,6 @@ const api = {
       return Promise.reject(new Error('must provide product_id'));
     }
 
-<<<<<<< HEAD
-    return axios.get(host + '/products/' + product_id + '/related', headers)
-      .then(res => this.getMultipleProducts({ product_ids: res.data }))
-      .catch(err => Promise.reject(new Error(err)));
-  },
-
-
-  //EDITS ----------------------------
-  getProductPicture: function (params = {}) {
-    const { product_id } = params;
-    if (!product_id) { return Promise.reject(new Error('must provide product_id')); }
-
-    return axios.get(host + '/products/' + product_id + '/styles', headers)
-      .then(res => Promise.resolve(res.data.results[0].photos[0].thumbnail_url))
-      .catch(err => Promise.reject(new Error(err)));
-  },
-
-  getMultiplePictures: function (params = {}) {
-    const { product_ids } = params;
-    if (!product_ids) { return Promise.reject(new Error('must provide product_id')); }
-    let promises = product_ids.map(id => this.getProductPicture({ product_id: id }));
-    return Promise.all(promises);
-  },
-
-  getProductRating: function (params = {}) {
-    //TODO: same as getProductPicture but with number rating
-=======
     return axios
       .get(host + '/products/' + product_id + '/related', headers)
       .then((res) => this.getMultipleProducts({ product_ids: res.data }))
@@ -158,7 +131,6 @@ const api = {
     } catch (err) {
       throw new Error(err);
     }
->>>>>>> master
   },
 
   /******************************************************************************

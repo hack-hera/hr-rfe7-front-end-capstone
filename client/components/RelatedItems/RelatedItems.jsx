@@ -25,33 +25,19 @@ class RelatedItems extends Component {
     console.log('this is relatedItems', this.state.relatedItems);
   }
 
-  // getRelatedProducts(product) {
-  //   api.getRelatedProducts(product)
-  //     .then(results => {
-  //       this.setState({
-  //         relatedItems: results
-  //       });
-  //     })
-  //     .catch(err => {
-  //       new Error('error retrieving related products');
-  //     });
-  // }
-
-
-
   getRelatedProducts(product) {
-    api.getRelatedProducts(product)
+    api.getRelatedProductData(product)
       .then(results => {
-        let promises = results.map(obj => ({ ...obj, Picture: api.getProductPicture({ product_id: obj.id }) }));
-
         this.setState({
-          relatedItems: promises
+          relatedItems: results.related
         });
       })
       .catch(err => {
         new Error('error retrieving related products');
       });
   }
+
+
   // after api.getRelatedProducts get and add pictures then get and add rating info
   addToOutfit(clickedProductId) {
     // figure out where to save current outfit list even on refreshes

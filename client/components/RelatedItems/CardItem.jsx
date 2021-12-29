@@ -21,16 +21,29 @@ var CardItem = (props) => {
     );
   }
 
+  var pictureSrc;
+
+  if (props.item.styles[0].photos[0].thumbnail_url) {
+    pictureSrc = props.item.styles[0].photos[0].thumbnail_url;
+  } else {
+    pictureSrc = 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg';
+  }
+
   return (
     <Container>
-      <Picture>Picture</Picture>
+      <PictureContainer>
+        <Picture>
+          <img src={pictureSrc} />
+        </Picture>
+        <Button>
+          {button}
+        </Button>
+      </PictureContainer>
+
       <Category>{props.item.category}</Category>
       <Name>{props.item.name}</Name>
       <Price>{props.item.default_price}</Price>
       <Stars />
-      <Button>
-        {button}
-      </Button>
     </Container>
   );
 };
@@ -53,8 +66,17 @@ const Price = styled.div`
   border: 1px solid ${(props) => props.theme.bgDark};
 `;
 
-const Picture = styled.div`
+const PictureContainer = styled.div`
   border: 1px solid ${(props) => props.theme.bgDark};
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+`;
+
+const Picture = styled.div`
+  img {
+    height: 200px
+  }
 `;
 
 const Button = styled.div`
