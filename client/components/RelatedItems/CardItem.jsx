@@ -1,4 +1,6 @@
 import React from 'react';
+import { COLORS } from '../../settings/colors';
+import styled from 'styled-components';
 import Stars from '../Shared/Stars.jsx';
 import StarButton from './StarButton.jsx';
 import XButton from './XButton.jsx';
@@ -12,15 +14,19 @@ var CardItem = (props) => {
   }
 
   return (
-    <div>
+    <Container>
       <div>{props.item.category}</div>
       <div>{props.item.name}</div>
       <div>{props.item.default_price}</div>
       <div>picture</div>
       {/* <Stars /> */}
       {button}
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  color: ${COLORS.hover};
+`;
 
 export default CardItem;

@@ -12,8 +12,9 @@ class RelatedItemsList extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { relatedItems } = this.props.relatedItems;
-    if (relatedItems && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+    const relatedItems = this.props.relatedItems;
+    if (relatedItems.length > 0 && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+      console.log(this.props.relatedItems);
       this.setState({
         relatedItems: this.props.relatedItems
       });
@@ -21,10 +22,12 @@ class RelatedItemsList extends React.Component {
   }
 
   render() {
+    console.log(this.state.relatedItems);
     return (
       <Container>
         {this.state.relatedItems.map(item => (
           <CardItem
+            key={item.id}
             item={item}
             inOutfit={false}
             add={this.props.addOutfit}

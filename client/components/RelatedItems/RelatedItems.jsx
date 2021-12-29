@@ -34,10 +34,6 @@ class RelatedItems extends Component {
       .catch(err => {
         new Error('error retrieving related products');
       });
-    // return array of related item ids
-    // for each put into array of promises
-    // promise.all
-    // set this.relatedItems equal to promised Array
   }
 
   addToOutfit(clickedProductId) {
