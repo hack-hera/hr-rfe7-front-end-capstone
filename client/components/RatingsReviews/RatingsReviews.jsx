@@ -10,9 +10,26 @@ import AddReview from './AddReview';
 
 const RatingsReviews = ({ data, product, fetch }) => {
   const [filters, setFilters] = useState({ ...allTrue });
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <Container>
+      {showModal === true && (
+        <AddReview
+          product={product}
+          meta={data}
+          onClose={() => setShowModal(false)}
+          onSubmit={() => {
+            setShowModal(false);
+            fetch({
+              product_id: product.id,
+              page: 1,
+              count: 100,
+              sort: 'newest',
+            });
+          }}
+        />
+      )}
       <h3>Ratings and Reviews</h3>
       <MainContainer>
         <LeftContainer>
@@ -23,8 +40,8 @@ const RatingsReviews = ({ data, product, fetch }) => {
           <ReviewList
             data={data}
             filters={filters}
-            addReview={() => console.log('add review')}
             fetch={fetch}
+            addReview={() => setShowModal(true)}
             product={product}
           />
         </RightContainer>

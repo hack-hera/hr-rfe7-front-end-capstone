@@ -170,17 +170,25 @@ const api = {
       .catch((err) => Promise.reject(new Error(err)));
   },
 
-  getReviewData: async function (params = {}) {
+  getReviewData: async function (params = {}, useCache = true) {
     const { product_id, count = 5, page = 1, sort = 'newest' } = params;
-    if (!product_id) {
-      return Promise.reject(new Error('must provide product_id'));
-    }
-    let data = await this.getReviewMeta({ product_id });
-    let reviews = await this.getReviews(params);
-    data.reviews = reviews.results;
-    data.numReviews = reviews.results.length;
 
-    return Promise.resolve(data);
+    try {
+      if (useCache === true) {
+        let cachedReviews = getCache('reviews', product_id);
+        if (cachedReviews) {
+          return cachedReviews;
+        }
+      }
+      let data = await this.getReviewMeta({ product_id });
+      let reviews = await this.getReviews(params);
+      data.reviews = reviews.results;
+      data.numReviews = reviews.results.length;
+      cache('reviews', product_id, data);
+      return data;
+    } catch (err) {
+      throw new Error(err);
+    }
   },
   // product_id	integer	Required ID of the product to post the review for
   // rating	int	Integer (1-5) indicating the review rating

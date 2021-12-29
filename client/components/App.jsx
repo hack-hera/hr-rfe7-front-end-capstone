@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   fetchReviewData({ product_id, page = 1, count = 100, sort = 'newest' }) {
-    api.getReviewData({ product_id, page, count, sort }).then((res) => {
+    api.getReviewData({ product_id, page, count, sort }, false).then((res) => {
       this.setState({ reviewData: res });
     });
   }
@@ -28,9 +28,18 @@ class App extends Component {
   componentDidMount() {
     api.getProducts({ count: 20 }).then((products) => {
       api
-        .getProductData({ product_id: products[8].id })
+        .getProductData({ product_id: products[0].id })
         .then((currentProduct) => {
-          this.setState({ products, currentProduct });
+          api
+            .getReviewData({
+              product_id: products[0].id,
+              page: 1,
+              count: 100,
+              sort: 'newest',
+            })
+            .then((reviewData) => {
+              this.setState({ products, currentProduct, reviewData });
+            });
         });
     });
   }
@@ -38,16 +47,15 @@ class App extends Component {
   //Handler to update the main product
   updateProduct(id) {
     api.getProductData({ product_id: id }).then((currentProduct) => {
-      this.setState({ currentProduct });
+      api
+        .getReviewData({ product_id: id, page: 1, count: 100, sort: 'newest' })
+        .then((reviewData) => {
+          this.setState({ currentProduct, reviewData });
+        });
     });
   }
 
   render() {
-    console.log(
-      'Rendering App State:\n',
-      this.state.products,
-      this.state.currentProduct
-    );
     const { products, currentProduct } = this.state;
     return (
       <ThemeProvider theme={THEMES.default}>
