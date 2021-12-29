@@ -1,30 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ReviewItem from './ReviewItem';
 
 import { Button } from '../Shared/Form';
 
-const ReviewList = ({
-  reviews,
-  filters,
-  reviewsShowing,
-  showMore,
-  addReview,
-  reFetch,
-  product,
-}) => {
-  let display = reviews.filter((r) => filters[r.rating]);
-  let showing = Math.min(reviewsShowing, display.length);
+const ReviewList = ({ data, filters, addReview, fetch, product }) => {
+  let display = data.reviews.filter((r) => filters[r.rating]);
+  const [showing, setShowing] = useState(Math.min(2, display.length));
+
+  useEffect(() => {
+    setShowing(Math.min(2, display.length));
+  }, [product.id]);
 
   return (
     <Container>
       <Header>
         Showing {showing} of {display.length} reviews | sorted by
       </Header>
-      {display.slice(0, reviewsShowing).map((r, i) => (
-        <ReviewItem review={r} key={i} reFetch={reFetch} product={product} />
+      {display.slice(0, showing).map((r, i) => (
+        <ReviewItem review={r} key={i} reFetch={fetch} product={product} />
       ))}
-      {showing < display.length && <Button onClick={showMore}>Show More</Button>}
+      {showing < display.length && (
+        <Button onClick={() => setShowing(showing + 2)}>Show More</Button>
+      )}
       <Button onClick={addReview}>
         Add a Review &nbsp;<b>+</b>
       </Button>

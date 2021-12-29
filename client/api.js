@@ -1,19 +1,17 @@
 import axios from 'axios';
 import ls from 'local-storage';
 
-
 const { github_token, campus } = require('./env/config.js');
 
 const headers = {
   headers: {
-    'Authorization': `${github_token}`
-  }
+    Authorization: `${github_token}`,
+  },
 };
 
 const host = `https://app-hrsei-api.herokuapp.com/api/fec2/${campus}`;
 
 const api = {
-
   /******************************************************************************
    * Product
    ******************************************************************************/
@@ -23,15 +21,18 @@ const api = {
   // count	integer	Specifies how many results per page to return. Default 5.
   getProducts: function (params = {}) {
     const { page = 1, count = 5 } = params;
-    return axios.get(host + `/products?page=${page}&count=${count}`, headers)
-      .then(res => Promise.resolve(res.data))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .get(host + `/products?page=${page}&count=${count}`, headers)
+      .then((res) => Promise.resolve(res.data))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   getMultipleProducts: function (params = {}) {
     const { product_ids } = params;
-    if (!product_ids) { return Promise.reject(new Error('must provide product_id')); }
-    let promises = product_ids.map(id => this.getProduct({ product_id: id }));
+    if (!product_ids) {
+      return Promise.reject(new Error('must provide product_id'));
+    }
+    let promises = product_ids.map((id) => this.getProduct({ product_id: id }));
     return Promise.all(promises);
   },
 
@@ -39,40 +40,47 @@ const api = {
   // product_id	integer	Required ID of the Product requested
   getProduct: function (params = {}) {
     const { product_id } = params;
-    if (!product_id) { return Promise.reject(new Error('must provide product_id')); }
+    if (!product_id) {
+      return Promise.reject(new Error('must provide product_id'));
+    }
 
-    return axios.get(host + '/products/' + product_id, headers)
-      .then(res => Promise.resolve(res.data))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .get(host + '/products/' + product_id, headers)
+      .then((res) => Promise.resolve(res.data))
+      .catch((err) => Promise.reject(new Error(err)));
   },
-
 
   // Parameter	Type	Description
   // product_id	integer	Required ID of the Product requested
   getProductStyles: function (params = {}) {
     const { product_id } = params;
-    if (!product_id) { return Promise.reject(new Error('must provide product_id')); }
+    if (!product_id) {
+      return Promise.reject(new Error('must provide product_id'));
+    }
 
-    return axios.get(host + '/products/' + product_id + '/styles', headers)
-      .then(res => Promise.resolve(res.data))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .get(host + '/products/' + product_id + '/styles', headers)
+      .then((res) => Promise.resolve(res.data))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Parameter	Type	Description
   // product_id	integer	Required ID of the Product requested
   getRelatedProducts: function (params = {}) {
     const { product_id } = params;
-    if (!product_id) { return Promise.reject(new Error('must provide product_id')); }
+    if (!product_id) {
+      return Promise.reject(new Error('must provide product_id'));
+    }
 
-    return axios.get(host + '/products/' + product_id + '/related', headers)
-      .then(res => this.getMultipleProducts({ product_ids: res.data }))
-      .catch(err => Promise.reject(new Error(err)));
-
+    return axios
+      .get(host + '/products/' + product_id + '/related', headers)
+      .then((res) => this.getMultipleProducts({ product_ids: res.data }))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   /******************************************************************************
-  * Ratings and Reviews
-  ******************************************************************************/
+   * Ratings and Reviews
+   ******************************************************************************/
   // Returns a list of reviews for a particular product. This list does not include any reported reviews.
   // page	integer	Selects the page of results to return. Default 1.
   // count	integer	Specifies how many results per page to return. Default 5.
@@ -81,26 +89,44 @@ const api = {
   // TODO - implement CACHING for getReviews
   getReviews: function (params = {}) {
     const { product_id, count = 5, page = 1, sort = 'newest' } = params;
-    if (!product_id) { return Promise.reject(new Error('must provide product_id')); }
+    if (!product_id) {
+      return Promise.reject(new Error('must provide product_id'));
+    }
 
     const url = `/reviews?product_id=${product_id}&count=${count}&page=${page}&sort=${sort}`;
 
-    return axios.get(host + url, headers)
-      .then(res => Promise.resolve(res.data))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .get(host + url, headers)
+      .then((res) => Promise.resolve(res.data))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Returns review metadata for a given product.
   // product_id	integer	Required ID of the product for which data should be returned
   getReviewMeta: function (params = {}) {
     const { product_id } = params;
-    if (!product_id) { return Promise.reject(new Error('must provide product_id')); }
+    if (!product_id) {
+      return Promise.reject(new Error('must provide product_id'));
+    }
 
-    return axios.get(host + '/reviews/meta?product_id=' + product_id, headers)
-      .then(res => Promise.resolve(res.data))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .get(host + '/reviews/meta?product_id=' + product_id, headers)
+      .then((res) => Promise.resolve(res.data))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
+  getReviewData: async function (params = {}) {
+    const { product_id, count = 5, page = 1, sort = 'newest' } = params;
+    if (!product_id) {
+      return Promise.reject(new Error('must provide product_id'));
+    }
+    let data = await this.getReviewMeta({ product_id });
+    let reviews = await this.getReviews(params);
+    data.reviews = reviews.results;
+    data.numReviews = reviews.results.length;
+
+    return Promise.resolve(data);
+  },
   // product_id	integer	Required ID of the product to post the review for
   // rating	int	Integer (1-5) indicating the review rating
   // summary	text	Summary text of the review
@@ -113,14 +139,17 @@ const api = {
 
   addReview: function (params = {}) {
     if (Object.keys(params).length !== 9) {
-      return Promise.reject(new Error('params must contain exactly 9 properties'));
+      return Promise.reject(
+        new Error('params must contain exactly 9 properties')
+      );
     }
 
     const url = host + '/reviews';
 
-    return axios.post(url, params, headers)
-      .then(res => Promise.resolve(res))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .post(url, params, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Updates a review to show it was found helpful.
@@ -128,12 +157,15 @@ const api = {
   // reveiw_id	integer	Required ID of the review to update
   markReviewAsHelpful: function (params = {}) {
     const { review_id } = params;
-    if (!review_id) { return Promise.reject(new Error('params must contain {review_id}')); }
+    if (!review_id) {
+      return Promise.reject(new Error('params must contain {review_id}'));
+    }
     let url = `${host}/reviews/${review_id}/helpful`;
 
-    return axios.put(url, {}, headers)
-      .then(res => Promise.resolve(res))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .put(url, {}, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Updates a review to show it was reported. Note, this action does not delete the review, but the review will not be returned in the above GET request.
@@ -142,12 +174,15 @@ const api = {
 
   reportReview: function (params = {}) {
     const { review_id } = params;
-    if (!review_id) { return Promise.reject(new Error('params must contain {review_id}')); }
+    if (!review_id) {
+      return Promise.reject(new Error('params must contain {review_id}'));
+    }
     let url = `${host}/reviews/${review_id}/report`;
 
-    return axios.put(url, {}, headers)
-      .then(res => Promise.resolve(res))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .put(url, {}, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   /******************************************************************************
@@ -160,15 +195,17 @@ const api = {
   // page	integer	Selects the page of results to return. Default 1.
   // count	integer	Specifies how many results per page to return. Default 5.
 
-
   getQuestions: function (params = {}) {
     const { product_id, page = 1, count = 5 } = params;
-    if (!product_id) { return Promise.reject(new Error('must provide product_id')); }
+    if (!product_id) {
+      return Promise.reject(new Error('must provide product_id'));
+    }
     const url = `/qa/questions?product_id=${product_id}&count=${count}&page=${page}`;
 
-    return axios.get(host + url, headers)
-      .then(res => Promise.resolve(res.data))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .get(host + url, headers)
+      .then((res) => Promise.resolve(res.data))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Returns answers for a given question. This list does not include any reported answers.
@@ -178,11 +215,14 @@ const api = {
 
   getAnswers: function (params = {}) {
     const { question_id } = params;
-    if (!question_id) { return Promise.reject(new Error('must provide a question_id')); }
+    if (!question_id) {
+      return Promise.reject(new Error('must provide a question_id'));
+    }
 
-    return axios.get(host + '/qa/questions/' + question_id + '/answers', headers)
-      .then(res => Promise.resolve(res.data))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .get(host + '/qa/questions/' + question_id + '/answers', headers)
+      .then((res) => Promise.resolve(res.data))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   //Adds a question for the given product
@@ -194,15 +234,24 @@ const api = {
 
   addQuestion: function (params = {}) {
     const { body, name, email, product_id } = params;
-    if (!body || !name || !email || !product_id || Object.keys(params).length !== 4) {
-      return Promise.reject(new Error('params must contain only {body, name, email, product_id}'));
+    if (
+      !body ||
+      !name ||
+      !email ||
+      !product_id ||
+      Object.keys(params).length !== 4
+    ) {
+      return Promise.reject(
+        new Error('params must contain only {body, name, email, product_id}')
+      );
     }
 
     const url = host + '/qa/questions';
 
-    return axios.post(url, params, headers)
-      .then(res => Promise.resolve(res))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .post(url, params, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Adds an answer for the given question
@@ -214,14 +263,26 @@ const api = {
 
   addAnswer: function (params = {}) {
     const { question_id, body, name, email, photos } = params;
-    if (!question_id || !body || !name || !email || !photos || Object.keys(params).length !== 5) {
-      return Promise.reject(new Error('params must contain only {question_id, body, name, email, photos}'));
+    if (
+      !question_id ||
+      !body ||
+      !name ||
+      !email ||
+      !photos ||
+      Object.keys(params).length !== 5
+    ) {
+      return Promise.reject(
+        new Error(
+          'params must contain only {question_id, body, name, email, photos}'
+        )
+      );
     }
     let url = `${host}/qa/questions/${question_id}/answers`;
     delete params.question_id;
-    return axios.post(url, params, headers)
-      .then(res => Promise.resolve(res))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .post(url, params, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Updates a question to show it was found helpful.
@@ -229,12 +290,15 @@ const api = {
   // question_id	integer	Required ID of the question to update
   markQuestionAsHelpful: function (params = {}) {
     const { question_id } = params;
-    if (!question_id) { return Promise.reject(new Error('params must contain {question_id}')); }
+    if (!question_id) {
+      return Promise.reject(new Error('params must contain {question_id}'));
+    }
     let url = `${host}/qa/questions/${question_id}/helpful`;
 
-    return axios.put(url, {}, headers)
-      .then(res => Promise.resolve(res))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .put(url, {}, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Updates a question to show it was reported. Note, this action does not delete the question, but the question will not be returned in the above GET request.
@@ -242,11 +306,14 @@ const api = {
   // question_id	integer	Required ID of the question to update
   reportQuestion: function (params = {}) {
     const { question_id } = params;
-    if (!question_id) { return Promise.reject(new Error('params must contain {question_id}')); }
+    if (!question_id) {
+      return Promise.reject(new Error('params must contain {question_id}'));
+    }
     let url = `${host}/qa/questions/${question_id}/report`;
-    return axios.put(url, {}, headers)
-      .then(res => Promise.resolve(res))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .put(url, {}, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Updates an answer to show it was found helpful.
@@ -254,11 +321,14 @@ const api = {
   // answer_id	integer	Required ID of the answer to update
   markAnswerAsHelpful: function (params = {}) {
     const { answer_id } = params;
-    if (!answer_id) { return Promise.reject(new Error('params must contain {answer_id}')); }
+    if (!answer_id) {
+      return Promise.reject(new Error('params must contain {answer_id}'));
+    }
     let url = `${host}/qa/answers/${answer_id}/helpful`;
-    return axios.put(url, {}, headers)
-      .then(res => Promise.resolve(res))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .put(url, {}, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   // Updates an answer to show it has been reported. Note, this action does not delete the answer, but the answer will not be returned in the above GET request.
@@ -266,17 +336,19 @@ const api = {
   // answer_id	integer	Required ID of the answer to update
   reportAnswer: function (params = {}) {
     const { answer_id } = params;
-    if (!answer_id) { return Promise.reject(new Error('params must contain {answer_id}')); }
+    if (!answer_id) {
+      return Promise.reject(new Error('params must contain {answer_id}'));
+    }
     let url = `${host}/qa/answers/${answer_id}/report`;
-    return axios.put(url, {}, headers)
-      .then(res => Promise.resolve(res))
-      .catch(err => Promise.reject(new Error(err)));
+    return axios
+      .put(url, {}, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
   },
 
   /******************************************************************************
    * Interactions
    ******************************************************************************/
-
 
   /******************************************************************************
    * SHOPPING CART
@@ -298,7 +370,6 @@ const api = {
   //     .then(res => Promise.resolve(res.data))
   //     .catch(err => Promise.reject(new Error(err)));
   // }
-
 };
 
 export default api;

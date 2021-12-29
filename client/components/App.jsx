@@ -15,19 +15,31 @@ class App extends Component {
     this.state = {
       products: [],
       currentProduct: null,
+      reviewData: null,
     };
+  }
+
+  fetchReviewData({ product_id, page = 1, count = 100, sort = 'newest' }) {
+    api.getReviewData({ product_id, page, count, sort }).then((res) => {
+      this.setState({ reviewData: res });
+    });
   }
 
   componentDidMount() {
     api.getProducts({ count: 20 }).then((res) => {
       this.setState({ currentProduct: res[8], products: res });
+      this.fetchReviewData({ product_id: res[8].id });
     });
   }
 
   //Handler to update the main product
   updateProduct(id) {
-    api.getProduct({ product_id: id }).then((res) => {
-      this.setState({ currentProduct: res });
+    api.getProduct({ product_id: id }).then((currentProduct) => {
+      api
+        .getReviewData({ product_id: id, page: 1, count: 100, sort: 'newest' })
+        .then((reviewData) => {
+          this.setState({ currentProduct, reviewData });
+        });
     });
   }
 
@@ -41,13 +53,25 @@ class App extends Component {
           updateProduct={(id) => this.updateProduct(id)}
         />
         <Container>
-          <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
-          <RelatedItems product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          <ProductDetail
+            product={currentProduct}
+            updateProduct={(id) => this.updateProduct(id)}
+          />
+          <RelatedItems
+            product={currentProduct}
+            updateProduct={(id) => this.updateProduct(id)}
+          />
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
-          <RatingsReviews product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          {this.state.reviewData && (
+            <RatingsReviews
+              data={this.state.reviewData}
+              product={currentProduct}
+              fetch={(params) => this.fetchReviewData(params)}
+            />
+          )}
         </Container>
       </ThemeProvider>
     );
