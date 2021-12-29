@@ -19,19 +19,28 @@ class App extends Component {
   }
 
   componentDidMount() {
-    api.getProducts({ count: 20 }).then((res) => {
-      this.setState({ currentProduct: res[8], products: res });
+    api.getProducts({ count: 20 }).then((products) => {
+      api
+        .getProductData({ product_id: products[8].id })
+        .then((currentProduct) => {
+          this.setState({ products, currentProduct });
+        });
     });
   }
 
   //Handler to update the main product
   updateProduct(id) {
-    api.getProduct({ product_id: id }).then((res) => {
-      this.setState({ currentProduct: res });
+    api.getProductData({ product_id: id }).then((currentProduct) => {
+      this.setState({ currentProduct });
     });
   }
 
   render() {
+    console.log(
+      'Rendering App State:\n',
+      this.state.products,
+      this.state.currentProduct
+    );
     const { products, currentProduct } = this.state;
     return (
       <ThemeProvider theme={THEMES.default}>
@@ -41,13 +50,22 @@ class App extends Component {
           updateProduct={(id) => this.updateProduct(id)}
         />
         <Container>
-          <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
-          <RelatedItems product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          <ProductDetail
+            product={currentProduct}
+            updateProduct={(id) => this.updateProduct(id)}
+          />
+          <RelatedItems
+            product={currentProduct}
+            updateProduct={(id) => this.updateProduct(id)}
+          />
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
-          <RatingsReviews product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          <RatingsReviews
+            product={currentProduct}
+            updateProduct={(id) => this.updateProduct(id)}
+          />
         </Container>
       </ThemeProvider>
     );
