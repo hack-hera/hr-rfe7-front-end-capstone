@@ -83,7 +83,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import api from '../../api';
+import { Stars } from '../Shared/Stars';
+import { totalRating } from '../../lib/ratingFunctions';
 import ProductImage from './ProductImage.jsx';
+import StyleSelector from './StyleSelector.jsx';
 
 class ProductDetail extends Component {
   constructor(props) {
@@ -92,6 +95,8 @@ class ProductDetail extends Component {
     this.state = {
       currentProduct: null,
       productStyles: null,
+      currentStyle: null,
+      selectedPhoto: null
     };
   }
 
@@ -99,7 +104,7 @@ class ProductDetail extends Component {
     const { id } = this.props.product;
     if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       api.getProductStyles({ product_id: id }).then((res) => {
-        this.setState({ productStyles: res, currentProduct: this.props.product }, () =>
+        this.setState({ productStyles: res, currentProduct: this.props.product, currentStyle: res.results[0], selectedPhoto: res.results[0].photos[0]}, () =>
           console.log(this.state)
         );
       });
@@ -107,34 +112,47 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { currentProduct, productStyles } = this.state;
+    const { currentProduct, productStyles, currentStyle, selectedPhoto } = this.state;
     return (
       <Container>
         <h3>Product Details</h3>
-        <ProductImage/>
         {currentProduct && (
           <ProductContainer>
-            <p>
-              <b>Product Name: </b>
-              {currentProduct.name}
-            </p>
-            <p>
-              <b>Description: </b>
-              {currentProduct.description}
-            </p>
-            <p>
-              <b>Price: </b>
-              {currentProduct.default_price}
-            </p>
-            <ImageContainer>
-              {productStyles.results[0].photos.map((i, k) => (
-                <Thumbnail
-                  key={k}
-                  src={i.thumbnail_url}
-                  onClick={() => alert('show a modal!' + i.url)}
-                />
-              ))}
-            </ImageContainer>
+            <DisplayContainer>
+              <ImageOptionsContainer>
+                {productStyles.results[0].photos.map((i, k) => (
+                  <Thumbnail
+                    key={k}
+                    src={i.thumbnail_url}
+                    onClick={() => alert('show a modal! ' + i.url)}
+                  />
+                ))}
+              </ImageOptionsContainer>
+              <ImageContainer>
+                <ProductImage selectedPhoto = {selectedPhoto}/>
+              </ImageContainer>
+            </DisplayContainer>
+            <ProductInfo>
+              <div>//***** Read all reviews//</div>
+              <div>category: {currentProduct.category}</div>
+              <p>
+                <b>Product Name: </b>
+                {currentProduct.name}
+              </p>
+              <p>
+                <b>Price: </b>
+                {currentProduct.default_price}
+              </p>
+              <StyleSelector productStyles={productStyles}/>
+              <div>Size</div>
+              <div>Qunatity</div>
+              <div>Add to Cart</div>
+              <button>*</button>
+              <p>
+                <b>Description: </b>
+                {currentProduct.description}
+              </p>
+            </ProductInfo>
           </ProductContainer>
         )}
       </Container>
@@ -142,25 +160,48 @@ class ProductDetail extends Component {
   }
 }
 
+const DisplayContainer = styled.div`
+  display: flex;
+  width: 60%;
+`;
+
 const Container = styled.div`
   background-color: ${(props) => props.theme.bg};
 `;
 
 const ProductContainer = styled.div`
+  display: flex;
+  flex-direction: row;
   font-size: 0.8em;
+`;
+
+const ImageOptionsContainer = styled.div`
+  display: inline-block;
+  width: 33px;
+  height: 440px;
+  margin-right: 30px;
 `;
 
 const ImageContainer = styled.div`
   display: flex;
+  width: 50%;
 `;
 
 const Thumbnail = styled.img`
-  margin-right: 10px;
-  height: 150px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  max-height: 55px;
+  max-width: 33px;
   :hover {
     opacity: 0.8;
     cursor: pointer;
   }
+`;
+
+const ProductInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 35%
 `;
 
 export default ProductDetail;
