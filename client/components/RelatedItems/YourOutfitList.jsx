@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import CardItem from './CardItem.jsx';
 
 class YourOutfitList extends React.Component {
@@ -12,7 +13,8 @@ class YourOutfitList extends React.Component {
 
   render() {
     return (
-      <div className="your-outfit-list">
+      <Container>
+        <CardItem firstCard={true} />
         {this.state.outfitArray.map(item => (
           <CardItem
             item={item}
@@ -20,9 +22,15 @@ class YourOutfitList extends React.Component {
             remove={this.props.removeItem}
           />
         ))}
-      </div>
+      </Container>
     );
   }
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 0px 20px 20px 20px;
+`;
 
 export default YourOutfitList;

@@ -79,7 +79,7 @@ const api = {
   },
 
   getProductRating: function (params = {}) {
-
+    //TODO: same as getProductPicture but with number rating
   },
 
   /******************************************************************************

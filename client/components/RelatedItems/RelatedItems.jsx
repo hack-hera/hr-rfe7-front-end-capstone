@@ -12,6 +12,7 @@ class RelatedItems extends Component {
     this.state = {
       currentProduct: this.props.product,
       relatedItems: [],
+      pictures: [],
       outfitData: []
     };
   }
