@@ -16,38 +16,28 @@ class QuestionsAnswers extends React.Component {
       questionsShow: 2,
       answersShow: 2,
       questions: [],
-      answers: []
+      answers: [],
+      answeredQuestionShow: 0,
+      answeredQuestion: []
     };
   }
-
-  // componentDidMount() {
-  //   api.getQuestions({product_id: 37323, page: 1, count: 100})
-  //     .then((res) => {
-  //       this.setState({
-  //         questions: res.results
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
-
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { id } = this.props.product;
     if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       api.getQuestions({ product_id: 37323, count: 100 }).then((res) => {
-        this.setState({ questions: res.results });
+        this.setState({
+          questions: res.results,
+          answeredQuestion: res.results.slice(2).filter(question => question.answers !== undefined)
+        });
       });
-      // api.getAnswers({ question_id: id }).then((res) => {
-      //   this.setState({ answers: res.results });
-      // });
+
+
     }
   }
 
   render() {
-    const {questionsShow, answersShow, questions, answers} = this.state;
+    const {questionsShow, answeredQuestionShow, answersShow, questions, answers, answeredQuestion} = this.state;
 
     return (
       <div>
@@ -59,8 +49,10 @@ class QuestionsAnswers extends React.Component {
             questions={questions}
             questionsShow={questionsShow}
             answersShow={answersShow}
+            answeredQuestionShow={answeredQuestionShow}
+            answeredQuestion={answeredQuestion}
             showMoreA={() => this.setState({answersShow: answersShow + 2})}
-            showMoreQ={() => this.setState({questionsShow: questionsShow + 2})}
+            showMoreQ={() => this.setState({answeredQuestionShow: answeredQuestionShow + 2})}
           />
         </div>
       </div>
