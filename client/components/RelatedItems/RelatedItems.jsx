@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { COLORS } from '../../settings/colors';
 import styled from 'styled-components';
-import { Header } from '../Header.jsx';
 import RelatedItemsList from './RelatedItemsList.jsx';
 import YourOutfitList from './YourOutfitList.jsx';
 import api from '../../api.js';
@@ -17,12 +16,16 @@ class RelatedItems extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getRelatedProducts(this.state.currentProduct);
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { id } = this.props.product;
+    if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+      this.getRelatedProducts({ product_id: id });
+    }
+    console.log(this.state.relatedItems);
   }
 
-  getRelatedProducts(currentProduct) {
-    api.getRelatedProducts(currentProduct)
+  getRelatedProducts(product) {
+    api.getRelatedProducts(product)
       .then(results => {
         this.setState({
           relatedItems: results
@@ -66,6 +69,24 @@ class RelatedItems extends Component {
     );
   }
 }
+
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  h1 {
+    margin: 0px;
+    padding: 0px;
+    color: ${(props) => props.theme.textDark};
+  }
+  div {
+    margin: 4px 0px 0px 4px;
+    font-size: 11px;
+    color: ${(props) => props.theme.graph};
+    padding: 0px;
+  }
+`;
 
 const Container = styled.div`
   color: ${COLORS.hover};

@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import CardItem from './CardItem.jsx';
 
 class RelatedItemsList extends React.Component {
@@ -10,9 +11,18 @@ class RelatedItemsList extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { relatedItems } = this.props.relatedItems;
+    if (relatedItems && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+      this.setState({
+        relatedItems: this.props.relatedItems
+      });
+    }
+  }
+
   render() {
     return (
-      <div className="related-items-list">
+      <Container>
         {this.state.relatedItems.map(item => (
           <CardItem
             item={item}
@@ -20,9 +30,15 @@ class RelatedItemsList extends React.Component {
             add={this.props.addOutfit}
           />
         ))}
-      </div>
+      </Container>
     );
   }
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px 20px 20px;
+`;
 
 export default RelatedItemsList;
