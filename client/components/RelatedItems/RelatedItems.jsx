@@ -21,35 +21,36 @@ class RelatedItems extends Component {
     const { id } = this.props.product;
     if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       this.getRelatedProducts({ product_id: id });
-      api.getProductPicture({ product_id: id });
     }
-    console.log(this.state.relatedItems);
+    console.log('this is relatedItems', this.state.relatedItems);
   }
+
+  // getRelatedProducts(product) {
+  //   api.getRelatedProducts(product)
+  //     .then(results => {
+  //       this.setState({
+  //         relatedItems: results
+  //       });
+  //     })
+  //     .catch(err => {
+  //       new Error('error retrieving related products');
+  //     });
+  // }
+
+
 
   getRelatedProducts(product) {
     api.getRelatedProducts(product)
       .then(results => {
+        let promises = results.map(obj => ({ ...obj, Picture: api.getProductPicture({ product_id: obj.id }) }));
         this.setState({
-          relatedItems: results
+          relatedItems: promises
         });
       })
       .catch(err => {
         new Error('error retrieving related products');
       });
   }
-
-  // getRelatedProducts(product) {
-  //   api.getRelatedProducts(product)
-  //     .then(data => {
-
-  //     })
-  //     .then(results => {
-
-  //     })
-  //     .catch(err => {
-  //       new Error('error retrieving related products');
-  //     });
-  // }
   // after api.getRelatedProducts get and add pictures then get and add rating info
   addToOutfit(clickedProductId) {
     // figure out where to save current outfit list even on refreshes
