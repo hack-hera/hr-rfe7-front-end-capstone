@@ -51,6 +51,7 @@ const RatingsReviews = ({ data, product, fetch }) => {
 };
 
 const Container = styled.div`
+  color: ${(props) => props.theme.textLight};
   h3 {
     margin-left: 10px;
     font-size: 16px;
