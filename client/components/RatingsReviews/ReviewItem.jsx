@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from '../Shared/Modal';
 import { Stars } from '../Shared/Stars';
+import Highlighter from 'react-highlight-words';
 
 import { MarkHelpfulReport } from './MarkHelpfulReport';
 
 //TODO - add some better date parsing logic
 
-const ReviewItem = ({ review, reFetch, product }) => {
+const ReviewItem = ({ review, product, keyword }) => {
   const [showing, setShowing] = useState(false);
   const [url, setUrl] = useState();
 
@@ -30,9 +31,21 @@ const ReviewItem = ({ review, reFetch, product }) => {
       </Header>
       <Body>
         <Text>
-          <h1>{review.summary}</h1>
+          <h1>
+            <Highlighter
+              highlightClassName='highlighted'
+              textToHighlight={review.summary}
+              searchWords={[keyword]}
+            />
+          </h1>
         </Text>
-        <Text>{review.body}</Text>
+        <Text>
+          <Highlighter
+            highlightClassName='highlighted'
+            textToHighlight={review.body}
+            searchWords={[keyword]}
+          />
+        </Text>
         {review.recommend === true && (
           <Text>
             <b>✓</b> I recommend this product
@@ -57,11 +70,15 @@ const ReviewItem = ({ review, reFetch, product }) => {
             />
           ))}
         </ImageContainer>
-        <MarkHelpfulReport review={review} reFetch={reFetch} product={product} />
+        <MarkHelpfulReport review={review} product={product} />
       </Body>
     </Container>
   );
 };
+
+const HighlightSpan = styled.span`
+  background-color: yellow;
+`;
 
 const Container = styled.div`
   margin: 10px 0px 20px 0px;
@@ -82,6 +99,9 @@ const Text = styled.div`
   h1 {
     font-size: 1.1em;
     font-weight: bold;
+  }
+  .highlighted {
+    background-color: ${(props) => props.theme.highlight};
   }
 `;
 
