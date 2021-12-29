@@ -20,8 +20,7 @@ class App extends Component {
 
   componentDidMount() {
     api.getProducts({ count: 20 }).then((res) => {
-      this.setState({ currentProduct: res[0], products: res });
-      this.updateProduct(res[0].id);
+      this.setState({ currentProduct: res[8], products: res });
     });
   }
 
@@ -59,7 +58,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: ${(props) => props.theme.bg};
+  background-color: ${(props) => props.theme.bgLight};
 `;
 
 export default App;

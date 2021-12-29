@@ -1,34 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { LoremIpsum } from 'lorem-ipsum';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-const lorem = new LoremIpsum({
-  sentencesPerParagraph: {
-    max: 8,
-    min: 4,
-  },
-  wordsPerSentence: {
-    max: 16,
-    min: 4,
-  },
-});
-
+import { Modal } from '../Shared/Modal';
 import { Stars } from '../Shared/Stars';
+
+import { MarkHelpfulReport } from './MarkHelpfulReport';
 
 //TODO - add some better date parsing logic
 
-const ReviewItem = ({ review }) => {
-  // review.summary = lorem.generateSentences(1);
-  // review.body = lorem.generateSentences(5);
-  // review.response = Math.random() > 0.5 ? lorem.generateSentences(2) : null;
+const ReviewItem = ({ review, reFetch, product }) => {
+  const [showing, setShowing] = useState(false);
+  const [url, setUrl] = useState();
 
   return (
     <Container>
+      {showing === true && (
+        <Modal width={50} height={60} onClose={() => setShowing(false)}>
+          <ModalImage>
+            <img src={url} />
+          </ModalImage>
+        </Modal>
+      )}
       <Header>
         <Text>
-          <Stars number={review.rating} />
+          <Stars number={review.rating} size={16} />
         </Text>
         <Text>
           {review.reviewer_name}, {review.date.substr(0, 10)}
@@ -51,7 +45,19 @@ const ReviewItem = ({ review }) => {
             {review.response}
           </Response>
         )}
-        <Text>Helpful? Yes (10) | Report</Text>
+        <ImageContainer>
+          {review.photos.map((p, i) => (
+            <img
+              key={i}
+              src={p.url}
+              onClick={() => {
+                setUrl(p.url);
+                setShowing(true);
+              }}
+            />
+          ))}
+        </ImageContainer>
+        <MarkHelpfulReport review={review} reFetch={reFetch} product={product} />
       </Body>
     </Container>
   );
@@ -89,6 +95,32 @@ const Response = styled.div`
 const Body = styled.div`
   margin-top: 8px;
   line-height: 1em;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+  img {
+    height: 50px;
+    margin-right: 10px;
+  }
+  img:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+`;
+
+const ModalImage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  img {
+    max-height: 100%;
+    max-width: 100%;
+  }
 `;
 
 export default ReviewItem;
