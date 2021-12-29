@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { characteristics } from '../../lib/characteristics';
-import { Button } from '../Shared/Form';
 
 export const RecommendForm = ({ formData, setFormData, errors, setErrors }) => (
   <div
@@ -107,9 +106,12 @@ export const AddImages = ({ formData, setFormData }) => {
         <img key={i} src={url} />
       ))}
       {photos.length < 5 && (
-        <Button style={{ width: '80px', height: '80px' }} onClick={getNewUrl}>
-          Add an Image
-        </Button>
+        <ImageButton
+          style={{ width: '80px', height: '80px' }}
+          onClick={getNewUrl}
+        >
+          +
+        </ImageButton>
       )}
     </ImageContainer>
   );
@@ -122,5 +124,19 @@ const ImageContainer = styled.div`
   img {
     height: 80px;
     margin-right: 10px;
+  }
+`;
+
+const ImageButton = styled.div`
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  color: ${(props) => props.theme.bgDark};
+  font-size: 30px;
+  border: 2px dotted ${(props) => props.theme.bgDark};
+  background-color: ${(props) => props.theme.bgLight};
+  cursor: pointer;
+  :hover {
+    background-color: ${(props) => props.theme.bg};
   }
 `;

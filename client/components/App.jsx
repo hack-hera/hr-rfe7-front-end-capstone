@@ -16,6 +16,7 @@ class App extends Component {
       products: [],
       currentProduct: null,
       reviewData: null,
+      darkMode: false,
     };
   }
 
@@ -56,10 +57,11 @@ class App extends Component {
   }
 
   render() {
-    const { products, currentProduct } = this.state;
+    const { products, currentProduct, darkMode } = this.state;
     return (
-      <ThemeProvider theme={THEMES.default}>
+      <ThemeProvider theme={THEMES[darkMode ? 'darkMode' : 'default']}>
         <Header
+          toggleColors={() => this.setState({ darkMode: !darkMode })}
           products={products}
           product={currentProduct}
           updateProduct={(id) => this.updateProduct(id)}

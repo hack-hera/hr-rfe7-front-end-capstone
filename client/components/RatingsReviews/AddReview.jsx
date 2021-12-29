@@ -81,9 +81,7 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
         ) : (
           <Form>
             <Header>Add a Review for {product.name}</Header>
-            <Label>
-              <Error>{errors.global || ''}</Error>
-            </Label>
+            <Error>{errors.global || ''}</Error>
             <Label>
               Overall Rating
               <Error>{errors.rating || ''}</Error>
@@ -97,7 +95,6 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
                 }}
               />
             </Field>
-
             <Label>
               Do you recommend this product
               <Error>{errors.recommend || ''}</Error>
@@ -155,8 +152,6 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
               <Error>{errors.body || ''}</Error>
             </Label>
             <Textarea
-              rows={5}
-              cols={50}
               onFocus={() => setErrors({ ...errors, body: '' })}
               value={formData.body}
               onChange={(e) =>
@@ -199,7 +194,11 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
 
             <Field>
               <Button
-                style={{ marginTop: '10px' }}
+                style={{
+                  marginTop: '10px',
+                  width: '200px',
+                  marginBottom: '30px',
+                }}
                 onClick={() => submitForm()}
               >
                 Add Review!
@@ -232,18 +231,46 @@ const Form = styled.div`
   height: 100%;
   width: 100%;
   overflow: auto;
-  padding-left: 5px;
+  overflow-x: hidden;
+  padding: 30px;
   background-color: ${(props) => props.theme.bgLight};
+
+  textarea {
+    width: 80%;
+    height: 120px;
+    line-height: 20px;
+    font-size: 0.8em;
+  }
+
+  button {
+    background-color: ${(props) => props.theme.button};
+    color: ${(props) => props.theme.textInv};
+    border: 0px;
+    outline: 0px;
+    :hover {
+      opacity: 0.8;
+      background-color: ${(props) => props.theme.button};
+    }
+  }
 `;
 
 const Header = styled.div`
-  width: 100%;
+  color: ${(props) => props.theme.textDark};
+  font-size: 1.4em;
+  width: calc(100% - 60px);
+  padding-bottom: 10px;
 `;
 
 const Label = styled.div`
-  margin: 10px 0px 5px 0px;
-  font-size: 0.7em;
-  color: ${(props) => props.theme.textLight};
+  margin: 25px 0px 10px 0px;
+  width: calc(100% - 60px);
+  font-size: 0.8em;
+  color: ${(props) => props.theme.textDark};
+  :first-child {
+    margin: 0px;
+  }
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
 `;
 
 const Error = styled.span`
@@ -254,22 +281,24 @@ const Error = styled.span`
 const Note = styled.div`
   margin: -5px 0px 0px 0px;
   padding: 0px;
-  font-size: 0.5em;
+  font-size: 0.7em;
   color: ${(props) => props.theme.textLight};
 `;
 
 const Field = styled.div`
-  font-size: 0.7em;
+  margin: 10px 0px;
+  font-size: 0.9em;
   color: ${(props) => props.theme.textLight};
   table {
-    width: 70%;
-    font-size: 0.8em;
+    width: calc(100% - 80px);
     border-collapse: collapse;
+    font-size: 0.8em;
+    color: ${(props) => props.theme.textLight};
   }
   td {
     width: 18%;
     border: 1px solid #ccc;
-    padding: 5px;
+    padding: 8px 5px;
     text-align: center;
   }
   td.selected {

@@ -10,7 +10,7 @@ import AddReview from './AddReview';
 
 const RatingsReviews = ({ data, product, fetch }) => {
   const [filters, setFilters] = useState({ ...allTrue });
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   return (
     <Container>
@@ -51,6 +51,7 @@ const RatingsReviews = ({ data, product, fetch }) => {
 };
 
 const Container = styled.div`
+  color: ${(props) => props.theme.textLight};
   h3 {
     margin-left: 10px;
     font-size: 16px;

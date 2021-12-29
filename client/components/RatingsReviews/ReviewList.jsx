@@ -75,6 +75,7 @@ const Header = styled.div`
 `;
 
 const Select = styled.select`
+  color: ${(props) => props.theme.textLight};
   border: 0px;
   background-color: transparent;
   font-size: 1em;
@@ -83,6 +84,7 @@ const Select = styled.select`
 `;
 
 const Input = styled.input`
+  color: ${(props) => props.theme.textLight};
   border: 0px;
   background-color: transparent;
   font-size: 1em;
