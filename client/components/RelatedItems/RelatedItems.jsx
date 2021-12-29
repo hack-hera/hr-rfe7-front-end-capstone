@@ -43,6 +43,7 @@ class RelatedItems extends Component {
     api.getRelatedProducts(product)
       .then(results => {
         let promises = results.map(obj => ({ ...obj, Picture: api.getProductPicture({ product_id: obj.id }) }));
+
         this.setState({
           relatedItems: promises
         });

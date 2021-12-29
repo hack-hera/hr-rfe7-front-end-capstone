@@ -23,7 +23,7 @@ var CardItem = (props) => {
 
   return (
     <Container>
-      <Picture>picture</Picture>
+      <Picture>Picture</Picture>
       <Category>{props.item.category}</Category>
       <Name>{props.item.name}</Name>
       <Price>{props.item.default_price}</Price>

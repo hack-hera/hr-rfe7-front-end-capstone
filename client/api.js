@@ -69,6 +69,8 @@ const api = {
       .catch(err => Promise.reject(new Error(err)));
   },
 
+
+  //EDITS ----------------------------
   getProductPicture: function (params = {}) {
     const { product_id } = params;
     if (!product_id) { return Promise.reject(new Error('must provide product_id')); }
