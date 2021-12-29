@@ -67,6 +67,18 @@ const api = {
     return axios.get(host + '/products/' + product_id + '/related', headers)
       .then(res => this.getMultipleProducts({ product_ids: res.data }))
       .catch(err => Promise.reject(new Error(err)));
+  },
+
+  getProductPicture: function (params = {}) {
+    const { product_id } = params;
+    if (!product_id) { return Promise.reject(new Error('must provide product_id')); }
+
+    return axios.get(host + '/products/' + product_id + '/styles', headers)
+      .then(res => console.log('this is from getProductPicture', res.data.results[0].photos[0].thumbnail_url))
+      .catch(err => Promise.reject(new Error(err)));
+  },
+
+  getProductRating: function (params = {}) {
 
   },
 

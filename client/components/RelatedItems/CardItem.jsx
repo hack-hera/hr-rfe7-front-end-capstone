@@ -15,18 +15,42 @@ var CardItem = (props) => {
 
   return (
     <Container>
-      <div>{props.item.category}</div>
-      <div>{props.item.name}</div>
-      <div>{props.item.default_price}</div>
-      <div>picture</div>
+      <Picture>picture</Picture>
+      <Category>{props.item.category}</Category>
+      <Name>{props.item.name}</Name>
+      <Price>{props.item.default_price}</Price>
       {/* <Stars /> */}
-      {button}
+      <Button>
+        {button}
+      </Button>
     </Container>
   );
 };
 
 const Container = styled.div`
-  color: ${COLORS.hover};
+  margin: 10px 0px 20px 0px;
+  padding: 0px 10px 10px 10px;
+  border: 1px solid ${(props) => props.theme.bgDark};
+`;
+
+const Category = styled.div`
+  border: 1px solid ${(props) => props.theme.bgDark};
+`;
+
+const Name = styled.div`
+  border: 1px solid ${(props) => props.theme.bgDark};
+`;
+
+const Price = styled.div`
+  border: 1px solid ${(props) => props.theme.bgDark};
+`;
+
+const Picture = styled.div`
+  border: 1px solid ${(props) => props.theme.bgDark};
+`;
+
+const Button = styled.div`
+  border: 1px solid ${(props) => props.theme.bgDark};
 `;
 
 export default CardItem;

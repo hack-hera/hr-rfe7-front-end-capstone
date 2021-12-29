@@ -40,7 +40,7 @@ class RelatedItemsList extends React.Component {
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 0px 20px 20px 20px;
 `;
 

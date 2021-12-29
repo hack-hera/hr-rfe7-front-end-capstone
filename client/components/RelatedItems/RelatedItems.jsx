@@ -20,6 +20,7 @@ class RelatedItems extends Component {
     const { id } = this.props.product;
     if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       this.getRelatedProducts({ product_id: id });
+      api.getProductPicture({ product_id: id });
     }
     console.log(this.state.relatedItems);
   }
@@ -36,6 +37,19 @@ class RelatedItems extends Component {
       });
   }
 
+  // getRelatedProducts(product) {
+  //   api.getRelatedProducts(product)
+  //     .then(data => {
+
+  //     })
+  //     .then(results => {
+
+  //     })
+  //     .catch(err => {
+  //       new Error('error retrieving related products');
+  //     });
+  // }
+  // after api.getRelatedProducts get and add pictures then get and add rating info
   addToOutfit(clickedProductId) {
     // figure out where to save current outfit list even on refreshes
     // make get request with that product ID
