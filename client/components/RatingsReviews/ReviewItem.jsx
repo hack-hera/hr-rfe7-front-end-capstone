@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from '../Shared/Modal';
 import { Stars } from '../Shared/Stars';
-import Highlighter from 'react-highlight-words';
-
+import { Highlighter } from '../Shared/Highlighter';
 import { MarkHelpfulReport } from './MarkHelpfulReport';
 
 //TODO - add some better date parsing logic
@@ -33,19 +32,11 @@ const ReviewItem = ({ review, product, keyword }) => {
       <Body>
         <Text>
           <h1>
-            <Highlighter
-              highlightClassName='highlighted'
-              textToHighlight={review.summary}
-              searchWords={[keyword]}
-            />
+            <Highlighter string={review.summary} query={keyword} />
           </h1>
         </Text>
         <Text>
-          <Highlighter
-            highlightClassName='highlighted'
-            textToHighlight={review.body}
-            searchWords={[keyword]}
-          />
+          <Highlighter string={review.body} query={keyword} />
         </Text>
         {review.recommend === true && (
           <Text>
@@ -82,6 +73,10 @@ const ReviewItem = ({ review, product, keyword }) => {
     </Container>
   );
 };
+
+const HighlightCustomComponent = ({ children, highlightIndex }) => (
+  <strong className='highlighted'>{children}</strong>
+);
 
 const HighlightSpan = styled.span`
   background-color: yellow;

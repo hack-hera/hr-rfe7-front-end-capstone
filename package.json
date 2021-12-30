@@ -22,6 +22,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
     "axios": "^0.24.0",
+    "babel-plugin-react-generate-property": "^1.1.2",
     "express": "^4.17.2",
     "local-storage": "^2.0.0",
     "lorem-ipsum": "^2.0.4",
@@ -29,7 +30,6 @@
     "nodemon": "^2.0.15",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-highlight-words": "^0.17.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Modal = ({ children, onClose, width = 50, height = 50 }) => {
+  const [z, setZ] = useState(10);
+
+  useEffect(() => {
+    setZ(z - 1);
+  }, [children]);
+
   width = Math.max(10, Math.min(90, width));
   height = Math.max(10, Math.min(90, height));
   return (
-    <Container width={width} height={height}>
+    <Container width={width} height={height} z={z}>
       <CloseButton onClick={onClose}>×</CloseButton>
       {children}
     </Container>
@@ -16,7 +22,7 @@ export const Modal = ({ children, onClose, width = 50, height = 50 }) => {
 
 const Container = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: ${(props) => props.z};
   width: ${(props) => props.width}%;
   height: ${(props) => props.height}%;
   left: ${(props) => (100 - props.width) / 2}%;
