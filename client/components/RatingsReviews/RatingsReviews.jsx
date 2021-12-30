@@ -10,7 +10,7 @@ import AddReview from './AddReview';
 
 const RatingsReviews = ({ data, product, fetch }) => {
   const [filters, setFilters] = useState({ ...allTrue });
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   return (
     <Container>

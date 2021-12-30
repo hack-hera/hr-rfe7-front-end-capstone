@@ -27,7 +27,7 @@ export const THEMES = {
   },
 
   darkMode: {
-    bg: '#2d3436',
+    bg: '#202527',
     bgLight: '#2d3436',
     bgDark: '#141718',
     bgNav: '#141718',

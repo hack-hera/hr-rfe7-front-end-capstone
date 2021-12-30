@@ -97,22 +97,20 @@ export const AddImages = ({ formData, setFormData }) => {
   let photos = formData.photos || [];
   let getNewUrl = () => {
     let url = prompt('Enter Image URL');
-    setFormData({ ...formData, photos: [...photos, url] });
+    if (url.length > 0) {
+      setFormData({ ...formData, photos: [...photos, url] });
+    }
   };
 
   return (
     <ImageContainer>
       {photos.map((url, i) => (
-        <img key={i} src={url} />
+        <ImageRemove>
+          <div>x</div>
+          <img key={i} src={url} />
+        </ImageRemove>
       ))}
-      {photos.length < 5 && (
-        <ImageButton
-          style={{ width: '80px', height: '80px' }}
-          onClick={getNewUrl}
-        >
-          +
-        </ImageButton>
-      )}
+      {photos.length < 5 && <ImageButton onClick={getNewUrl}>+</ImageButton>}
     </ImageContainer>
   );
 };
@@ -121,9 +119,26 @@ const ImageContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+`;
+
+const ImageRemove = styled.div`
+  position: relative;
+  margin-right: 10px;
+  padding: 0px;
   img {
     height: 80px;
-    margin-right: 10px;
+    margin: 0px;
+    padding: 0px;
+  }
+  :hover {
+    opacity: 0.8;
+  }
+  div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: red;
   }
 `;
 
@@ -131,6 +146,8 @@ const ImageButton = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 4px;
+  text-align: center;
+  line-height: 80px;
   color: ${(props) => props.theme.bgDark};
   font-size: 30px;
   border: 2px dotted ${(props) => props.theme.bgDark};
