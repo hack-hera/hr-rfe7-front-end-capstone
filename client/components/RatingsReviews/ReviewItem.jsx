@@ -12,6 +12,12 @@ const ReviewItem = ({ review, product, keyword }) => {
   const [url, setUrl] = useState();
   const [dimensions, setDimensions] = useState([50, 70]);
 
+  const displayDate = new Date(review.date).toLocaleString('en-us', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
   return (
     <Container>
       {showing === true && (
@@ -26,7 +32,7 @@ const ReviewItem = ({ review, product, keyword }) => {
           <Stars number={review.rating} size={16} />
         </Text>
         <Text>
-          {review.reviewer_name}, {review.date.substr(0, 10)}
+          {review.reviewer_name}, {displayDate}
         </Text>
       </Header>
       <Body>
