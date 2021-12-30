@@ -17,8 +17,6 @@ export const months = {
   '12': 'Dec'
 };
 
-
-
 export const sortedQuestion = (a, b) => {
   return a - b;
 };
@@ -35,7 +33,6 @@ export const QuestionBody = ({question}) => {
     </QuestionText>
   );
 };
-
 
 const AlignRight = styled.span`
   font-weight: normal;
