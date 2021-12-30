@@ -1,46 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ls from 'local-storage';
 
 import api from '../../api.js';
 
-export const MarkHelpfulReport = ({ review, reFetch, product }) => {
-  let alreadyMarked = (ls.get('markedReviews') || []).includes(review.review_id);
+export const MarkHelpfulReport = ({ review, product }) => {
+  let markedReviews = ls.get('markedReviews') || [];
+  let reported = ls.get('reported') || [];
+
+  let [alreadyMarked, setAlreadyMarked] = useState(
+    markedReviews.includes(review.review_id)
+  );
   let [alreadyReported, setAlreadyReported] = useState(
-    (ls.get('reported') || []).includes(review.review_id)
+    reported.includes(review.review_id)
   );
 
-  let markAsHelpful = () => {
-    let markedReviews = ls.get('markedReviews') || [];
-    ls.set('markedReviews', [...markedReviews, review.review_id]);
-    api
-      .markReviewAsHelpful({ review_id: review.review_id })
-      .then(() => reFetch(product.id))
-      .catch((err) => console.error(err));
+  useEffect(() => {
+    setAlreadyMarked(markedReviews.includes(review.review_id));
+    setAlreadyReported(reported.includes(review.review_id));
+  }, [review.review_id]);
 
-    //TODO - MAKE THIS RERENDER THE PAGE
+  let markAsHelpful = () => {
+    ls.set('markedReviews', [...markedReviews, review.review_id]);
+    api.markReviewAsHelpful({ review_id: review.review_id });
+    setAlreadyMarked(true);
   };
 
   let report = () => {
-    let reported = ls.get('reported') || [];
     ls.set('reported', [...reported, review.review_id]);
-    api
-      .reportReview({ review_id: review.review_id })
-      .then(() => setAlreadyReported(true))
-      .catch((err) => console.error(err));
+    api.reportReview({ review_id: review.review_id });
+    setAlreadyReported(true);
   };
 
   return (
     <Text>
-      {alreadyMarked === true && <>✓ Helpful</>}
-      {alreadyMarked === false && (
+      {alreadyMarked === true ? (
+        <>✓ Helpful ({review.helpfulness + 1})</>
+      ) : (
         <>
-          Helpful? <a onClick={markAsHelpful}>Yes</a>
+          Helpful? ({review.helpfulness}) <a onClick={markAsHelpful}>Yes</a>
         </>
-      )}{' '}
-      ({review.helpfulness}){' | '}
-      {alreadyReported === true && <>✓ Reported</>}
-      {alreadyReported === false && <a onClick={report}>Report Review</a>}
+      )}
+      {' | '}
+      {alreadyReported === true ? (
+        <>✓ Reported</>
+      ) : (
+        <a onClick={report}>Report Review</a>
+      )}
     </Text>
   );
 };

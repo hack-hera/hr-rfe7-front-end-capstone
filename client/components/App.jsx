@@ -15,15 +15,32 @@ class App extends Component {
     this.state = {
       products: [],
       currentProduct: null,
+      reviewData: null,
+      darkMode: false,
     };
+  }
+
+  fetchReviewData({ product_id, page = 1, count = 100, sort = 'newest' }) {
+    api.getReviewData({ product_id, page, count, sort }, false).then((res) => {
+      this.setState({ reviewData: res });
+    });
   }
 
   componentDidMount() {
     api.getProducts({ count: 20 }).then((products) => {
       api
-        .getProductData({ product_id: products[8].id })
+        .getProductData({ product_id: products[0].id })
         .then((currentProduct) => {
-          this.setState({ products, currentProduct });
+          api
+            .getReviewData({
+              product_id: products[0].id,
+              page: 1,
+              count: 100,
+              sort: 'newest',
+            })
+            .then((reviewData) => {
+              this.setState({ products, currentProduct, reviewData });
+            });
         });
     });
   }
@@ -31,20 +48,20 @@ class App extends Component {
   //Handler to update the main product
   updateProduct(id) {
     api.getProductData({ product_id: id }).then((currentProduct) => {
-      this.setState({ currentProduct });
+      api
+        .getReviewData({ product_id: id, page: 1, count: 100, sort: 'newest' })
+        .then((reviewData) => {
+          this.setState({ currentProduct, reviewData });
+        });
     });
   }
 
   render() {
-    console.log(
-      'Rendering App State:\n',
-      this.state.products,
-      this.state.currentProduct
-    );
-    const { products, currentProduct } = this.state;
+    const { products, currentProduct, darkMode } = this.state;
     return (
-      <ThemeProvider theme={THEMES.default}>
+      <ThemeProvider theme={THEMES[darkMode ? 'darkMode' : 'default']}>
         <Header
+          toggleColors={() => this.setState({ darkMode: !darkMode })}
           products={products}
           product={currentProduct}
           updateProduct={(id) => this.updateProduct(id)}
@@ -62,10 +79,13 @@ class App extends Component {
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
-          <RatingsReviews
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
+          {this.state.reviewData && (
+            <RatingsReviews
+              data={this.state.reviewData}
+              product={currentProduct}
+              fetch={(params) => this.fetchReviewData(params)}
+            />
+          )}
         </Container>
       </ThemeProvider>
     );

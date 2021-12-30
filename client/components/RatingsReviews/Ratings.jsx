@@ -5,12 +5,12 @@ import {
   recommendedPercentage,
   ratingPercentages,
   totalRating,
-  filtersToText
+  filtersToText,
+  getNewFilters,
 } from '../../lib/ratingFunctions';
 
-const Ratings = ({ meta, updateFilter, filters }) => {
-
-  const { recommended, ratings } = meta;
+const Ratings = ({ data, updateFilter, filters }) => {
+  const { recommended, ratings } = data;
   const displayRatings = ratingPercentages(ratings);
   const displayTotalRating = totalRating(ratings);
   const displayRecommended = recommendedPercentage(recommended);
@@ -24,14 +24,14 @@ const Ratings = ({ meta, updateFilter, filters }) => {
       </Header>
 
       <TableContainer>
-        <p>
-          {displayRecommended} of people recommend this product
-        </p>
+        <p>{displayRecommended} of people recommend this product</p>
         <table>
           <tbody>
             {displayRatings.map((v, k) => (
               <tr key={k}>
-                <th onClick={() => updateFilter(5 - k)}>{5 - k} Stars</th>
+                <th onClick={() => updateFilter(getNewFilters(filters, 5 - k))}>
+                  {5 - k} Stars
+                </th>
                 <td>
                   <Bar width={v} />
                 </td>
@@ -41,13 +41,15 @@ const Ratings = ({ meta, updateFilter, filters }) => {
         </table>
         {displayFilterText && (
           <p>
-            {displayFilterText}{' | '}
-            <Link onClick={() => updateFilter(-1)}>Remove Filters</Link>
+            {displayFilterText}
+            {' | '}
+            <Link onClick={() => updateFilter(getNewFilters(filters, -1))}>
+              Remove Filters
+            </Link>
           </p>
         )}
       </TableContainer>
-
-    </Container >
+    </Container>
   );
 };
 
@@ -58,7 +60,7 @@ const Container = styled.div`
 `;
 
 const Link = styled.a`
-  :hover{
+  :hover {
     text-decoration: underline;
     cursor: pointer;
   }
@@ -108,7 +110,9 @@ const Bar = styled.div`
   widht: 100%;
   height: 10px;
   background: ${(props) => {
-    return `linear-gradient(to left, ${props.theme.bgDark} ${100 - props.width}%,
+    return `linear-gradient(to left, ${props.theme.bgDark} ${
+      100 - props.width
+    }%,
       ${props.theme.graph} ${100 - props.width}%)`;
   }};
 `;
