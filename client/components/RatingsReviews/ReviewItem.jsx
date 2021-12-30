@@ -2,23 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from '../Shared/Modal';
 import { Stars } from '../Shared/Stars';
-
+import { Highlighter } from '../Shared/Highlighter';
 import { MarkHelpfulReport } from './MarkHelpfulReport';
 
 //TODO - add some better date parsing logic
-
-const Highlighter = ({ string, query }) => {
-  if (query.length === 0) {
-    return <span>{string}</span>;
-  }
-  let arr = string.split(new RegExp(query, 'i'));
-  return arr.map((chunk, i) => (
-    <span key={i}>
-      {chunk}
-      {i !== arr.length - 1 ? <span className='highlighted'>{query}</span> : <></>}
-    </span>
-  ));
-};
 
 const ReviewItem = ({ review, product, keyword }) => {
   const [showing, setShowing] = useState(false);
@@ -49,7 +36,7 @@ const ReviewItem = ({ review, product, keyword }) => {
           </h1>
         </Text>
         <Text>
-          <Highlighter string={review.body} query={[keyword]} />
+          <Highlighter string={review.body} query={keyword} />
         </Text>
         {review.recommend === true && (
           <Text>
