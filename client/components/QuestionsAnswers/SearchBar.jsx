@@ -6,24 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.searchInput = this.searchInput.bind(this);
 
-    this.state = {
-      searchText: ''
-    };
-  }
-
-  searchInput(e) {
-    this.setState({
-      searchText: e.target.value
-    });
   }
 
   render() {
     return (
       <div>
-        <h1>Questions & Answers</h1>
-        <SearchBox type='search' placeholder='Have a question? Search for answers...' onChange={this.searchInput}></SearchBox>
+        <SearchBox type='search' placeholder='Have a question? Search for answers...' onChange={this.props.searchInput}></SearchBox>
         <SearchButton type='submit'><FontAwesomeIcon icon={faSearch} /></SearchButton>
       </div>
     );
@@ -32,6 +21,7 @@ class SearchBar extends React.Component {
 
 const Container = styled.div`
   display: inline-block;
+  color: ${(props) => props.theme.textLight};
 `;
 
 const SearchBox = styled.input`
