@@ -4,7 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Modal = ({ children, onClose, width = 50, height = 50 }) => {
-  const [z, setZ] = useState(10);
+  const [z, setZ] = useState(100000);
 
   useEffect(() => {
     setZ(z - 1);
