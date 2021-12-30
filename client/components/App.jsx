@@ -28,20 +28,18 @@ class App extends Component {
 
   componentDidMount() {
     api.getProducts({ count: 20 }).then((products) => {
-      api
-        .getProductData({ product_id: products[0].id })
-        .then((currentProduct) => {
-          api
-            .getReviewData({
-              product_id: products[0].id,
-              page: 1,
-              count: 100,
-              sort: 'newest',
-            })
-            .then((reviewData) => {
-              this.setState({ products, currentProduct, reviewData });
-            });
-        });
+      api.getProductData({ product_id: products[0].id }).then((currentProduct) => {
+        api
+          .getReviewData({
+            product_id: products[0].id,
+            page: 1,
+            count: 100,
+            sort: 'newest',
+          })
+          .then((reviewData) => {
+            this.setState({ products, currentProduct, reviewData });
+          });
+      });
     });
   }
 
@@ -67,14 +65,8 @@ class App extends Component {
           updateProduct={(id) => this.updateProduct(id)}
         />
         <Container>
-          <ProductDetail
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
-          <RelatedItems
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
+          <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          <RelatedItems product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}

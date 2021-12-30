@@ -13,7 +13,7 @@ const Ratings = ({ data, updateFilter, filters }) => {
   const { recommended, ratings } = data;
   const displayRatings = ratingPercentages(ratings);
   const displayTotalRating = totalRating(ratings);
-  const displayRecommended = recommendedPercentage(recommended);
+  const displayRecommended = Math.round(100 * recommendedPercentage(recommended)) + '%';
   const displayFilterText = filtersToText(filters);
 
   return (
@@ -29,9 +29,7 @@ const Ratings = ({ data, updateFilter, filters }) => {
           <tbody>
             {displayRatings.map((v, k) => (
               <tr key={k}>
-                <th onClick={() => updateFilter(getNewFilters(filters, 5 - k))}>
-                  {5 - k} Stars
-                </th>
+                <th onClick={() => updateFilter(getNewFilters(filters, 5 - k))}>{5 - k} Stars</th>
                 <td>
                   <Bar width={v} />
                 </td>
@@ -43,9 +41,7 @@ const Ratings = ({ data, updateFilter, filters }) => {
           <p>
             {displayFilterText}
             {' | '}
-            <Link onClick={() => updateFilter(getNewFilters(filters, -1))}>
-              Remove Filters
-            </Link>
+            <Link onClick={() => updateFilter(getNewFilters(filters, -1))}>Remove Filters</Link>
           </p>
         )}
       </TableContainer>
@@ -110,9 +106,7 @@ const Bar = styled.div`
   widht: 100%;
   height: 10px;
   background: ${(props) => {
-    return `linear-gradient(to left, ${props.theme.bgDark} ${
-      100 - props.width
-    }%,
+    return `linear-gradient(to left, ${props.theme.bgDark} ${100 - props.width}%,
       ${props.theme.graph} ${100 - props.width}%)`;
   }};
 `;

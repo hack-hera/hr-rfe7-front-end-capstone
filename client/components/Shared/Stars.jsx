@@ -58,18 +58,22 @@ const Container = styled.div`
 
 const Empty = styled.path`
   fill: ${(props) => props.theme.bgDark};
+  stroke: ${(props) => props.theme.bgDark};
+  stroke-width: 3;
+  stroke-linejoin: round;
 `;
 
 const Filled = styled.path`
-  fill: ${(props) => props.theme.graph}; ;
+  fill: ${(props) => props.theme.graph};
+  stroke: ${(props) => props.theme.graph};
+  stroke-width: 3;
+  stroke-linejoin: round;
 `;
 
 const Star = ({ amount = 25, size = 24 }) => (
   <svg version='1.1' viewBox='0.0 0.0 240.0 240.0' width={size} height={size}>
     <Empty d='m16.0 96.0l64.0 -16.0l40.0 -64.0l37.713913 65.32021l66.28609 14.679787l-40.0 48.0l8.0 80.0l-72.0 -32.0l-72.0 32.0l8.0 -80.0z' />
-    {amount === 0.25 && (
-      <Filled d='m16.0 96.0l64.0 -16.0l0 128.0l-32.0 16.0l8.0 -80.0z' />
-    )}
+    {amount === 0.25 && <Filled d='m16.0 96.0l64.0 -16.0l0 128.0l-32.0 16.0l8.0 -80.0z' />}
     {amount === 0.5 && (
       <Filled d='m16.0 96.0l64.0 -16.0l40.0 -64.0l0 176.0l-72.0 32.0l8.0 -80.0z' />
     )}

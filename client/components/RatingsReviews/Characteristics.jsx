@@ -45,7 +45,7 @@ const Bar = styled.div`
   background: linear-gradient(
     90deg,
     ${(props) => props.theme.bgDark} 90%,
-    ${(props) => props.theme.bg} 90%
+    ${(props) => props.theme.bgLight} 90%
   );
   background-repeat: repeat-x;
   background-size: 35%;
