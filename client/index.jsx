@@ -4,8 +4,8 @@ import App from './components/App.jsx';
 import ClickHandler from './components/Shared/ClickHandler';
 
 ReactDOM.render(
-  <ClickHandler>
-    <App />
-  </ClickHandler>,
+  // <ClickHandler>
+  <App />,
+  // </ClickHandler>
   document.getElementById('root')
 );

@@ -16,7 +16,10 @@ const ReviewItem = ({ review, product, keyword }) => {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
+    timeZone: 'UTC',
   });
+
+  console.log(review.date);
 
   return (
     <Container>
