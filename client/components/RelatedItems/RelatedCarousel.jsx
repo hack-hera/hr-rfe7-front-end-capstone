@@ -38,7 +38,7 @@ const RelatedCarousel = (props) => {
         }
         <CarouselWrapper>
           <CarouselContent
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
           >
             {props.relatedItems.map((item, i) => {
               return (
@@ -68,12 +68,14 @@ const CarouselComponent = styled.div`
 width: 100%;
 display: flex;
 flex-direction: column;
+align-items: center;
 `;
 
 const CarouselContainer = styled.div`
 display: flex;
 width: 100%;
 position: relative;
+justify-content: center;
 `;
 
 const CarouselWrapper = styled.div`
@@ -85,6 +87,9 @@ height: 100%;
 const CarouselContent = styled.div`
 display: flex;
 transition: all 250ms linear;
+width: calc(100%/2);
+padding: 5px;
+margin: 0px 10px;
 `;
 
 const LeftButton = styled.div`
@@ -92,9 +97,10 @@ position: absolute;
 z-index: 1;
 top: 50%;
 transform: translateY(-50%);
-width: 48px;
-height: 48px;
-left: 24px;
+width: 100px;
+height: 100%;
+left: 0px;
+background-image: linear-gradient(to left, rgba(255,0,0,1), rgba(255,0,0,1));
 `;
 
 const RightButton = styled.div`
@@ -102,9 +108,10 @@ position: absolute;
 z-index: 1;
 top: 50%;
 transform: translateY(-50%);
-width: 48px;
-height: 48px;
-right: 24px;
+width: 100px;
+height: 100%;
+right: 0px;
+background-image: linear-gradient(to right, rgba(255,0,0,1), rgba(255,0,0,1));
 `;
 
 export default RelatedCarousel;

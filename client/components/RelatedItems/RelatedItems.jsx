@@ -86,7 +86,9 @@ const Header = styled.div`
 `;
 
 const Container = styled.div`
-  color: ${COLORS.hover};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export default RelatedItems;

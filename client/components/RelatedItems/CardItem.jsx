@@ -49,7 +49,6 @@ var CardItem = (props) => {
 };
 
 const Container = styled.div`
-  margin: 10px 0px 20px 0px;
   padding: 0px 10px 10px 10px;
   border: 1px solid ${(props) => props.theme.bgDark};
 `;
