@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App.jsx';
-
-const ClickHandler = ({ children }) => {
-  let log = (e) => {
-    let element = e.target;
-    console.log(element);
-  };
-  return <div onClick={(e) => log(e)}>{children}</div>;
-};
+import ClickHandler from './components/Shared/ClickHandler';
 
 ReactDOM.render(
   <ClickHandler>

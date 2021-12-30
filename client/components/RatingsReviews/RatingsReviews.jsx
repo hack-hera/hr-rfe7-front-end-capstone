@@ -31,7 +31,7 @@ const RatingsReviews = ({ data, product, fetch }) => {
           }}
         />
       )}
-      <h3 data-id='Ratings and Reviews'>Ratings and Reviews</h3>
+      <h3>Ratings and Reviews</h3>
       <MainContainer>
         <LeftContainer>
           <Ratings data={data} updateFilter={setFilters} filters={filters} />

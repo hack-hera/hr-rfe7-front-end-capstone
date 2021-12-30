@@ -6,7 +6,7 @@ import { ProductDetail } from './ProductDetail';
 import { QuestionsAnswers } from './QuestionsAnswers';
 import { RatingsReviews } from './RatingsReviews';
 import { RelatedItems } from './RelatedItems';
-import { Header } from './Header';
+import { Header } from './Header/Header';
 import api from '../api';
 
 class App extends Component {

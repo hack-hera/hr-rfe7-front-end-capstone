@@ -1,5 +1,5 @@
 import React from 'react';
-import { COLORS, THEMES } from '../settings/colors';
+import { THEMES } from '../../settings/colors';
 import styled from 'styled-components';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,10 +17,7 @@ export const Header = ({ product, products, updateProduct, toggleColors }) => {
         </h1>
       </div>
       <div>
-        <select
-          defaultValue={product.id}
-          onChange={(e) => updateProduct(e.target.value)}
-        >
+        <select defaultValue={product.id} onChange={(e) => updateProduct(e.target.value)}>
           {products.map((x, i) => (
             <option key={x.id} value={x.id}>
               {x.id} - {x.name}
