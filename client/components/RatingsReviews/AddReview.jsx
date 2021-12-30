@@ -6,11 +6,7 @@ import api from '../../api';
 import { Modal } from '../Shared/Modal';
 import { Input, Dropdown, Button, Textarea } from '../Shared/Form';
 import { Stars, StarForm } from '../Shared/Stars';
-import {
-  RecommendForm,
-  CharacteristicsForm,
-  AddImages,
-} from './FormComponents';
+import { RecommendForm, CharacteristicsForm, AddImages } from './FormComponents';
 import { validateReviewForm } from '../../lib/formValidation';
 
 const lorem = new LoremIpsum({
@@ -29,17 +25,11 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
   let [fading, setFading] = useState(false);
   let [formData, setFormData] = useState({
     product_id: product.id,
-    rating: 3,
-    recommend: false,
-    characteristics: { 125031: 3, 125032: 4 },
     email: 'asieke@gmail.com',
     name: 'siekechu',
     summary: lorem.generateSentences(1),
     body: lorem.generateSentences(8),
-    photos: [
-      'https://cdn.pixabay.com/photo/2020/12/01/10/04/dog-5793625__480.jpg',
-      'https://cdn.pixabay.com/photo/2021/12/09/20/58/christmas-cookies-6859116__340.jpg',
-    ],
+    photos: [],
   });
 
   let [errors, setErrors] = useState({});
@@ -60,8 +50,7 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
         .catch((err) => {
           setErrors({
             ...currentErrors,
-            global:
-              'There was an error submitting your review, please try again',
+            global: 'There was an error submitting your review, please try again',
           });
         });
     } else {
@@ -75,9 +64,7 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
     <Container fade={fading}>
       <Modal onClose={onClose} width={60} height={90}>
         {submitted ? (
-          <Submitted>
-            Thanks for your review! You are an awesome customer 😀
-          </Submitted>
+          <Submitted>Thanks for your review! You are an awesome customer 😀</Submitted>
         ) : (
           <Form>
             <Header>Add a Review for {product.name}</Header>
@@ -123,10 +110,7 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
               />
             </Field>
             <Label>
-              Summary{' '}
-              {summary.length < 20 && (
-                <>{20 - summary.length} characters needed</>
-              )}
+              Summary {summary.length < 20 && <>{20 - summary.length} characters needed</>}
               {summary.length >= 20 && summary.length < 60 && (
                 <>{60 - summary.length} characters remaining</>
               )}
@@ -138,14 +122,11 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
               maxLength={60}
               style={{ width: '50%' }}
               onFocus={() => setErrors({ ...errors, summary: '' })}
-              onChange={(e) =>
-                setFormData({ ...formData, summary: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
             />
 
             <Label>
-              Review:{' '}
-              {body.length < 50 && <>{50 - body.length} characters needed</>}
+              Review: {body.length < 50 && <>{50 - body.length} characters needed</>}
               {body.length >= 50 && body.length < 1000 && (
                 <>{1000 - body.length} characters remaining</>
               )}
@@ -154,9 +135,7 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
             <Textarea
               onFocus={() => setErrors({ ...errors, body: '' })}
               value={formData.body}
-              onChange={(e) =>
-                setFormData({ ...formData, body: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, body: e.target.value })}
             />
             <Label>Add Images</Label>
             <AddImages formData={formData} setFormData={setFormData} />
@@ -170,13 +149,9 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
               maxLength={60}
               style={{ width: '50%' }}
               onFocus={() => setErrors({ ...errors, name: '' })}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
-            <Note>
-              For privacy reasons, do not use your full name or email address
-            </Note>
+            <Note>For privacy reasons, do not use your full name or email address</Note>
             <Label>
               Your email (mandatory)
               <Error>{errors.email || ''}</Error>
@@ -186,9 +161,7 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
               maxLength={60}
               style={{ width: '50%' }}
               onFocus={() => setErrors({ ...errors, email: '' })}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
             <Note>For authentication reasons, you will not be emailed</Note>
 
@@ -228,11 +201,12 @@ const Submitted = styled.div`
 `;
 
 const Form = styled.div`
-  height: 100%;
-  width: 100%;
+  height: calc(100%-60px);
+  width: calc(100%-60px);
   overflow: auto;
   overflow-x: hidden;
   padding: 30px;
+  margin: 0px;
   background-color: ${(props) => props.theme.bgLight};
 
   textarea {
@@ -290,7 +264,7 @@ const Field = styled.div`
   font-size: 0.9em;
   color: ${(props) => props.theme.textLight};
   table {
-    width: calc(100% - 80px);
+    width: calc(100%);
     border-collapse: collapse;
     font-size: 0.8em;
     color: ${(props) => props.theme.textLight};
