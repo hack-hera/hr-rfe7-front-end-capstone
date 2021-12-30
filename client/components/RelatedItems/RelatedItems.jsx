@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { COLORS } from '../../settings/colors';
 import styled from 'styled-components';
-import RelatedItemsList from './RelatedItemsList.jsx';
+import RelatedCarousel from './RelatedCarousel.jsx';
 import YourOutfitList from './YourOutfitList.jsx';
 import api from '../../api.js';
 
@@ -39,10 +39,8 @@ class RelatedItems extends Component {
 
 
   // after api.getRelatedProducts get and add pictures then get and add rating info
-  addToOutfit(clickedProductId) {
-    // figure out where to save current outfit list even on refreshes
-    // make get request with that product ID
-    // push result into outfit array
+  addToOutfit() {
+    this.state.outfitData.push(this.state.currentProduct);
   }
 
   removeFromOutfit(clickedProductId) {
@@ -55,7 +53,7 @@ class RelatedItems extends Component {
     return (
       <Container>
         <Header>RelatedItems</Header>
-        <RelatedItemsList
+        <RelatedCarousel
           relatedItems={this.state.relatedItems}
           addOutfit={this.addToOutfit.bind(this)}
         />
