@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import api from '../../api.js';
 import QuestionList from './QuestionList.jsx';
+import SearchBar from './SearchBar.jsx';
 
 
 
@@ -16,7 +17,6 @@ class QuestionsAnswers extends React.Component {
       questionsShow: 2,
       answersShow: 2,
       questions: [],
-      answers: [],
       answeredQuestionShow: 0,
       answeredQuestion: []
     };
@@ -41,9 +41,7 @@ class QuestionsAnswers extends React.Component {
 
     return (
       <div>
-        <h1>Questions & Answers</h1>
-        <input type='text' placeholder='Enter your question here'></input>
-        <button><FontAwesomeIcon icon={faSearch} /></button>
+        <SearchBar/>
         <div>
           <QuestionList
             questions={questions}
