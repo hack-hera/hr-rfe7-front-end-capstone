@@ -11,11 +11,12 @@ import { MarkHelpfulReport } from './MarkHelpfulReport';
 const ReviewItem = ({ review, product, keyword }) => {
   const [showing, setShowing] = useState(false);
   const [url, setUrl] = useState();
+  const [dimensions, setDimensions] = useState([50, 70]);
 
   return (
     <Container>
       {showing === true && (
-        <Modal width={50} height={60} onClose={() => setShowing(false)}>
+        <Modal width={dimensions[0]} height={dimensions[1]} onClose={() => setShowing(false)}>
           <ModalImage>
             <img src={url} />
           </ModalImage>
@@ -63,9 +64,15 @@ const ReviewItem = ({ review, product, keyword }) => {
             <img
               key={i}
               src={p.url}
-              onClick={() => {
+              onClick={(e) => {
                 setUrl(p.url);
                 setShowing(true);
+
+                let x =
+                  (80 * window.innerHeight * e.target.width) /
+                  (window.innerWidth * e.target.height);
+                console.log(x);
+                setDimensions([x, 80]);
               }}
             />
           ))}
@@ -138,8 +145,8 @@ const ModalImage = styled.div`
   width: 100%;
   height: 100%;
   img {
-    max-height: 100%;
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
   }
 `;
 
