@@ -29,6 +29,7 @@ const Container = styled.div`
 `;
 
 const CloseButton = styled.button`
+  color: ${(props) => props.theme.textDark};
   position: absolute;
   top: 0px;
   right: 0px;
