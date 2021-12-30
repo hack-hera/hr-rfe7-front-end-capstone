@@ -105,9 +105,9 @@ export const AddImages = ({ formData, setFormData }) => {
   return (
     <ImageContainer>
       {photos.map((url, i) => (
-        <ImageRemove>
+        <ImageRemove key={i}>
           <div>x</div>
-          <img key={i} src={url} />
+          <img src={url} />
         </ImageRemove>
       ))}
       {photos.length < 5 && <ImageButton onClick={getNewUrl}>+</ImageButton>}
@@ -146,8 +146,6 @@ const ImageButton = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 4px;
-  text-align: center;
-  line-height: 80px;
   color: ${(props) => props.theme.bgDark};
   font-size: 30px;
   border: 2px dotted ${(props) => props.theme.bgDark};
