@@ -17,11 +17,10 @@ export const Modal = ({ children, onClose, width = 50, height = 50 }) => {
 const Container = styled.div`
   position: fixed;
   z-index: 1;
-  padding: 20px;
-  width: calc(${(props) => props.width}% - 40px);
-  height: calc(${(props) => props.height}% - 40px);
-  left: calc(${(props) => (100 - props.width) / 2}% - 20px);
-  top: calc(${(props) => Math.min(10, (100 - props.height) / 2)}% - 20px);
+  width: ${(props) => props.width}%;
+  height: ${(props) => props.height}%;
+  left: ${(props) => (100 - props.width) / 2}%;
+  top: ${(props) => Math.min(10, (100 - props.height) / 2)}%;
   overflow: auto;
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -30,6 +29,7 @@ const Container = styled.div`
 
 const CloseButton = styled.button`
   color: ${(props) => props.theme.textDark};
+  -webkit-text-stroke: 1px ${(props) => props.theme.textInv};
   position: absolute;
   top: 0px;
   right: 0px;
@@ -39,4 +39,7 @@ const CloseButton = styled.button`
   background-color: transparent;
   border: 0px;
   cursor: pointer;
+  :hover {
+    color: ${(props) => props.theme.textLight};
+  }
 `;

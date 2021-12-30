@@ -1,14 +1,14 @@
 //Returns the recommended percentage based on an object that contains {true: x, false: y}
 export const recommendedPercentage = (recommended) => {
-  if (!recommended.true || !recommended.false) {
-    return '0%';
+  if (!recommended) {
+    return 0;
   }
-  let t = parseInt(recommended.true);
-  let f = parseInt(recommended.false);
+  let t = parseInt(recommended.true || 0);
+  let f = parseInt(recommended.false || 0);
   if (t + f === 0) {
-    return '0%';
+    return 0;
   }
-  return Math.floor((100 * t) / (t + f)) + '%';
+  return t / (t + f);
 };
 
 //Given an object with 5 ratins, returns the relative percentages e.g.

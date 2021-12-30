@@ -27,12 +27,12 @@ export const THEMES = {
   },
 
   darkMode: {
-    bg: '#2d3436',
+    bg: '#202527',
     bgLight: '#2d3436',
     bgDark: '#141718',
     bgNav: '#141718',
     graph: '#4a3f9e',
-    error: '#a29bfe',
+    error: '#c0392b',
     success: '#27ae60',
     warning: '#f1c40f',
     button: '#2980b9',
