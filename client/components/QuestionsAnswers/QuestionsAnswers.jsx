@@ -18,8 +18,13 @@ class QuestionsAnswers extends React.Component {
       answersShow: 2,
       questions: [],
       answeredQuestionShow: 0,
-      answeredQuestion: []
+      answeredQuestion: [],
+      searchText: '',
+      searchQuestions: [],
+      answeredSearchQuestion: []
     };
+
+    this.searchInput = this.searchInput.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -31,17 +36,23 @@ class QuestionsAnswers extends React.Component {
           answeredQuestion: res.results.slice(2).filter(question => question.answers !== undefined)
         });
       });
-
-
     }
   }
 
+  searchInput(e) {
+    this.setState({
+      searchText: e.target.value,
+      searchQuestions: this.state.questions.filter(question => question.question_body.toLowerCase().indexOf(e.target.value) !== -1),
+      answeredSearchQuestion: this.state.searchQuestions.slice(2).filter(question => question.answers !== undefined)
+    });
+  }
+
   render() {
-    const {questionsShow, answeredQuestionShow, answersShow, questions, answers, answeredQuestion} = this.state;
+    const {questionsShow, answeredQuestionShow, answersShow, questions, answeredQuestion, searchText, searchQuestions, answeredSearchQuestion} = this.state;
 
     return (
       <div>
-        <SearchBar/>
+        <SearchBar searchInput={this.searchInput}/>
         <div>
           <QuestionList
             questions={questions}
@@ -51,13 +62,15 @@ class QuestionsAnswers extends React.Component {
             answeredQuestion={answeredQuestion}
             showMoreA={() => this.setState({answersShow: answersShow + 2})}
             showMoreQ={() => this.setState({answeredQuestionShow: answeredQuestionShow + 2})}
+            searchText={searchText}
+            searchQuestions={searchQuestions}
+            answeredSearchQuestion={answeredSearchQuestion}
           />
         </div>
       </div>
     );
   }
 }
-
 
 
 
