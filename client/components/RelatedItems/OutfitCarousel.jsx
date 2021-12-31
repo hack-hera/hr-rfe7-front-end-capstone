@@ -10,6 +10,7 @@ var OutfitCarousel = (props) => {
           <CarouselContent>
             <CardItem
               firstCard={true}
+              add={props.addOutfit}
             />
             {props.outfitData.map((item, i) => {
               return (

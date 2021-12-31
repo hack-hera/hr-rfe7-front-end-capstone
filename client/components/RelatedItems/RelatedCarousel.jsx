@@ -48,6 +48,7 @@ const RelatedCarousel = (props) => {
                   inOutfit={false}
                   add={props.addOutfit}
                   currentProduct={props.currentProduct}
+                  updateCurrent={props.update}
                 />
               );
             })}

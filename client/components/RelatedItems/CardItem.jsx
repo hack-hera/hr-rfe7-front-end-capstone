@@ -6,6 +6,8 @@ import XButton from './XButton.jsx';
 import StarButton from './StarButton.jsx';
 import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 var CardItem = (props) => {
   const [showing, setShowing] = useState(false);
@@ -25,8 +27,12 @@ var CardItem = (props) => {
     return (
       <Container>
         <AddCard>
-          <h1>Add item to your outfit</h1>
-          <div>Icon</div>
+          <AddTitle>
+            Add item to your outfit
+          </AddTitle>
+          <AddButton>
+            <FontAwesomeIcon icon={faPlusCircle} onClick={props.add} />
+          </AddButton>
         </AddCard>
       </Container>
     );
@@ -40,6 +46,10 @@ var CardItem = (props) => {
     pictureSrc = 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg';
   }
 
+  const updateCurrentProduct = () => {
+    props.updateCurrent(props.item.id);
+  };
+
   return (
     <Container>
       {showing === true && (
@@ -52,14 +62,16 @@ var CardItem = (props) => {
         </Modal>
       )}
       <PictureContainer>
-        <Picture>
+        <Picture onClick={updateCurrentProduct}>
           <img src={pictureSrc} />
         </Picture>
         {button}
       </PictureContainer>
 
       <Category>{props.item.category}</Category>
-      <Name>{props.item.name}</Name>
+      <Name onClick={updateCurrentProduct}>
+        {props.item.name}
+      </Name>
       <Price>${props.item.default_price}</Price>
       <Stars />
     </Container>
@@ -110,6 +122,14 @@ const Button = styled.div`
 
 const AddCard = styled.div`
 border: 1px solid ${(props) => props.theme.bgDark};
+`;
+
+const AddTitle = styled.div`
+
+`;
+
+const AddButton = styled.div`
+
 `;
 
 export default CardItem;

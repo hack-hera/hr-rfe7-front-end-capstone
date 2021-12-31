@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import RelatedCarousel from './RelatedCarousel.jsx';
 import OutfitCarousel from './OutfitCarousel.jsx';
 import api from '../../api.js';
+import ls from 'local-storage';
 
 class RelatedItems extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class RelatedItems extends Component {
     }
     console.log('this is relatedItems', this.state.relatedItems);
     console.log('this is currentProduct', this.props.product);
+    console.log('this is from app', this.props.state);
   }
 
   getRelatedProducts(product) {
@@ -41,7 +43,8 @@ class RelatedItems extends Component {
 
   // after api.getRelatedProducts get and add pictures then get and add rating info
   addToOutfit() {
-    this.state.outfitData.push(this.state.currentProduct);
+    this.state.outfitData.push(this.props.product);
+    console.log(this.state.outfitData);
   }
 
   removeFromOutfit(clickedProductId) {
@@ -56,13 +59,14 @@ class RelatedItems extends Component {
         <Header>RelatedItems</Header>
         <RelatedCarousel
           relatedItems={this.state.relatedItems}
-          addOutfit={this.addToOutfit.bind(this)}
           currentProduct={this.state.currentProduct}
+          update={this.props.updateProduct}
         />
         <Header>YourOutfit</Header>
         <OutfitCarousel
           outfitData={this.state.outfitData}
           removeItem={this.removeFromOutfit.bind(this)}
+          addOutfit={this.addToOutfit.bind(this)}
           currentProduct={this.state.currentProduct}
         />
       </Container>
