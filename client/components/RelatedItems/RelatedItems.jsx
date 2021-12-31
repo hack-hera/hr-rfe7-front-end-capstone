@@ -23,6 +23,7 @@ class RelatedItems extends Component {
       this.getRelatedProducts({ product_id: id });
     }
     console.log('this is relatedItems', this.state.relatedItems);
+    console.log('this is currentProduct', this.props.product);
   }
 
   getRelatedProducts(product) {
@@ -56,11 +57,13 @@ class RelatedItems extends Component {
         <RelatedCarousel
           relatedItems={this.state.relatedItems}
           addOutfit={this.addToOutfit.bind(this)}
+          currentProduct={this.state.currentProduct}
         />
         <Header>YourOutfit</Header>
         <OutfitCarousel
           outfitData={this.state.outfitData}
           removeItem={this.removeFromOutfit.bind(this)}
+          currentProduct={this.state.currentProduct}
         />
       </Container>
     );

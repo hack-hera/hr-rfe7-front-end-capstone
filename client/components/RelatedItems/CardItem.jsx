@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { COLORS } from '../../settings/colors';
 import styled from 'styled-components';
 import { Stars } from '../Shared/Stars.jsx';
 import XButton from './XButton.jsx';
 import StarButton from './StarButton.jsx';
+import CompareModal from './CompareModal.jsx';
+import { Modal } from '../Shared/Modal.jsx';
 
 var CardItem = (props) => {
+  const [showing, setShowing] = useState(false);
+
+  const compare = () => {
+    setShowing(true);
+  };
+
   let button;
   if (!props.inOutfit) {
-    button = <StarButton onClick={props.add} />;
+    button = <StarButton onClick={compare} />;
   } else {
     button = <XButton onClick={props.remove} />;
   }
@@ -34,13 +42,20 @@ var CardItem = (props) => {
 
   return (
     <Container>
+      {showing === true && (
+        <Modal
+          onClose={() => setShowing(false)}>
+          <CompareModal
+            related={props.item}
+            current={props.currentProduct}
+          />
+        </Modal>
+      )}
       <PictureContainer>
         <Picture>
           <img src={pictureSrc} />
         </Picture>
-        <Button>
-          {button}
-        </Button>
+        {button}
       </PictureContainer>
 
       <Category>{props.item.category}</Category>
@@ -56,8 +71,8 @@ const Container = styled.div`
   margin: 10px 0px;
   width: 180px;
   height: 250px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   border: 1px solid ${(props) => props.theme.bgDark};
 `;
 
