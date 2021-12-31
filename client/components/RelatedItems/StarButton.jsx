@@ -4,6 +4,7 @@ var StarButton = (props) => {
   return (
     <button>
       {/* star icon */}
+      Star
     </button>
   );
 };

@@ -16,7 +16,10 @@ var CardItem = (props) => {
   if (props.firstCard) {
     return (
       <Container>
-        <AddCard>Add to Your Outfit</AddCard>
+        <AddCard>
+          <h1>Add item to your outfit</h1>
+          <div>Icon</div>
+        </AddCard>
       </Container>
     );
   }
@@ -42,7 +45,7 @@ var CardItem = (props) => {
 
       <Category>{props.item.category}</Category>
       <Name>{props.item.name}</Name>
-      <Price>{props.item.default_price}</Price>
+      <Price>${props.item.default_price}</Price>
       <Stars />
     </Container>
   );
@@ -50,19 +53,26 @@ var CardItem = (props) => {
 
 const Container = styled.div`
   padding: 0px 10px 10px 10px;
+  margin: 10px 0px;
+  width: 180px;
+  height: 250px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   border: 1px solid ${(props) => props.theme.bgDark};
 `;
 
 const Category = styled.div`
-  border: 1px solid ${(props) => props.theme.bgDark};
+  grid-column
+  font-size: 12px;
 `;
 
 const Name = styled.div`
-  border: 1px solid ${(props) => props.theme.bgDark};
+  font-size: 14px;
+  font-weight: bold;
 `;
 
 const Price = styled.div`
-  border: 1px solid ${(props) => props.theme.bgDark};
+  font-size: 12px;
 `;
 
 const PictureContainer = styled.div`

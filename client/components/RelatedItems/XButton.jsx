@@ -4,6 +4,7 @@ var XButton = (props) => {
   return (
     <button >
       {/* X icon */}
+      X
     </button>
   );
 };

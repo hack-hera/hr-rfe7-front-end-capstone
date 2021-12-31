@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { COLORS } from '../../settings/colors';
 import styled from 'styled-components';
 import RelatedCarousel from './RelatedCarousel.jsx';
-import YourOutfitList from './YourOutfitList.jsx';
+import OutfitCarousel from './OutfitCarousel.jsx';
 import api from '../../api.js';
 
 class RelatedItems extends Component {
@@ -58,7 +58,7 @@ class RelatedItems extends Component {
           addOutfit={this.addToOutfit.bind(this)}
         />
         <Header>YourOutfit</Header>
-        <YourOutfitList
+        <OutfitCarousel
           outfitData={this.state.outfitData}
           removeItem={this.removeFromOutfit.bind(this)}
         />

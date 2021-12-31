@@ -89,7 +89,6 @@ display: flex;
 transition: all 250ms linear;
 width: calc(100%/2);
 padding: 5px;
-margin: 0px 10px;
 `;
 
 const LeftButton = styled.div`
@@ -100,7 +99,7 @@ transform: translateY(-50%);
 width: 100px;
 height: 100%;
 left: 0px;
-background-image: linear-gradient(to left, rgba(255,0,0,1), rgba(255,0,0,1));
+background-image: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,1));
 `;
 
 const RightButton = styled.div`
@@ -111,7 +110,7 @@ transform: translateY(-50%);
 width: 100px;
 height: 100%;
 right: 0px;
-background-image: linear-gradient(to right, rgba(255,0,0,1), rgba(255,0,0,1));
+background-image: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1));
 `;
 
 export default RelatedCarousel;
