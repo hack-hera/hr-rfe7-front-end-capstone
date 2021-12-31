@@ -22,10 +22,12 @@ class RelatedItems extends Component {
     const { id } = this.props.product;
     if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       this.getRelatedProducts({ product_id: id });
+      this.getOutfit();
     }
-    console.log('this is relatedItems', this.state.relatedItems);
-    console.log('this is currentProduct', this.props.product);
-    console.log('this is from app', this.props.state);
+    // console.log('this is relatedItems', this.state.relatedItems);
+    // console.log('this is currentProduct', this.props.product);
+    // console.log('this is from app', this.props.state);
+    console.log('this is outfitdata', this.state.outfitData);
   }
 
   getRelatedProducts(product) {
@@ -40,17 +42,33 @@ class RelatedItems extends Component {
       });
   }
 
+  getOutfit() {
+    let outfit = ls.get('myoutfit') || [];
+    this.setState({
+      outfitData: outfit
+    });
+  }
+
 
   // after api.getRelatedProducts get and add pictures then get and add rating info
   addToOutfit() {
-    this.state.outfitData.push(this.props.product);
-    console.log(this.state.outfitData);
+    let product = this.props.product;
+    let id = product.id;
+    let outfit = ls.get('myoutfit') || [];
+    if (outfit.length === 0) {
+      ls.set('myoutfit', [...outfit, product]);
+    } else {
+      let ids = outfit.reduce((items, current) => items.concat(current.id), []);
+      if (ids.indexOf(id) === -1) {
+        ls.set('myoutfit', [...outfit, product]);
+      }
+    }
+    this.getOutfit();
   }
 
   removeFromOutfit(clickedProductId) {
-    // i = index of clickedProductId
-    // array.splice(i, 1)
-    // and update in unchanged data
+    let outfit = ls.get('myoutfit') || [];
+    let removeId = clickedProductId;
   }
 
   render() {

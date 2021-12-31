@@ -106,7 +106,6 @@ const PictureContainer = styled.div`
   border: 1px solid ${(props) => props.theme.bgDark};
   display: flex;
   flex-direction: row;
-  margin-bottom: 8px;
 `;
 
 const Picture = styled.div`
@@ -121,15 +120,22 @@ const Button = styled.div`
 `;
 
 const AddCard = styled.div`
-border: 1px solid ${(props) => props.theme.bgDark};
+height: 150px;
+width: 150px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 `;
 
 const AddTitle = styled.div`
-
+font-size: 14px;
+font-weight: bold;
+text-align: center;
 `;
 
 const AddButton = styled.div`
-
+font-size: 100px;
 `;
 
 export default CardItem;
