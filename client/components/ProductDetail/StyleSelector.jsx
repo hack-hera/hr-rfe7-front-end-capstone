@@ -8,7 +8,9 @@ const StyleSelector = (props) => {
         <Thumbnail
           key={k}
           src={i.photos[0].thumbnail_url}
-          onClick={() => alert('show a modal! ' + i.url)}
+          onClick={() => {
+            props.changeStyle(i);
+          }}
         />
       ))}
     </Container>

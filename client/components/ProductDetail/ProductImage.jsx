@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Modal } from '../Shared/Modal.jsx';
 
 const ProductImage = (props) => {
+
   return (
     <Image
+      id = "image"
       src={props.selectedPhoto.url}
     />
   );
