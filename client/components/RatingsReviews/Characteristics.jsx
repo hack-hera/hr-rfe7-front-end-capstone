@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Characteristics = ({ meta }) => {
-
-  const { characteristics } = meta;
+const Characteristics = ({ data }) => {
+  const { characteristics } = data;
 
   return (
     <Container>
@@ -15,11 +14,12 @@ const Characteristics = ({ meta }) => {
 };
 
 const Graph = ({ name, value }) => {
+  value = Math.max(1.08, Math.min(4.92, value));
   return (
     <div>
       <p>{name}</p>
       <Bar>
-        <Arrow value={value / 5} />
+        <Arrow value={(value - 1) / 4} />
       </Bar>
       <Labels>
         <span>Too Small</span>
@@ -45,7 +45,7 @@ const Bar = styled.div`
   background: linear-gradient(
     90deg,
     ${(props) => props.theme.bgDark} 90%,
-    ${(props) => props.theme.bg} 90%
+    ${(props) => props.theme.bgLight} 90%
   );
   background-repeat: repeat-x;
   background-size: 35%;
@@ -63,13 +63,11 @@ const Labels = styled.div`
 const Arrow = styled.div`
   position: relative;
   height: 0px;
-  left: ${(props) => Math.floor(100 * props.value * 0.95)}%;
+  left: calc(${(props) => Math.floor(100 * props.value)}% - 6px);
   width: 0px;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 12px solid ${(props) => props.theme.graph};
 `;
-
-
 
 export default Characteristics;

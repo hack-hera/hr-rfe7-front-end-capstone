@@ -6,7 +6,7 @@ import { ProductDetail } from './ProductDetail';
 import { QuestionsAnswers } from './QuestionsAnswers';
 import { RatingsReviews } from './RatingsReviews';
 import { RelatedItems } from './RelatedItems';
-import { Header } from './Header';
+import { Header } from './Header/Header';
 import api from '../api';
 
 class App extends Component {
@@ -15,28 +15,51 @@ class App extends Component {
     this.state = {
       products: [],
       currentProduct: null,
+      reviewData: null,
+      darkMode: false,
     };
   }
 
+  fetchReviewData({ product_id, page = 1, count = 100, sort = 'newest' }) {
+    api.getReviewData({ product_id, page, count, sort }, false).then((res) => {
+      this.setState({ reviewData: res });
+    });
+  }
+
   componentDidMount() {
-    api.getProducts({ count: 20 }).then((res) => {
-      this.setState({ currentProduct: res[0], products: res });
-      this.updateProduct(res[0].id);
+    api.getProducts({ count: 20 }).then((products) => {
+      api.getProductData({ product_id: products[0].id }).then((currentProduct) => {
+        api
+          .getReviewData({
+            product_id: products[0].id,
+            page: 1,
+            count: 100,
+            sort: 'newest',
+          })
+          .then((reviewData) => {
+            this.setState({ products, currentProduct, reviewData });
+          });
+      });
     });
   }
 
   //Handler to update the main product
   updateProduct(id) {
-    api.getProduct({ product_id: id }).then((res) => {
-      this.setState({ currentProduct: res });
+    api.getProductData({ product_id: id }).then((currentProduct) => {
+      api
+        .getReviewData({ product_id: id, page: 1, count: 100, sort: 'newest' })
+        .then((reviewData) => {
+          this.setState({ currentProduct, reviewData });
+        });
     });
   }
 
   render() {
-    const { products, currentProduct } = this.state;
+    const { products, currentProduct, darkMode } = this.state;
     return (
-      <ThemeProvider theme={THEMES.default}>
+      <ThemeProvider theme={THEMES[darkMode ? 'darkMode' : 'default']}>
         <Header
+          toggleColors={() => this.setState({ darkMode: !darkMode })}
           products={products}
           product={currentProduct}
           updateProduct={(id) => this.updateProduct(id)}
@@ -48,7 +71,13 @@ class App extends Component {
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
           />
-          <RatingsReviews product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          {this.state.reviewData && (
+            <RatingsReviews
+              data={this.state.reviewData}
+              product={currentProduct}
+              fetch={(params) => this.fetchReviewData(params)}
+            />
+          )}
         </Container>
       </ThemeProvider>
     );
@@ -59,7 +88,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: ${(props) => props.theme.bg};
+  background-color: ${(props) => props.theme.bgLight};
 `;
 
 export default App;

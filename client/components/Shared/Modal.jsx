@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const Modal = ({ children, onClose, size = 50 }) => {
-  size = Math.max(10, Math.min(90, size));
+export const Modal = ({ children, onClose, width = 50, height = 50 }) => {
+  const [z, setZ] = useState(100000);
+
+  useEffect(() => {
+    setZ(z - 1);
+  }, [children]);
+
+  width = Math.max(10, Math.min(90, width));
+  height = Math.max(10, Math.min(90, height));
   return (
-    <Container size={size}>
+    <Container width={width} height={height} z={z}>
       <CloseButton onClick={onClose}>×</CloseButton>
       {children}
     </Container>
@@ -15,19 +22,20 @@ export const Modal = ({ children, onClose, size = 50 }) => {
 
 const Container = styled.div`
   position: fixed;
-  z-index: 1;
-  padding: 20px;
-  width: calc(${(props) => props.size}% - 40px);
-  height: calc(${(props) => props.size}% - 40px);
-  left: calc(${(props) => (100 - props.size) / 2}% - 20px);
-  top: calc(${(props) => Math.min(10, (100 - props.size) / 2)}% - 20px);
+  z-index: ${(props) => props.z};
+  width: ${(props) => props.width}%;
+  height: ${(props) => props.height}%;
+  left: ${(props) => (100 - props.width) / 2}%;
+  top: ${(props) => Math.min(10, (100 - props.height) / 2)}%;
   overflow: auto;
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  background-color: ${(props) => props.theme.bg};
+  background-color: ${(props) => props.theme.bgLight};
 `;
 
 const CloseButton = styled.button`
+  color: ${(props) => props.theme.textDark};
+  -webkit-text-stroke: 1px ${(props) => props.theme.textInv};
   position: absolute;
   top: 0px;
   right: 0px;
@@ -37,4 +45,7 @@ const CloseButton = styled.button`
   background-color: transparent;
   border: 0px;
   cursor: pointer;
+  :hover {
+    color: ${(props) => props.theme.textLight};
+  }
 `;
