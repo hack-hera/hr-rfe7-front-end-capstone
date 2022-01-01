@@ -208,9 +208,7 @@ const api = {
 
   addReview: function (params = {}) {
     if (Object.keys(params).length !== 9) {
-      return Promise.reject(
-        new Error('params must contain exactly 9 properties')
-      );
+      return Promise.reject(new Error('params must contain exactly 9 properties'));
     }
 
     const url = host + '/reviews';
@@ -303,16 +301,8 @@ const api = {
 
   addQuestion: function (params = {}) {
     const { body, name, email, product_id } = params;
-    if (
-      !body ||
-      !name ||
-      !email ||
-      !product_id ||
-      Object.keys(params).length !== 4
-    ) {
-      return Promise.reject(
-        new Error('params must contain only {body, name, email, product_id}')
-      );
+    if (!body || !name || !email || !product_id || Object.keys(params).length !== 4) {
+      return Promise.reject(new Error('params must contain only {body, name, email, product_id}'));
     }
 
     const url = host + '/qa/questions';
@@ -332,18 +322,9 @@ const api = {
 
   addAnswer: function (params = {}) {
     const { question_id, body, name, email, photos } = params;
-    if (
-      !question_id ||
-      !body ||
-      !name ||
-      !email ||
-      !photos ||
-      Object.keys(params).length !== 5
-    ) {
+    if (!question_id || !body || !name || !email || !photos || Object.keys(params).length !== 5) {
       return Promise.reject(
-        new Error(
-          'params must contain only {question_id, body, name, email, photos}'
-        )
+        new Error('params must contain only {question_id, body, name, email, photos}')
       );
     }
     let url = `${host}/qa/questions/${question_id}/answers`;
@@ -418,6 +399,21 @@ const api = {
   /******************************************************************************
    * Interactions
    ******************************************************************************/
+
+  // Parameter	Type	Description
+  // element	string	Required. Selector for the element which was clicked
+  // widget	string	Required. Name of the module/widget in which the click occured
+  // time	string	Required. Time the interaction occurred
+  // POST /interactions
+
+  logInteraction: function (params = {}) {
+    const { element, widget, time } = params;
+    let url = `${host}/interactions`;
+    return axios
+      .post(url, params, headers)
+      .then((res) => Promise.resolve(res))
+      .catch((err) => Promise.reject(new Error(err)));
+  },
 
   /******************************************************************************
    * SHOPPING CART

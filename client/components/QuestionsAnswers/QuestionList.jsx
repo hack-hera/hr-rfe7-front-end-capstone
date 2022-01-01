@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import AnswersList from './AnswersList.jsx';
 import { Button } from '../Shared/Form';
-import { MarkQuestionHelpfulAndReported } from './MarkHelpfulAndReported.jsx';
+import { sortedQuestion, QuestionBody } from './lib/dataFunctions.jsx';
+
 
 
 class QuestionList extends React.Component {
@@ -13,57 +14,73 @@ class QuestionList extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.props.questions.sort((a, b) => { return (a - b); } ).slice(0, this.props.questionsShow).map((question, i) => {
-          const answers = Object.values(question.answers);
-          return (
-            <div key={i}>
-              <QuestionBody><span>Q:{question.question_body}</span>
-                <AlignRight>Add Answer</AlignRight>
-                <MarkQuestionHelpfulAndReported question={question}/>
-              </QuestionBody>
-              <AnswersList
-                answers={answers}
-                answersShow={this.props.answersShow}
-                showMoreA={this.props.showMoreA}
-              />
-            </div>
-          );
-        })}
-        {this.props.answeredQuestion.sort(this.sortFunction).slice(0, this.props.answeredQuestionShow).map((question, i) => {
-          const answers = Object.values(question.answers);
-          return (
-            <div key={i}>
-              <QuestionBody><span>Q:{question.question_body}</span>
-                <AlignRight>Add Answer</AlignRight>
-                <MarkQuestionHelpfulAndReported question={question}/>
-              </QuestionBody>
-              <AnswersList
-                answers={answers}
-                answersShow={this.props.answersShow}
-                showMoreA={this.props.showMoreA}
-              />
-            </div>
-          );
-        })}
+      <Container>
+        {this.props.searchText.length < 3 && <div>
+          {this.props.questions.sort(sortedQuestion).slice(0, this.props.questionsShow).map((question, i) => {
+            const answers = Object.values(question.answers);
+            return (
+              <div key={i}>
+                <QuestionBody question={question}/>
+                <AnswersList
+                  answers={answers}
+                  answersShow={this.props.answersShow}
+                  showMoreA={this.props.showMoreA}
+                />
+              </div>
+            );
+          })}
+          {this.props.answeredQuestion.sort(sortedQuestion).slice(0, this.props.answeredQuestionShow).map((question, i) => {
+            const answers = Object.values(question.answers);
+            return (
+              <div key={i}>
+                <QuestionBody question={question}/>
+                <AnswersList
+                  answers={answers}
+                  answersShow={this.props.answersShow}
+                  showMoreA={this.props.showMoreA}
+                />
+              </div>
+            );
+          })}
+        </div>}
+        {this.props.searchText.length >= 3 && <div>
+          {this.props.searchQuestions.sort(sortedQuestion).slice(0, this.props.questionsShow).map((question, i) => {
+            const answers = Object.values(question.answers);
+            return (
+              <div key={i}>
+                <QuestionBody question={question}/>
+                <AnswersList
+                  answers={answers}
+                  answersShow={this.props.answersShow}
+                  showMoreA={this.props.showMoreA}
+                />
+              </div>
+            );
+          })}
+          {this.props. answeredSearchQuestion.sort(sortedQuestion).slice(0, this.props.answeredQuestionShow).map((question, i) => {
+            const answers = Object.values(question.answers);
+            return (
+              <div key={i}>
+                <QuestionBody question={question}/>
+                <AnswersList
+                  answers={answers}
+                  answersShow={this.props.answersShow}
+                  showMoreA={this.props.showMoreA}
+                />
+              </div>
+            );
+          })}
+        </div>}
         <Button onClick={this.props.showMoreQ}>MORE ANSWERED QUESTIONS</Button>
         <Button>ADD A QUESTION +</Button>
-      </div>
+      </Container>
     );
   }
 }
 
-const AlignRight = styled.span`
-  font-weight: normal;
-  float: right;
-  font-size: smaller;
-`;
 
-const QuestionBody = styled.div`
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-top: 15px;
-
+const Container = styled.div`
+  color: ${(props) => props.theme.textLight};
 `;
 
 export default QuestionList;

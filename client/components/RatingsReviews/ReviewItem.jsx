@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from '../Shared/Modal';
 import { Stars } from '../Shared/Stars';
-import Highlighter from 'react-highlight-words';
-
+import { Highlighter } from '../Shared/Highlighter';
 import { MarkHelpfulReport } from './MarkHelpfulReport';
 
 //TODO - add some better date parsing logic
@@ -12,6 +11,15 @@ const ReviewItem = ({ review, product, keyword }) => {
   const [showing, setShowing] = useState(false);
   const [url, setUrl] = useState();
   const [dimensions, setDimensions] = useState([50, 70]);
+
+  const displayDate = new Date(review.date).toLocaleString('en-us', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+
+  console.log(review.date);
 
   return (
     <Container>
@@ -27,25 +35,17 @@ const ReviewItem = ({ review, product, keyword }) => {
           <Stars number={review.rating} size={16} />
         </Text>
         <Text>
-          {review.reviewer_name}, {review.date.substr(0, 10)}
+          {review.reviewer_name}, {displayDate}
         </Text>
       </Header>
       <Body>
         <Text>
           <h1>
-            <Highlighter
-              highlightClassName='highlighted'
-              textToHighlight={review.summary}
-              searchWords={[keyword]}
-            />
+            <Highlighter string={review.summary} query={keyword} />
           </h1>
         </Text>
         <Text>
-          <Highlighter
-            highlightClassName='highlighted'
-            textToHighlight={review.body}
-            searchWords={[keyword]}
-          />
+          <Highlighter string={review.body} query={keyword} />
         </Text>
         {review.recommend === true && (
           <Text>
@@ -82,6 +82,10 @@ const ReviewItem = ({ review, product, keyword }) => {
     </Container>
   );
 };
+
+const HighlightCustomComponent = ({ children, highlightIndex }) => (
+  <strong className='highlighted'>{children}</strong>
+);
 
 const HighlightSpan = styled.span`
   background-color: yellow;

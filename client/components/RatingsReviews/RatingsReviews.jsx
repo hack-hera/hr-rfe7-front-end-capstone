@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
+
 import api from '../../api';
 import { allTrue } from '../../lib/ratingFunctions';
 

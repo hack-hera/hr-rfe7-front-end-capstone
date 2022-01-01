@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { months } from './lib/dataFunctions.js';
+import { months } from './lib/dataFunctions.jsx';
 import api from '../../api.js';
 import { MarkAnswerHelpfulAndReported } from './MarkHelpfulAndReported.jsx';
+import { sortedAnswer } from './lib/dataFunctions.jsx';
+
 
 const AnswersList = ({answers, answersShow, showMoreA}) => {
 
@@ -11,7 +13,7 @@ const AnswersList = ({answers, answersShow, showMoreA}) => {
       <AnswerContainer>
         <TitleA>A:</TitleA>
         <AnswerContent>
-          {answers.sort((a, b) => { return (b.helpfulness - a.helpfulness); }).slice(0, answersShow).map((answer, i) => {
+          {answers.sort(sortedAnswer).slice(0, answersShow).map((answer, i) => {
             let timeArr = answer.date.split('T')[0].split('-');
             return (
               <div key={i}>
@@ -77,6 +79,7 @@ const AnswerContent = styled.div`
 `;
 
 const Container = styled.div`
+  color: ${(props) => props.theme.textLight};
   flex-direction: column;
 `;
 
