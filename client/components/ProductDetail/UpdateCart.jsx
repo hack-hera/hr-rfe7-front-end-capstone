@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Selection = (props) => {
+const UpdateCart = (props) => {
   var availability = [{
     size: 'Select Size',
     quantity: null
@@ -75,7 +75,7 @@ const Selection = (props) => {
   );
 };
 
-export default Selection;
+export default UpdateCart;
 
 const Selections = styled.div`
   display: flex;
@@ -103,4 +103,5 @@ const QuantitySelection = styled.select`
 
 const AddToCart = styled.button`
   margin: 15px 0px 15px 0px;
+  width: 50%;
 `;

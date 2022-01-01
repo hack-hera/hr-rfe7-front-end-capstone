@@ -7,7 +7,7 @@ const ProductImage = (props) => {
   return (
     <Image
       id = "image"
-      src={props.selectedPhoto.url}
+      src={props.currentPhoto.url}
     />
   );
 };

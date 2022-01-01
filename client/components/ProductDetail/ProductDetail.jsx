@@ -5,9 +5,12 @@ import { Stars } from '../Shared/Stars';
 import { totalRating } from '../../lib/ratingFunctions';
 import ProductImage from './ProductImage.jsx';
 import StyleSelector from './StyleSelector.jsx';
-import ImageOptions from './ImageOptions.jsx';
-import Selection from './Checkout.jsx';
+import ImageGallery from './ImageGallery.jsx';
+import UpdateCart from './UpdateCart.jsx';
 import RenderPrice from './RenderPrice.jsx';
+import { Modal } from '../Shared/Modal';
+import ShareButtons from './ShareButtons.jsx';
+import ProductDescription from './ProductDescription.jsx';
 
 class ProductDetail extends Component {
   constructor(props) {
@@ -17,7 +20,7 @@ class ProductDetail extends Component {
       currentProduct: null,
       productStyles: null,
       currentStyle: null,
-      selectedPhoto: null,
+      currentPhoto: null,
       selectedSize: '',
       selectedQuantity: '',
       cart: []
@@ -69,13 +72,13 @@ class ProductDetail extends Component {
   changeStyle(style) {
     this.setState({
       currentStyle: style,
-      selectedPhoto: style.photos[0]
+      currentPhoto: style.photos[0]
     });
   }
 
   changePhoto(photo) {
     this.setState({
-      selectedPhoto: photo
+      currentPhoto: photo
     });
   }
 
@@ -83,30 +86,30 @@ class ProductDetail extends Component {
     const { id } = this.props.product;
     if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       api.getProductStyles({ product_id: id }).then((res) => {
-        this.setState({ productStyles: res, currentProduct: this.props.product, currentStyle: res.results[0], selectedPhoto: res.results[0].photos[0]
+        this.setState({ productStyles: res, currentProduct: this.props.product, currentStyle: res.results[0], currentPhoto: res.results[0].photos[0]
         });
       });
     }
   }
 
   render() {
-    const { currentProduct, productStyles, currentStyle, selectedPhoto, selectedSize, selectedQuantity } = this.state;
+    const { currentProduct, productStyles, currentStyle, currentPhoto, selectedSize, selectedQuantity } = this.state;
     return (
       <Container>
         <h3>Product Details</h3>
         {currentProduct && (
           <ProductContainer>
             <DisplayContainer>
-              <ImageOptionsContainer>
-                <ImageOptions
-                  productStyles={currentStyle}
+              <ImageGalleryContainer>
+                <ImageGallery
+                  currentStyle={currentStyle}
                   changePhoto={this.changePhoto}/>
-              </ImageOptionsContainer>
+              </ImageGalleryContainer>
               <ImageContainer>
-                <ProductImage selectedPhoto = {selectedPhoto}/>
+                <ProductImage currentPhoto = {currentPhoto}/>
               </ImageContainer>
             </DisplayContainer>
-            <ProductInfo>
+            <ProductInfoContainer>
               <div>//***** Read all reviews//</div>
               <div>category: {currentProduct.category}</div>
               <p>
@@ -122,20 +125,19 @@ class ProductDetail extends Component {
               <StyleSelector
                 productStyles={productStyles}
                 changeStyle={this.changeStyle}/>
-              <Checkout>
-                <Selection
+              <Cart>
+                <UpdateCart
                   currentStyle = {currentStyle}
                   changeSize = {this.changeSize}
                   selectedSize = {selectedSize}
                   changeQuantity = {this.changeQuantity}
                   addToCart = {this.addToCart}/>
-              </Checkout>
+              </Cart>
+              <ShareButtons/>
               <button>*</button>
-              <p>
-                <b>Description: </b>
-                {currentProduct.description}
-              </p>
-            </ProductInfo>
+              <ProductDescription
+                currentProduct={currentProduct}/>
+            </ProductInfoContainer>
           </ProductContainer>
         )}
       </Container>
@@ -143,9 +145,13 @@ class ProductDetail extends Component {
   }
 }
 
-const Checkout = styled.div`
+const Cart = styled.div`
   display: flex;
   margin-bottom: 5px;
+`;
+
+const ProductDescriptionContainer = styled.div`
+  display: block;
 `;
 
 const DisplayContainer = styled.div`
@@ -163,7 +169,7 @@ const ProductContainer = styled.div`
   font-size: 0.8em;
 `;
 
-const ImageOptionsContainer = styled.div`
+const ImageGalleryContainer = styled.div`
   display: inline-block;
   width: 33px;
   height: 440px;
@@ -186,12 +192,10 @@ const Thumbnail = styled.img`
   }
 `;
 
-const ProductInfo = styled.div`
+const ProductInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 35%
 `;
 
 export default ProductDetail;
-
-// let placeHolderURL = 'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101032/112815935-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
