@@ -135,8 +135,8 @@ class ProductDetail extends Component {
               </Cart>
               <ShareButtons/>
               <button>*</button>
-              <ProductDescription
-                currentProduct={currentProduct}/>
+              {currentProduct && <ProductDescription
+                currentProduct={currentProduct}/>}
             </ProductInfoContainer>
           </ProductContainer>
         )}
