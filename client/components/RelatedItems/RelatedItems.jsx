@@ -69,6 +69,8 @@ class RelatedItems extends Component {
   removeFromOutfit(clickedProductId) {
     let outfit = ls.get('myoutfit') || [];
     let removeId = clickedProductId;
+    ls.set('myoutfit', outfit.filter(item => item.id !== removeId));
+    this.getOutfit();
   }
 
   render() {

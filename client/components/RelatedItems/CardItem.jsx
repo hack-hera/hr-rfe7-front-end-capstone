@@ -16,11 +16,20 @@ var CardItem = (props) => {
     setShowing(true);
   };
 
+  const updateCurrentProduct = () => {
+    props.updateCurrent(props.item.id);
+  };
+
+  const remove = () => {
+    props.remove(props.item.id);
+  };
+
+
   let button;
   if (!props.inOutfit) {
     button = <StarButton onClick={compare} />;
   } else {
-    button = <XButton onClick={props.remove} />;
+    button = <XButton onClick={remove} />;
   }
 
   if (props.firstCard) {
@@ -45,10 +54,6 @@ var CardItem = (props) => {
   } else {
     pictureSrc = 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg';
   }
-
-  const updateCurrentProduct = () => {
-    props.updateCurrent(props.item.id);
-  };
 
   return (
     <Container>
