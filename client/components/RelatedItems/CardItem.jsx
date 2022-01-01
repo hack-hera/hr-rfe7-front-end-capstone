@@ -27,9 +27,13 @@ var CardItem = (props) => {
 
   let button;
   if (!props.inOutfit) {
-    button = <StarButton onClick={compare} />;
+    button = <Button>
+      <StarButton onClick={compare} />
+    </Button>;
   } else {
-    button = <XButton onClick={remove} />;
+    button = <Button>
+      <XButton onClick={remove} />
+    </Button>;
   }
 
   if (props.firstCard) {
@@ -57,6 +61,7 @@ var CardItem = (props) => {
 
   return (
     <Container>
+
       {showing === true && (
         <Modal
           onClose={() => setShowing(false)}>
@@ -66,6 +71,7 @@ var CardItem = (props) => {
           />
         </Modal>
       )}
+
       <PictureContainer>
         <Picture onClick={updateCurrentProduct}>
           <img src={pictureSrc} />
@@ -121,7 +127,7 @@ const Picture = styled.div`
 `;
 
 const Button = styled.div`
-  border: 1px solid ${(props) => props.theme.bgDark};
+z-index: 1;
 `;
 
 const AddCard = styled.div`

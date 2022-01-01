@@ -18,6 +18,7 @@ var CompareModal = (props) => {
   };
 
   const allFeats = unique(relatedFeatArr.concat(currentFeatArr));
+  console.log(allFeats);
 
   const characteristics = allFeats.map((feature, index) => {
     return (
@@ -52,6 +53,8 @@ var CompareModal = (props) => {
     relateFeats = <Row></Row>;
   }
 
+  console.log(currFeats);
+  console.log(relateFeats);
 
   return (
     <Container>

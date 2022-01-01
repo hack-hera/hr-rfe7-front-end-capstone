@@ -26,7 +26,6 @@ const RelatedCarousel = (props) => {
   };
 
 
-
   return (
     <CarouselComponent>
       <CarouselContainer>
@@ -45,6 +44,7 @@ const RelatedCarousel = (props) => {
                 <CardItem
                   key={item.id}
                   item={item}
+                  // rating={}
                   inOutfit={false}
                   add={props.addOutfit}
                   currentProduct={props.currentProduct}

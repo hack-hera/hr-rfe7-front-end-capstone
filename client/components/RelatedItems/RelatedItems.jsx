@@ -12,8 +12,9 @@ class RelatedItems extends Component {
 
     this.state = {
       currentProduct: this.props.product,
+      currentProductRating: this.props.rating,
       relatedItems: [],
-      pictures: [],
+      ratings: [],
       outfitData: []
     };
   }
@@ -24,7 +25,8 @@ class RelatedItems extends Component {
       this.getRelatedProducts({ product_id: id });
       this.getOutfit();
     }
-    // console.log('this is relatedItems', this.state.relatedItems);
+    console.log('this is relatedItems', this.state.relatedItems);
+    console.log('this is ratings', this.state.ratings);
     // console.log('this is currentProduct', this.props.product);
     // console.log('this is from app', this.props.state);
     console.log('this is outfitdata', this.state.outfitData);
@@ -34,13 +36,15 @@ class RelatedItems extends Component {
     api.getRelatedProductData(product)
       .then(results => {
         this.setState({
-          relatedItems: results.related
+          relatedItems: results.related,
+          ratings: results.ratings
         });
       })
       .catch(err => {
         new Error('error retrieving related products');
       });
   }
+
 
   getOutfit() {
     let outfit = ls.get('myoutfit') || [];
@@ -53,6 +57,7 @@ class RelatedItems extends Component {
   // after api.getRelatedProducts get and add pictures then get and add rating info
   addToOutfit() {
     let product = this.props.product;
+    product.rating = this.props.rating;
     let id = product.id;
     let outfit = ls.get('myoutfit') || [];
     if (outfit.length === 0) {
@@ -79,6 +84,7 @@ class RelatedItems extends Component {
         <Header>RelatedItems</Header>
         <RelatedCarousel
           relatedItems={this.state.relatedItems}
+          relatedRatings={this.state.ratings}
           currentProduct={this.state.currentProduct}
           update={this.props.updateProduct}
         />
