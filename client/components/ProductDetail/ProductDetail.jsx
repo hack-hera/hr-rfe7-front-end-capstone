@@ -11,11 +11,12 @@ import RenderPrice from './RenderPrice.jsx';
 import { Modal } from '../Shared/Modal';
 import ShareButtons from './ShareButtons.jsx';
 import ProductDescription from './ProductDescription.jsx';
+import ScrollToReviews from './ScrollToReviews.jsx';
 
 class ProductDetail extends Component {
   constructor(props) {
     super(props);
-
+    // const displayTotalRating = totalRating(ratings);
     this.state = {
       currentProduct: null,
       productStyles: null,
@@ -23,8 +24,11 @@ class ProductDetail extends Component {
       currentPhoto: null,
       selectedSize: '',
       selectedQuantity: '',
-      cart: []
+      cart: [],
+      rating: null,
+      allRatings: null
     };
+
     this.changeStyle = this.changeStyle.bind(this);
     this.changePhoto = this.changePhoto.bind(this);
     this.changeSize = this.changeSize.bind(this);
@@ -86,14 +90,14 @@ class ProductDetail extends Component {
     const { id } = this.props.product;
     if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       api.getProductStyles({ product_id: id }).then((res) => {
-        this.setState({ productStyles: res, currentProduct: this.props.product, currentStyle: res.results[0], currentPhoto: res.results[0].photos[0]
+        this.setState({ productStyles: res, currentProduct: this.props.product, currentStyle: res.results[0], currentPhoto: res.results[0].photos[0], rating: totalRating(this.props.productReviews.ratings), allRatings: this.props.productReviews.numReviews
         });
       });
     }
   }
 
   render() {
-    const { currentProduct, productStyles, currentStyle, currentPhoto, selectedSize, selectedQuantity } = this.state;
+    const { currentProduct, productStyles, currentStyle, currentPhoto, selectedSize, selectedQuantity, rating, allRatings } = this.state;
     return (
       <Container>
         <h3>Product Details</h3>
@@ -110,7 +114,10 @@ class ProductDetail extends Component {
               </ImageContainer>
             </DisplayContainer>
             <ProductInfoContainer>
-              <div>//***** Read all reviews//</div>
+              <ReviewsContainer>
+                <Stars number={rating}/>
+                <ScrollToReviews allRatings={allRatings}/>
+              </ReviewsContainer>
               <div>category: {currentProduct.category}</div>
               <p>
                 <b>Product Name: </b>
@@ -144,6 +151,10 @@ class ProductDetail extends Component {
     );
   }
 }
+
+const ReviewsContainer = styled.div`
+  display: flex;
+`;
 
 const Cart = styled.div`
   display: flex;
