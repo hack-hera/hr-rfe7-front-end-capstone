@@ -122,9 +122,15 @@ const api = {
       }
       obj.related_product_ids = related;
       obj.related = [];
+      obj.ratings = [];
       related.forEach(async (product_id) => {
         let temp = await this.getProductData({ product_id });
         obj.related.push(temp);
+      });
+
+      related.forEach(async (product_id) => {
+        let ratings = await this.getReviewMeta({ product_id });
+        obj.ratings.push(ratings);
       });
 
       return obj;
