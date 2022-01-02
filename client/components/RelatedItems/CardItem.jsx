@@ -13,6 +13,7 @@ var CardItem = (props) => {
   const [showing, setShowing] = useState(false);
 
   const compare = () => {
+    console.log('star button was pressed');
     setShowing(true);
   };
 
@@ -21,6 +22,7 @@ var CardItem = (props) => {
   };
 
   const remove = () => {
+    console.log('X button was pressed');
     props.remove(props.item.id);
   };
 
@@ -28,11 +30,11 @@ var CardItem = (props) => {
   let button;
   if (!props.inOutfit) {
     button = <Button>
-      <StarButton onClick={compare} />
+      <StarButton onClick={() => compare()} />
     </Button>;
   } else {
     button = <Button>
-      <XButton onClick={remove} />
+      <XButton onClick={() => remove()} />
     </Button>;
   }
 
