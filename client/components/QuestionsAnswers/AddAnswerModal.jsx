@@ -9,7 +9,7 @@ class AddAnswer extends React.Component {
 
     this.state = {
       show: false
-    }
+    };
 
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
@@ -17,11 +17,11 @@ class AddAnswer extends React.Component {
 
   showModal() {
     this.setState({ show: true });
-  };
+  }
 
   hideModal() {
     this.setState({ show: false });
-  };
+  }
 
   render() {
     return (
@@ -33,7 +33,7 @@ class AddAnswer extends React.Component {
         />}
         <AddLink onClick={this.showModal}>Add Answer</AddLink>
       </AlignRight>
-    )
+    );
   }
 
 
@@ -47,6 +47,6 @@ const AlignRight = styled.span`
 
 const AddLink = styled.span`
   cursor: pointer;
-`
+`;
 
 export default AddAnswer;
