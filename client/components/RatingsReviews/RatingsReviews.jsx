@@ -14,7 +14,7 @@ const RatingsReviews = ({ data, product, fetch }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <Container>
+    <Container id="RatingsReviews">
       {showModal === true && (
         <AddReview
           product={product}

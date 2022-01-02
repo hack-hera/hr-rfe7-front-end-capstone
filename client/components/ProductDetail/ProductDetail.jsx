@@ -99,7 +99,7 @@ class ProductDetail extends Component {
   render() {
     const { currentProduct, productStyles, currentStyle, currentPhoto, selectedSize, selectedQuantity, rating, allRatings } = this.state;
     return (
-      <Container>
+      <Container id="ProductDetail">
         <h3>Product Details</h3>
         {currentProduct && (
           <ProductContainer>
