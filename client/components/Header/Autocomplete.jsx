@@ -7,7 +7,12 @@ const Autocomplete = ({ items, onClick, query }) => {
     <Container>
       <StyledUl>
         {display.map((x, i) => (
-          <li key={i} onClick={() => onClick(x.id)}>
+          <li
+            key={i}
+            onMouseDown={(e) => {
+              onClick(x.id);
+            }}
+          >
             {x.name}
           </li>
         ))}
@@ -26,7 +31,7 @@ const Container = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
   width: 200px;
-  z-index: 10px;
+  z-index: 10;
   background-color: ${(props) => props.theme.bgNav};
   color: ${(props) => props.theme.textInv};
 `;

@@ -31,7 +31,7 @@ export const Header = ({ product, products, updateProduct, toggleColors }) => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setShowing(true)}
-          onBlur={() => setTimeout(() => setShowing(false), 200)}
+          onBlur={() => setShowing(false)}
         ></StyledInput>
         <FontAwesomeIcon icon={faSearch} />
         {showing && query.length >= 1 && (
