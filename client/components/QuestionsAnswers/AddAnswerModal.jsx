@@ -15,13 +15,13 @@ class AddAnswer extends React.Component {
     this.hideModal = this.hideModal.bind(this);
   }
 
-  showModal = (() => {
+  showModal() {
     this.setState({ show: true });
-  });
+  };
 
-  hideModal = (() => {
+  hideModal() {
     this.setState({ show: false });
-  });
+  };
 
   render() {
     return (
