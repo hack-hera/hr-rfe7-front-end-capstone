@@ -16,7 +16,7 @@ import ScrollToReviews from './ScrollToReviews.jsx';
 class ProductDetail extends Component {
   constructor(props) {
     super(props);
-    // const displayTotalRating = totalRating(ratings);
+
     this.state = {
       currentProduct: null,
       productStyles: null,
@@ -118,7 +118,8 @@ class ProductDetail extends Component {
                 <Stars number={rating}/>
                 <ScrollToReviews allRatings={allRatings}/>
               </ReviewsContainer>
-              <div>category: {currentProduct.category}</div>
+              <br></br>
+              <div><b>Category:</b> {currentProduct.category}</div>
               <p>
                 <b>Product Name: </b>
                 {currentProduct.name}
@@ -141,7 +142,6 @@ class ProductDetail extends Component {
                   addToCart = {this.addToCart}/>
               </Cart>
               <ShareButtons/>
-              <button>*</button>
               {currentProduct && <ProductDescription
                 currentProduct={currentProduct}/>}
             </ProductInfoContainer>
