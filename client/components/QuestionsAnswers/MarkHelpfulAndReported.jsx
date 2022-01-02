@@ -34,7 +34,7 @@ export const MarkAnswerHelpfulAndReported = ({answer}) => {
   );
 };
 
-export const MarkQuestionHelpfulAndReported = ({question}) => {
+export const MarkQuestionHelpfulAndReported = ({question, product_id}) => {
 
   let questionHelpfulMarked = (ls.get('markedQuestions') || []).includes(question.question_id);
 
@@ -42,6 +42,7 @@ export const MarkQuestionHelpfulAndReported = ({question}) => {
     let markedQuestions = ls.get('markedQuestions') || [];
     ls.set('markedQuestions', [...markedQuestions, question.question_id]);
     api.markQuestionAsHelpful({question_id: question.question_id});
+    // api.getQuestions({product_id: product_id, count: 100});
   };
 
   return (
