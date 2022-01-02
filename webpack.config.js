@@ -16,7 +16,10 @@ module.exports = {
           options: {
             presets: ['@babel/preset-react', '@babel/preset-env'],
             plugins: ['babel-plugin-react-generate-property', '@babel/plugin-transform-runtime'],
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c883d5f9074aa2bfa740bc9080b5876b7f44c33
           },
         },
       },
