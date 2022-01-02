@@ -65,7 +65,11 @@ class App extends Component {
           updateProduct={(id) => this.updateProduct(id)}
         />
         <Container>
-          {/* <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
+          <ProductDetail
+            product={currentProduct}
+            updateProduct={(id) => this.updateProduct(id)}
+            productReviews={this.state.reviewData}
+          />
           <RelatedItems
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
@@ -74,7 +78,7 @@ class App extends Component {
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
-          /> */}
+          />
           {this.state.reviewData && (
             <RatingsReviews
               data={this.state.reviewData}

@@ -9,8 +9,8 @@ const ProductDescription = (props) => {
           {props.currentProduct.description}
         </Description>
         <Features>
-          {props.currentProduct.features.map((feature) => (
-            <li>{feature.feature}: {feature.value}</li>
+          {props.currentProduct.features.map((feature, key) => (
+            <li key={key}>{feature.feature}: {feature.value}</li>
           ))}
         </Features>
       </Container>

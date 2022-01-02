@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import AddToCart from './AddToCart.jsx';
 
 const UpdateCart = (props) => {
   var availability = [{
@@ -18,32 +19,25 @@ const UpdateCart = (props) => {
     availability.push(obj);
   }
 
-  const addToCart = document.getElementById('add');
-
   if (availability.length === 1) {
     availability[0].size = 'Out of Stock';
-    addToCart.style.visibility = 'hidden';
   }
 
-  var array = ['-'];
+  var amountAvailable = ['-'];
   var count = 1;
   while (count <= props.selectedSize.quantity) {
-    array.push(count);
+    amountAvailable.push(count);
     count++;
     if (count === 16) {
       break;
     }
   }
 
-  if (array.length > 1) {
-    array.shift();
+  if (amountAvailable.length > 1) {
+    amountAvailable.shift();
   }
 
-  const warning = document.getElementById('warning');
-  const SizeMenu = document.getElementById('size');
-
   return (
-
     <Container>
       <Warning id="warning">Please Select Size</Warning>
       <Selections>
@@ -56,21 +50,15 @@ const UpdateCart = (props) => {
           ))}
         </SizeSelection>
         <QuantitySelection onChange = {(event) => (props.changeQuantity(event.target.value))}>
-          {array.map((option) => (
+          {amountAvailable.map((option) => (
             <option key={option} value = {option}>{option}</option>
           ))}
         </QuantitySelection>
       </Selections>
-      <AddToCart id="add" onClick = {() => {
-        if (props.selectedSize === '') {
-          warning.style.visibility = 'visible';
-          SizeMenu.click();
-        } else {
-          props.addToCart();
-        }
-      }}>
-        AddToCart
-      </AddToCart>
+      <AddToCart
+        availability={availability}
+        addToCart={props.addToCart}
+        selectedSize={props.selectedSize}/>
     </Container>
   );
 };
@@ -99,9 +87,4 @@ const SizeSelection = styled.select`
 const QuantitySelection = styled.select`
   width: 50%;
   margin-right: 5px;
-`;
-
-const AddToCart = styled.button`
-  margin: 15px 0px 15px 0px;
-  width: 50%;
 `;

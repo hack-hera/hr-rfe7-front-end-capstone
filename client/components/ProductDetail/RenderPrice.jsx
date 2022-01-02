@@ -16,7 +16,7 @@ const RenderPrice = (props) => {
   } else {
     return (
       <Price>
-        Price ${props.currentStyle.original_price}
+        <b>Price:</b> ${props.currentStyle.original_price}
       </Price>
     );
   }
