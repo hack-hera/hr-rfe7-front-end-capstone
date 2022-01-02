@@ -8,8 +8,6 @@ export const Highlighter = ({ string, query }) => {
   let matches = [...string.matchAll(regex)].map((x) => x[0]);
   let arr = string.split(regex);
 
-  console.log(matches, arr);
-
   return arr.map((chunk, i) => (
     <span key={i}>
       {chunk}
