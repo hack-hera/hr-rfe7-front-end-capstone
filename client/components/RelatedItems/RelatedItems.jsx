@@ -85,7 +85,7 @@ class RelatedItems extends Component {
         <RelatedCarousel
           relatedItems={this.state.relatedItems}
           relatedRatings={this.state.ratings}
-          currentProduct={this.state.currentProduct}
+          currentProduct={this.props.product}
           update={this.props.updateProduct}
         />
         <Header>YourOutfit</Header>

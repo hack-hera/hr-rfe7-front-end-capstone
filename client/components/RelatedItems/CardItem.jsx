@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { COLORS } from '../../settings/colors';
 import styled from 'styled-components';
 import { Stars } from '../Shared/Stars.jsx';
-import XButton from './XButton.jsx';
-import StarButton from './StarButton.jsx';
 import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faStar, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 var CardItem = (props) => {
   const [showing, setShowing] = useState(false);
 
   const compare = () => {
+    console.log('star button was pressed');
     setShowing(true);
   };
 
@@ -21,20 +20,9 @@ var CardItem = (props) => {
   };
 
   const remove = () => {
+    console.log('X button was pressed');
     props.remove(props.item.id);
   };
-
-
-  let button;
-  if (!props.inOutfit) {
-    button = <Button>
-      <StarButton onClick={compare} />
-    </Button>;
-  } else {
-    button = <Button>
-      <XButton onClick={remove} />
-    </Button>;
-  }
 
   if (props.firstCard) {
     return (
@@ -52,12 +40,23 @@ var CardItem = (props) => {
   }
 
   var pictureSrc;
-
   if (props.item.styles[0].photos[0].thumbnail_url) {
     pictureSrc = props.item.styles[0].photos[0].thumbnail_url;
   } else {
     pictureSrc = 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg';
   }
+
+  var button;
+  if (!props.inOutfit) {
+    button = <Button onClick={() => compare()}>
+      <FontAwesomeIcon icon={faStar} />
+    </Button>;
+  } else {
+    button = <Button onClick={() => remove()}>
+      <FontAwesomeIcon icon={faTimesCircle} />
+    </Button>;
+  }
+
 
   return (
     <Container>
