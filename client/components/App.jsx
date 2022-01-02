@@ -65,12 +65,16 @@ class App extends Component {
           updateProduct={(id) => this.updateProduct(id)}
         />
         <Container>
-          <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} productReviews={this.state.reviewData}/>
-          <RelatedItems
+          <ProductDetail
+            product={currentProduct}
+            updateProduct={(id) => this.updateProduct(id)}
+            productReviews={this.state.reviewData}
+          />
+          {/* <RelatedItems
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
             rating={this.state.reviewData}
-            state={this.state} />
+            state={this.state} /> */}
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
