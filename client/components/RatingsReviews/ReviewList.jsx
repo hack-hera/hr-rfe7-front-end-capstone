@@ -7,14 +7,16 @@ import { Button } from '../Shared/Form';
 const ReviewList = ({ data, filters, addReview, product }) => {
   let display = data.reviews.filter((r) => filters[r.rating]);
 
-  const [showing, setShowing] = useState(Math.min(2, display.length));
+  const [showing, setShowing] = useState(2);
   const [sort, setSort] = useState('newest');
   const [keyword, setKeyword] = useState('');
   const [infinite, setInfinite] = useState(false);
 
   const onScroll = (e) => {
     if (infinite && window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      setShowing(showing + Math.min(2, display.length - showing));
+      if (showing < display.length) {
+        setShowing(showing + 2);
+      }
     }
   };
 
@@ -65,7 +67,7 @@ const ReviewList = ({ data, filters, addReview, product }) => {
           <Button
             onClick={() => {
               setInfinite(true);
-              setShowing(showing + Math.min(2, display.length - showing));
+              setShowing(showing + 2);
             }}
           >
             Show More
