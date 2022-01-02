@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    api.getProducts({ count: 20 }).then((products) => {
+    api.getProducts({ count: 100 }).then((products) => {
       api.getProductData({ product_id: products[0].id }).then((currentProduct) => {
         api
           .getReviewData({
@@ -65,12 +65,16 @@ class App extends Component {
           updateProduct={(id) => this.updateProduct(id)}
         />
         <Container>
-          <ProductDetail product={currentProduct} updateProduct={(id) => this.updateProduct(id)} />
-          <RelatedItems
+          <ProductDetail
+            product={currentProduct}
+            updateProduct={(id) => this.updateProduct(id)}
+            productReviews={this.state.reviewData}
+          />
+          {/* <RelatedItems
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
             rating={this.state.reviewData}
-            state={this.state} />
+            state={this.state} /> */}
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}

@@ -11,6 +11,7 @@ import RenderPrice from './RenderPrice.jsx';
 import { Modal } from '../Shared/Modal';
 import ShareButtons from './ShareButtons.jsx';
 import ProductDescription from './ProductDescription.jsx';
+import ScrollToReviews from './ScrollToReviews.jsx';
 
 class ProductDetail extends Component {
   constructor(props) {
@@ -23,8 +24,11 @@ class ProductDetail extends Component {
       currentPhoto: null,
       selectedSize: '',
       selectedQuantity: '',
-      cart: []
+      cart: [],
+      rating: null,
+      allRatings: null,
     };
+
     this.changeStyle = this.changeStyle.bind(this);
     this.changePhoto = this.changePhoto.bind(this);
     this.changeSize = this.changeSize.bind(this);
@@ -38,24 +42,24 @@ class ProductDetail extends Component {
       item: this.state.currentProduct,
       style: this.state.currentStyle,
       size: this.state.selectedSize.size,
-      quantity: this.state.selectedQuantity
+      quantity: this.state.selectedQuantity,
     };
     newCart.push(item);
     this.setState({
-      cart: newCart
+      cart: newCart,
     });
   }
 
   changeSize(size) {
     if (size === 'Select Size') {
       this.setState({
-        selectedSize: ''
+        selectedSize: '',
       });
     }
     for (var key in this.state.currentStyle.skus) {
       if (this.state.currentStyle.skus[key].size === size) {
         this.setState({
-          selectedSize: this.state.currentStyle.skus[key]
+          selectedSize: this.state.currentStyle.skus[key],
         });
         break;
       }
@@ -65,53 +69,72 @@ class ProductDetail extends Component {
 
   changeQuantity(quantity) {
     this.setState({
-      selectedQuantity: quantity
+      selectedQuantity: quantity,
     });
   }
 
   changeStyle(style) {
     this.setState({
       currentStyle: style,
-      currentPhoto: style.photos[0]
+      currentPhoto: style.photos[0],
     });
   }
 
   changePhoto(photo) {
     this.setState({
-      currentPhoto: photo
+      currentPhoto: photo,
     });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { id } = this.props.product;
     if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
-      api.getProductStyles({ product_id: id }).then((res) => {
-        this.setState({ productStyles: res, currentProduct: this.props.product, currentStyle: res.results[0], currentPhoto: res.results[0].photos[0]
+      api.getProductData({ product_id: id }).then((res) => {
+        this.setState({
+          productStyles: res.styles,
+          currentProduct: res,
+          currentStyle: res.styles[0],
+          currentPhoto: res.styles[0].photos[0],
+          rating: totalRating(this.props.productReviews.ratings),
+          allRatings: this.props.productReviews.numReviews,
         });
       });
     }
   }
 
   render() {
-    const { currentProduct, productStyles, currentStyle, currentPhoto, selectedSize, selectedQuantity } = this.state;
+    const {
+      currentProduct,
+      productStyles,
+      currentStyle,
+      currentPhoto,
+      selectedSize,
+      selectedQuantity,
+      rating,
+      allRatings,
+    } = this.state;
     return (
-      <Container>
+      <Container id='ProductDetail'>
         <h3>Product Details</h3>
         {currentProduct && (
           <ProductContainer>
             <DisplayContainer>
               <ImageGalleryContainer>
-                <ImageGallery
-                  currentStyle={currentStyle}
-                  changePhoto={this.changePhoto}/>
+                <ImageGallery currentStyle={currentStyle} changePhoto={this.changePhoto} />
               </ImageGalleryContainer>
               <ImageContainer>
-                <ProductImage currentPhoto = {currentPhoto}/>
+                <ProductImage currentPhoto={currentPhoto} />
               </ImageContainer>
             </DisplayContainer>
             <ProductInfoContainer>
-              <div>//***** Read all reviews//</div>
-              <div>category: {currentProduct.category}</div>
+              <ReviewsContainer>
+                <Stars number={rating} />
+                <ScrollToReviews allRatings={allRatings} />
+              </ReviewsContainer>
+              <br></br>
+              <div>
+                <b>Category:</b> {currentProduct.category}
+              </div>
               <p>
                 <b>Product Name: </b>
                 {currentProduct.name}
@@ -120,23 +143,19 @@ class ProductDetail extends Component {
                 <b>Style: </b>
                 {currentStyle.name}
               </p>
-              <RenderPrice
-                currentStyle={currentStyle}/>
-              <StyleSelector
-                productStyles={productStyles}
-                changeStyle={this.changeStyle}/>
+              <RenderPrice currentStyle={currentStyle} />
+              <StyleSelector productStyles={productStyles} changeStyle={this.changeStyle} />
               <Cart>
                 <UpdateCart
-                  currentStyle = {currentStyle}
-                  changeSize = {this.changeSize}
-                  selectedSize = {selectedSize}
-                  changeQuantity = {this.changeQuantity}
-                  addToCart = {this.addToCart}/>
+                  currentStyle={currentStyle}
+                  changeSize={this.changeSize}
+                  selectedSize={selectedSize}
+                  changeQuantity={this.changeQuantity}
+                  addToCart={this.addToCart}
+                />
               </Cart>
-              <ShareButtons/>
-              <button>*</button>
-              {currentProduct && <ProductDescription
-                currentProduct={currentProduct}/>}
+              <ShareButtons />
+              {currentProduct && <ProductDescription currentProduct={currentProduct} />}
             </ProductInfoContainer>
           </ProductContainer>
         )}
@@ -144,6 +163,10 @@ class ProductDetail extends Component {
     );
   }
 }
+
+const ReviewsContainer = styled.div`
+  display: flex;
+`;
 
 const Cart = styled.div`
   display: flex;
@@ -195,7 +218,7 @@ const Thumbnail = styled.img`
 const ProductInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 35%
+  width: 35%;
 `;
 
 export default ProductDetail;

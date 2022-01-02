@@ -19,8 +19,6 @@ const ReviewItem = ({ review, product, keyword }) => {
     timeZone: 'UTC',
   });
 
-  console.log(review.date);
-
   return (
     <Container>
       {showing === true && (
