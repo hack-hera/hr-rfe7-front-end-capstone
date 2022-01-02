@@ -91,6 +91,30 @@ const Title = styled.div`
 
 `;
 
+const Header = styled.div`
+
+`;
+
+const Current = styled.div`
+
+`;
+
+const Related = styled.div`
+
+`;
+
+const CurrentFeatures = styled.div`
+
+`;
+
+const Characteristics = styled.div`
+
+`;
+
+const RelatedFeatures = styled.div`
+
+`;
+
 const FirstRow = styled.div`
 
 `;

@@ -48,9 +48,13 @@ var CardItem = (props) => {
 
   var button;
   if (!props.inOutfit) {
-    button = <button onClick={() => compare()}>STAR</button>;
+    button = <Button onClick={() => compare()}>
+      <FontAwesomeIcon icon={faStar} />
+    </Button>;
   } else {
-    button = <button onClick={() => remove()}>X</button>;
+    button = <Button onClick={() => remove()}>
+      <FontAwesomeIcon icon={faTimesCircle} />
+    </Button>;
   }
 
 
