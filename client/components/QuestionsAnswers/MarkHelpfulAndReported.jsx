@@ -42,12 +42,13 @@ export const MarkQuestionHelpfulAndReported = ({question, product_id}) => {
     let markedQuestions = ls.get('markedQuestions') || [];
     ls.set('markedQuestions', [...markedQuestions, question.question_id]);
     api.markQuestionAsHelpful({question_id: question.question_id});
+
     // api.getQuestions({product_id: product_id, count: 100});
   };
 
   return (
     <AlignRight>
-      {questionHelpfulMarked === true && <>✓ Helpful {question.question_helpfuless} <u>Yes</u>({question.question_helpfulness})&emsp;|&emsp;</>}
+      {questionHelpfulMarked === true && <>✓ Helpful {question.question_helpfuless + 1} <u>Yes</u>({question.question_helpfulness + 1})&emsp;|&emsp;</>}
       {questionHelpfulMarked === false && <span>Helpful?{question.question_helpfuless} <u onClick={MarkQuestionHelpful}>Yes</u>({question.question_helpfulness})&emsp;|&emsp;</span>}
     </AlignRight>
   );

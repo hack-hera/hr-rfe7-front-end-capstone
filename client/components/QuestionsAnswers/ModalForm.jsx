@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 
 export const AnswerModal = ({ product_name, handleClose, question}) => {
+
   return (
     <Container>
       <ModalForm action="" method="post" enctype="multipart/form-data">
@@ -60,5 +61,6 @@ const CloseButton = styled.span`
 `;
 
 const ModalForm = styled.form`
+  margin-left: 20px;
 `;
 

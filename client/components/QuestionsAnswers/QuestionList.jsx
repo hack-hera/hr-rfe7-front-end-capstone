@@ -27,7 +27,7 @@ class QuestionList extends React.Component {
                     product_name={this.props.product_name}
                     question={question}
                   />
-                  <MarkQuestionHelpfulAndReported question={question}/>
+                  <MarkQuestionHelpfulAndReported question={question} product_id={this.props.product_id}/>
                 </QuestionText>
                 <AnswersList
                   answers={answers}
