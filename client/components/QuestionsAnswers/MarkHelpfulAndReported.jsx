@@ -8,6 +8,10 @@ export const MarkAnswerHelpfulAndReported = ({answer}) => {
   let answerHelpfulMarked = (ls.get('markedAnswers') || []).includes(answer.id);
   let answerReportMarked = (ls.get('markedAnswersReport') || []).includes(answer.reported);
 
+  let [alreadyMarked, setAlreadyMarked] = useState(
+    markedReviews.includes(answer.id)
+  );
+
   let MarkAnswerHelpful = () => {
     let markedAnswers = ls.get('markedAnswers') || [];
     ls.set('markedAnswers', [...markedAnswers, answer.id]);
