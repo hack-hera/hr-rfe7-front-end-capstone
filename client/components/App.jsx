@@ -15,7 +15,7 @@ class App extends Component {
     this.state = {
       products: [],
       currentProduct: null,
-      relatedProducts: null,
+      // relatedProducts: null,
       reviewData: null,
       darkMode: false,
     };
@@ -33,6 +33,7 @@ class App extends Component {
         this.setState({
           products: products,
           currentProduct: data.currentProduct,
+          // relatedProducts: data.relatedProducts,
           reviewData: data.reviewData,
         });
       });
