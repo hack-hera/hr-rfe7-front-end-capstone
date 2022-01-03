@@ -25,11 +25,11 @@ class RelatedItems extends Component {
       this.getRelatedProducts({ product_id: id });
       this.getOutfit();
     }
-    console.log('this is relatedItems', this.state.relatedItems);
-    console.log('this is ratings', this.state.ratings);
+    // console.log('this is relatedItems', this.state.relatedItems);
+    // console.log('this is ratings', this.state.ratings);
     // console.log('this is currentProduct', this.props.product);
     // console.log('this is from app', this.props.state);
-    console.log('this is outfitdata', this.state.outfitData);
+    // console.log('this is outfitdata', this.state.outfitData);
   }
 
   getRelatedProducts(product) {

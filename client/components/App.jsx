@@ -70,11 +70,11 @@ class App extends Component {
             updateProduct={(id) => this.updateProduct(id)}
             productReviews={this.state.reviewData}
           />
-          {/* <RelatedItems
+          <RelatedItems
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
             rating={this.state.reviewData}
-            state={this.state} /> */}
+            state={this.state} />
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}

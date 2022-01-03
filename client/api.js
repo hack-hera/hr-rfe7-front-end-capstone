@@ -321,10 +321,10 @@ const api = {
   // photos	[text]	An array of urls corresponding to images to display
 
   addAnswer: function (params = {}) {
-    const { question_id, body, name, email, photos } = params;
-    if (!question_id || !body || !name || !email || !photos || Object.keys(params).length !== 5) {
+    const { question_id, body, name, email } = params;
+    if (!question_id || !body || !name || !email || Object.keys(params).length !== 4) {
       return Promise.reject(
-        new Error('params must contain only {question_id, body, name, email, photos}')
+        new Error('params must contain only {question_id, body, name, email}')
       );
     }
     let url = `${host}/qa/questions/${question_id}/answers`;

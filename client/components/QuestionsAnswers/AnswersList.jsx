@@ -6,7 +6,7 @@ import { MarkAnswerHelpfulAndReported } from './MarkHelpfulAndReported.jsx';
 import { sortedAnswer } from './lib/dataFunctions.jsx';
 
 
-const AnswersList = ({answers, answersShow, showMoreA}) => {
+const AnswersList = ({ answers, answersShow, showMoreA }) => {
 
   return (
     <Container>
@@ -29,7 +29,6 @@ const AnswersList = ({answers, answersShow, showMoreA}) => {
                 </div>
                 <ByUser>
                   <span>by { answer.answerer_name }, { months[timeArr[1]] } { timeArr[2] }, { timeArr[0] }&emsp;|&emsp;</span>
-                  {/* <span>Helpful?{answer.helpfuless} <u >Yes</u>({answer.helpfulness})&emsp;|&emsp;</span> */}
                   <MarkAnswerHelpfulAndReported answer={answer}/>
                 </ByUser>
               </div>

@@ -1,10 +1,12 @@
-import React from 'react';
-import { THEMES } from '../../settings/colors';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import Autocomplete from './Autocomplete';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Header = ({ product, products, updateProduct, toggleColors }) => {
+  const [query, setQuery] = useState('');
+  const [showing, setShowing] = useState(false);
   return (
     <Navbar>
       <div>
@@ -14,7 +16,7 @@ export const Header = ({ product, products, updateProduct, toggleColors }) => {
       </div>
       <div>
         {product && (
-          <select defaultValue={product.id} onChange={(e) => updateProduct(e.target.value)}>
+          <select value={product.id} onChange={(e) => updateProduct(e.target.value)}>
             {products.map((x, i) => (
               <option key={x.id} value={x.id}>
                 {x.id} - {x.name}
@@ -24,33 +26,46 @@ export const Header = ({ product, products, updateProduct, toggleColors }) => {
         )}
       </div>
       <div>
-        <StyledInput type='text' list='languages'></StyledInput>
-        <datalist id='languages'>
-          <option value='JavaScript'></option>
-          <option value='Python'></option>
-          <option value='Java'></option>
-          <option value='HTML'>Stop being a troll</option>
-        </datalist>
+        <StyledInput
+          type='text'
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => setShowing(true)}
+          onBlur={() => setShowing(false)}
+        ></StyledInput>
         <FontAwesomeIcon icon={faSearch} />
+        {showing && query.length >= 1 && (
+          <Autocomplete
+            items={products}
+            query={query}
+            onClick={(id) => {
+              setShowing(false);
+              updateProduct(id);
+            }}
+          />
+        )}
       </div>
     </Navbar>
   );
 };
 
+const Container = styled.div``;
+
 const Navbar = styled.div`
   position: fixed;
   z-index: 10;
-  width: 100%;
   top: 0px;
   left: 0px;
+  right: 0px;
+  height: 60px;
+  padding: 0px 25px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: calc(100%-50px);
-  padding: 0px 25px;
   align-items: center;
+
   color: ${(props) => props.theme.textInv};
-  height: 60px;
+
   background-color: ${(props) => props.theme.bgNav};
   h1 {
     font-size: 22px;
@@ -62,6 +77,7 @@ const Navbar = styled.div`
 
 const StyledInput = styled.input`
   background-color: transparent;
+  width: 200px;
   border: 0px;
   border-bottom: 2px solid ${(props) => props.theme.textInv};
   margin-right: 20px;
