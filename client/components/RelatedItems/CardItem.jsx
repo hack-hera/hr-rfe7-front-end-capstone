@@ -11,7 +11,6 @@ var CardItem = (props) => {
   const [showing, setShowing] = useState(false);
 
   const compare = () => {
-    console.log('star button was pressed');
     setShowing(true);
   };
 
@@ -20,7 +19,6 @@ var CardItem = (props) => {
   };
 
   const remove = () => {
-    console.log('X button was pressed');
     props.remove(props.item.id);
   };
 

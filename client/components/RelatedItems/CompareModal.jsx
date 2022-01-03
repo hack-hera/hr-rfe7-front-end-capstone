@@ -5,26 +5,14 @@ var CompareModal = (props) => {
   const relatedFeatArr = props.related.features.reduce((result, current) => result.concat(current.feature), []);
   const currentFeatArr = props.current.features.reduce((result, current) => result.concat(current.feature), []);
 
-  var unique = (array) => {
-    var a = array.slice();
-    for (var i = 0; i < a.length; i++) {
-      for (var j = i + 1; j < a.length; j++) {
-        if (a[i] === a[j]) {
-          a.splice(j - 1, 1);
-        }
-      }
+
+  var allFeats = relatedFeatArr.concat(currentFeatArr);
+  var unique = [];
+  for (let i = 0; i < allFeats.length; i++) {
+    if (!unique.includes(allFeats[i])) {
+      unique.push(allFeats[i]);
     }
-    return a;
-  };
-
-  const allFeats = unique(relatedFeatArr.concat(currentFeatArr));
-  console.log(allFeats);
-
-  const characteristics = allFeats.map((feature, index) => {
-    return (
-      <Row key={index}>{feature}</Row>
-    );
-  });
+  }
 
   let hasFeature = false;
   for (var i = 0; i < relatedFeatArr.length; i++) {
@@ -34,59 +22,83 @@ var CompareModal = (props) => {
     }
   }
 
-  var currFeats;
-  var relateFeats;
+  const characteristics = unique.map((char, index) => {
+    var related;
+    var current;
+    if (relatedFeatArr.includes(char)) {
+      var relatedIndex = relatedFeatArr.indexOf(char);
+      related = props.related.features[relatedIndex].value;
+    } else {
+      related = 'none';
+    }
 
-  if (hasFeature) {
-    currFeats = currentFeatArr.map((feature, index) => {
+    if (currentFeatArr.includes(char)) {
+      var currentIndex = currentFeatArr.indexOf(char);
+      current = props.current.features[currentIndex].value;
+    } else {
+      current = 'none';
+    }
+    if (hasFeature) {
       return (
-        <Row key={index}>{feature}</Row>
+        <Row key={index}>
+          <Column >
+            {current}
+          </Column>
+          <Column >
+            {char}
+          </Column>
+          <Column >
+            {related}
+          </Column>
+        </Row>
       );
-    });
-    relateFeats = relatedFeatArr.map((feature, index) => {
+    } else {
       return (
-        <Row key={index}>{feature}</Row>
+        <Row key={index}>
+          <Column >
+          </Column>
+          <Column >
+            {char}
+          </Column>
+          <Column >
+          </Column>
+        </Row >
       );
-    });
-  } else {
-    currFeats = <Row></Row>;
-    relateFeats = <Row></Row>;
-  }
-
-  console.log(currFeats);
-  console.log(relateFeats);
+    }
+  });
 
   return (
     <Container>
       <Title>Comparing</Title>
-      <Header>
-        <Current>
-          {props.current.name}
-        </Current>
-        <Empty />
-        <Related>
-          {props.related.name}
-        </Related>
-      </Header>
-      <RowsContainer>
-        <CurrentFeatures>
-          {currFeats}
-        </CurrentFeatures>
-        <Characteristics>
+      <Table>
+        <Header>
+          <Current>
+            {props.current.name}
+          </Current>
+          <Empty />
+          <Related>
+            {props.related.name}
+          </Related>
+        </Header>
+        <RowsContainer>
           {characteristics}
-        </Characteristics>
-        <RelatedFeatures>
-          {relateFeats}
-        </RelatedFeatures>
-      </RowsContainer>
+        </RowsContainer>
+      </Table>
     </Container >
   );
 };
 
 const Container = styled.div`
-display: flex;
-flex-direction: column;
-position: relative;
+
+`;
+
+const Table = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  font-size: .8rem;
+  margin: 0.5rem;
+  line-height: 1.5;
+  flex: 1 1 auto;
 `;
 
 const Title = styled.div`
@@ -94,8 +106,12 @@ const Title = styled.div`
 `;
 
 const Header = styled.div`
-display: flex;
-flex-direction: row;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  margin-bottom: 5px;
 `;
 
 const Current = styled.div`
@@ -103,31 +119,23 @@ const Current = styled.div`
 `;
 
 const Related = styled.div`
-
-`;
-
-const CurrentFeatures = styled.div`
-
-`;
-
-const Characteristics = styled.div`
-
-`;
-
-const RelatedFeatures = styled.div`
-
-`;
-
-const FirstRow = styled.div`
-
 `;
 
 const RowsContainer = styled.div`
-
+display: flex;
+flex-direction: column;
 `;
 
 const Row = styled.div`
+margin: 10px 0px;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+border-bottom: 1px solid black;
+`;
 
+const Column = styled.div`
+display: flex;
 `;
 
 const Empty = styled.div`
