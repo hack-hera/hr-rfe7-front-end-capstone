@@ -14,6 +14,7 @@ class QuestionsAnswers extends React.Component {
     super(props);
 
     this.state = {
+      product_id: 0,
       questionsShow: 2,
       answersShow: 2,
       questions: [],
@@ -21,7 +22,8 @@ class QuestionsAnswers extends React.Component {
       answeredQuestion: [],
       searchText: '',
       searchQuestions: [],
-      answeredSearchQuestion: []
+      answeredSearchQuestion: [],
+      product_name: ''
     };
 
     this.searchInput = this.searchInput.bind(this);
@@ -30,10 +32,15 @@ class QuestionsAnswers extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { id } = this.props.product;
     if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
-      api.getQuestions({ product_id: 37323, count: 100 }).then((res) => {
+      api.getQuestions({ product_id: id, count: 100 }).then((res) => {
         this.setState({
+          product_id: this.props.product,
+          questionsShow: 2,
+          answersShow: 2,
+          answeredQuestionShow: 0,
+          product_name: this.props.product.name,
           questions: res.results,
-          answeredQuestion: res.results.slice(2).filter(question => question.answers !== undefined)
+          answeredQuestion: res.results.slice(2).filter(question => Object.keys(question.answers).length > 0)
         });
       });
     }
@@ -48,13 +55,16 @@ class QuestionsAnswers extends React.Component {
   }
 
   render() {
-    const {questionsShow, answeredQuestionShow, answersShow, questions, answeredQuestion, searchText, searchQuestions, answeredSearchQuestion} = this.state;
+    const {questionsShow, answeredQuestionShow, answersShow, questions, answeredQuestion, searchText, searchQuestions, answeredSearchQuestion, product_name, product_id} = this.state;
 
     return (
       <div>
+        <h3>Questions & Answers</h3>
         <SearchBar searchInput={this.searchInput}/>
         <div>
           <QuestionList
+            product_id={product_id}
+            product_name={product_name}
             questions={questions}
             questionsShow={questionsShow}
             answersShow={answersShow}
