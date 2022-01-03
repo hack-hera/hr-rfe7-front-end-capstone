@@ -59,6 +59,7 @@ class QuestionsAnswers extends React.Component {
 
     return (
       <div>
+        <h3>Questions & Answers</h3>
         <SearchBar searchInput={this.searchInput}/>
         <div>
           <QuestionList

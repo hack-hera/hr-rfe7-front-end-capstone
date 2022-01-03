@@ -47,9 +47,7 @@ export const MarkAnswerHelpfulAndReported = ({answer}) => {
 };
 
 export const MarkQuestionHelpfulAndReported = ({question}) => {
-
   let markedQuestions = ls.get('markedQuestions') || [];
-
   let [alreadyMarked, setAlreadyMarked] = useState(
     markedQuestions.includes(question.question_id)
   );
@@ -57,7 +55,6 @@ export const MarkQuestionHelpfulAndReported = ({question}) => {
   useEffect(() => {
     setAlreadyMarked(markedQuestions.includes(question.question_id));
   }, [question.question_id]);
-
 
   let MarkQuestionHelpful = () => {
     ls.set('markedQuestions', [...markedQuestions, question.question_id]);
