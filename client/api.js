@@ -33,6 +33,7 @@ const api = {
     obj.currentProduct = await this.getProductData({ product_id });
     obj.reviewData = await this.getReviewData({ product_id });
     obj.relatedProducts = await this.getRelatedProductData({ product_id });
+    obj.questionData = await this.getQuestionData({ product_id });
     return obj;
   },
 
@@ -190,7 +191,7 @@ const api = {
   },
 
   getReviewData: async function (params = {}, useCache = true) {
-    const { product_id, count = 5, page = 1, sort = 'newest' } = params;
+    const { product_id, count = 100, page = 1, sort = 'newest' } = params;
 
     try {
       if (useCache === true) {
@@ -303,6 +304,25 @@ const api = {
       .get(host + '/qa/questions/' + question_id + '/answers', headers)
       .then((res) => Promise.resolve(res.data))
       .catch((err) => Promise.reject(new Error(err)));
+  },
+
+  getQuestionData: async function (params = {}, useCache = true) {
+    const { product_id, count = 100, page = 1 } = params;
+    const url = `/qa/questions?product_id=${product_id}&count=${count}&page=${page}`;
+
+    try {
+      if (useCache === true) {
+        let cachedQuestions = getCache('questions', product_id);
+        if (cachedQuestions) {
+          return cachedQuestions;
+        }
+      }
+      let questionRes = await axios.get(host + url, headers);
+      cache('questions', product_id, questionRes.data);
+      return questionRes.data;
+    } catch (err) {
+      throw new Error(err);
+    }
   },
 
   //Adds a question for the given product
