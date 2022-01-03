@@ -84,7 +84,9 @@ var CompareModal = (props) => {
 };
 
 const Container = styled.div`
-
+display: flex;
+flex-direction: column;
+position: relative;
 `;
 
 const Title = styled.div`
@@ -92,7 +94,8 @@ const Title = styled.div`
 `;
 
 const Header = styled.div`
-
+display: flex;
+flex-direction: row;
 `;
 
 const Current = styled.div`

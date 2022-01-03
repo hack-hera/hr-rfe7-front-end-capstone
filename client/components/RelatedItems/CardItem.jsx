@@ -63,7 +63,9 @@ var CardItem = (props) => {
 
       {showing === true && (
         <Modal
-          onClose={() => setShowing(false)}>
+          onClose={() => setShowing(false)}
+          width={100}
+          height={100}>
           <CompareModal
             related={props.item}
             current={props.currentProduct}
