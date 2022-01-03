@@ -37,7 +37,7 @@ const RelatedCarousel = (props) => {
             {props.relatedItems.map((item, i) => {
               return (
                 <CardItem
-                  key={item.id}
+                  key={i}
                   item={item}
                   // rating={}
                   inOutfit={false}
