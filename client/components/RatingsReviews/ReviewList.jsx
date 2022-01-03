@@ -6,14 +6,30 @@ import { Button } from '../Shared/Form';
 
 const ReviewList = ({ data, filters, addReview, product }) => {
   let display = data.reviews.filter((r) => filters[r.rating]);
-  const [showing, setShowing] = useState(Math.min(2, display.length));
+
+  const [showing, setShowing] = useState(2);
   const [sort, setSort] = useState('newest');
   const [keyword, setKeyword] = useState('');
+  const [infinite, setInfinite] = useState(false);
+
+  const onScroll = (e) => {
+    if (infinite && window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (showing < display.length) {
+        setShowing(showing + 2);
+      }
+    }
+  };
 
   //Update the state if the user switches to a different product
   useEffect(() => {
-    setShowing(Math.min(2, display.length));
+    setShowing(2);
+    setInfinite(false);
   }, [product.id]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  });
 
   //sort based upon the default sort
   display = sortReviews(display, sort);
@@ -23,16 +39,10 @@ const ReviewList = ({ data, filters, addReview, product }) => {
     display = keywordFilter(display, keyword);
   }
 
-  //unfurl the list if there are >0 items to display
-  if (showing === 0 && display.length > 0) {
-    setShowing(2);
-  }
-
   return (
     <Container>
       <Header>
-        Showing {Math.min(display.length, showing)} of {display.length} reviews
-        | sorted by
+        Showing {Math.min(display.length, showing)} of {display.length} reviews | sorted by
         <Select onChange={(e) => setSort(e.target.value)}>
           <option value='newest'>newest</option>
           <option value='oldest'>oldest</option>
@@ -47,19 +57,24 @@ const ReviewList = ({ data, filters, addReview, product }) => {
           onChange={(e) => setKeyword(e.target.value)}
         />
       </Header>
-      {display.slice(0, showing).map((r, i) => (
-        <ReviewItem review={r} key={i} product={product} keyword={keyword} />
-      ))}
-      {showing < display.length && (
-        <Button
-          onClick={() =>
-            setShowing(showing + Math.min(2, display.length - showing))
-          }
-        >
-          Show More
-        </Button>
+
+      {display.map(
+        (r, i) =>
+          i < showing && <ReviewItem review={r} key={i} product={product} keyword={keyword} />
       )}
-      <Button onClick={addReview}>
+      {showing < display.length && infinite === false && (
+        <>
+          <Button
+            onClick={() => {
+              setInfinite(true);
+              setShowing(showing + 2);
+            }}
+          >
+            Show More
+          </Button>
+        </>
+      )}
+      <Button onClick={addReview} style={{ marginBottom: '100px' }}>
         Add a Review &nbsp;<b>+</b>
       </Button>
     </Container>
