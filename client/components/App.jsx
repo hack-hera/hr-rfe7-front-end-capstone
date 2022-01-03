@@ -64,26 +64,6 @@ class App extends Component {
           product={currentProduct}
           updateProduct={(id) => this.updateProduct(id)}
         />
-<<<<<<< HEAD
-        <Container>
-          <ProductDetail
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-            productReviews={this.state.reviewData}
-          />
-          <RelatedItems
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-            rating={this.state.reviewData}
-            state={this.state} />
-          <QuestionsAnswers
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
-          {this.state.reviewData && (
-            <RatingsReviews
-              data={this.state.reviewData}
-=======
         {currentProduct && (
           <Container>
             <ProductDetail
@@ -91,14 +71,15 @@ class App extends Component {
               updateProduct={(id) => this.updateProduct(id)}
               productReviews={this.state.reviewData}
             />
-            <RelatedItems
-              product={currentProduct}
-              updateProduct={(id) => this.updateProduct(id)}
-              rating={this.state.reviewData}
-              state={this.state}
-            />
+            {this.state.relatedProducts &&
+              <RelatedItems
+                product={currentProduct}
+                related={this.state.relatedProducts}
+                updateProduct={(id) => this.updateProduct(id)}
+                rating={this.state.reviewData}
+              />
+            }
             <QuestionsAnswers
->>>>>>> master
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
             />
