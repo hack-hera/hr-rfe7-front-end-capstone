@@ -70,12 +70,7 @@ class App extends Component {
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
             rating={this.state.reviewData}
-<<<<<<< HEAD
             state={this.state} />
-=======
-            state={this.state}
-          />
->>>>>>> master
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
