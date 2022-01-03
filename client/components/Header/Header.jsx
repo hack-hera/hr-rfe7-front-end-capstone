@@ -5,10 +5,6 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Header = ({ product, products, updateProduct, toggleColors }) => {
-  if (!product) {
-    return <></>;
-  }
-
   return (
     <Navbar>
       <div>
@@ -17,16 +13,24 @@ export const Header = ({ product, products, updateProduct, toggleColors }) => {
         </h1>
       </div>
       <div>
-        <select defaultValue={product.id} onChange={(e) => updateProduct(e.target.value)}>
-          {products.map((x, i) => (
-            <option key={x.id} value={x.id}>
-              {x.id} - {x.name}
-            </option>
-          ))}
-        </select>
+        {product && (
+          <select defaultValue={product.id} onChange={(e) => updateProduct(e.target.value)}>
+            {products.map((x, i) => (
+              <option key={x.id} value={x.id}>
+                {x.id} - {x.name}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
       <div>
-        <StyledInput type='text'></StyledInput>
+        <StyledInput type='text' list='languages'></StyledInput>
+        <datalist id='languages'>
+          <option value='JavaScript'></option>
+          <option value='Python'></option>
+          <option value='Java'></option>
+          <option value='HTML'>Stop being a troll</option>
+        </datalist>
         <FontAwesomeIcon icon={faSearch} />
       </div>
     </Navbar>
@@ -34,6 +38,11 @@ export const Header = ({ product, products, updateProduct, toggleColors }) => {
 };
 
 const Navbar = styled.div`
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  top: 0px;
+  left: 0px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

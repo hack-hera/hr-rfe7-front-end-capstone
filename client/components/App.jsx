@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    api.getProducts({ count: 20 }).then((products) => {
+    api.getProducts({ count: 100 }).then((products) => {
       api.getProductData({ product_id: products[0].id }).then((currentProduct) => {
         api
           .getReviewData({
