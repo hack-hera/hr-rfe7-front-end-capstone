@@ -24,6 +24,19 @@ const host = `https://app-hrsei-api.herokuapp.com/api/fec2/${campus}`;
 
 const api = {
   /******************************************************************************
+   * Get All
+   ******************************************************************************/
+
+  getAllData: async function (params = {}) {
+    const { product_id } = params;
+    let obj = {};
+    obj.currentProduct = await this.getProductData({ product_id });
+    obj.reviewData = await this.getReviewData({ product_id });
+    obj.relatedProducts = await this.getRelatedProductData({ product_id });
+    return obj;
+  },
+
+  /******************************************************************************
    * Product
    ******************************************************************************/
 
@@ -129,7 +142,7 @@ const api = {
       });
 
       related.forEach(async (product_id) => {
-        let ratings = await this.getReviewMeta({ product_id });
+        let ratings = await this.getReviewData({ product_id });
         obj.ratings.push(ratings);
       });
 
@@ -323,9 +336,7 @@ const api = {
   addAnswer: function (params = {}) {
     const { question_id, body, name, email } = params;
     if (!question_id || !body || !name || !email || Object.keys(params).length !== 4) {
-      return Promise.reject(
-        new Error('params must contain only {question_id, body, name, email}')
-      );
+      return Promise.reject(new Error('params must contain only {question_id, body, name, email}'));
     }
     let url = `${host}/qa/questions/${question_id}/answers`;
     delete params.question_id;
