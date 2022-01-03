@@ -55,7 +55,7 @@ class App extends Component {
   }
 
   render() {
-    const { products, currentProduct, darkMode } = this.state;
+    const { products, currentProduct, reviewData, darkMode } = this.state;
     return (
       <ThemeProvider theme={THEMES[darkMode ? 'darkMode' : 'default']}>
         <Header
@@ -69,21 +69,21 @@ class App extends Component {
             <ProductDetail
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
-              productReviews={this.state.reviewData}
+              productReviews={reviewData}
             />
             <RelatedItems
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
-              rating={this.state.reviewData}
+              rating={reviewData}
               state={this.state}
             />
             <QuestionsAnswers
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
             />
-            {this.state.reviewData && (
+            {reviewData && (
               <RatingsReviews
-                data={this.state.reviewData}
+                data={reviewData}
                 product={currentProduct}
                 fetch={(params) => this.fetchReviewData(params)}
               />
