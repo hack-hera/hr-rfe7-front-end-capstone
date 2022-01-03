@@ -11,7 +11,6 @@ var CardItem = (props) => {
   const [showing, setShowing] = useState(false);
 
   const compare = () => {
-    console.log('star button was pressed');
     setShowing(true);
   };
 
@@ -20,7 +19,6 @@ var CardItem = (props) => {
   };
 
   const remove = () => {
-    console.log('X button was pressed');
     props.remove(props.item.id);
   };
 
@@ -63,7 +61,9 @@ var CardItem = (props) => {
 
       {showing === true && (
         <Modal
-          onClose={() => setShowing(false)}>
+          onClose={() => setShowing(false)}
+          width={100}
+          height={100}>
           <CompareModal
             related={props.item}
             current={props.currentProduct}
