@@ -15,7 +15,8 @@ class App extends Component {
     this.state = {
       products: [],
       currentProduct: null,
-      // relatedProducts: null,
+      relatedProducts: null,
+      questionData: null,
       reviewData: null,
       darkMode: false,
     };
@@ -29,13 +30,8 @@ class App extends Component {
 
   componentDidMount() {
     api.getProducts({ count: 100 }).then((products) => {
-      api.getAllData({ product_id: products[0].id }).then((data) => {
-        this.setState({
-          products: products,
-          currentProduct: data.currentProduct,
-          // relatedProducts: data.relatedProducts,
-          reviewData: data.reviewData,
-        });
+      this.setState({ products: products }, () => {
+        this.updateProduct(products[0].id);
       });
     });
   }
@@ -45,6 +41,8 @@ class App extends Component {
     api.getAllData({ product_id: id }).then((data) => {
       this.setState({
         currentProduct: data.currentProduct,
+        relatedProducts: data.relatedProducts,
+        questionData: data.questionData,
         reviewData: data.reviewData,
       });
     });
@@ -60,30 +58,32 @@ class App extends Component {
           product={currentProduct}
           updateProduct={(id) => this.updateProduct(id)}
         />
-        <Container>
-          <ProductDetail
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-            productReviews={this.state.reviewData}
-          />
-          <RelatedItems
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-            rating={this.state.reviewData}
-            state={this.state}
-          />
-          <QuestionsAnswers
-            product={currentProduct}
-            updateProduct={(id) => this.updateProduct(id)}
-          />
-          {this.state.reviewData && (
-            <RatingsReviews
-              data={this.state.reviewData}
+        {currentProduct && (
+          <Container>
+            <ProductDetail
               product={currentProduct}
-              fetch={(params) => this.fetchReviewData(params)}
+              updateProduct={(id) => this.updateProduct(id)}
+              productReviews={this.state.reviewData}
             />
-          )}
-        </Container>
+            <RelatedItems
+              product={currentProduct}
+              updateProduct={(id) => this.updateProduct(id)}
+              rating={this.state.reviewData}
+              state={this.state}
+            />
+            <QuestionsAnswers
+              product={currentProduct}
+              updateProduct={(id) => this.updateProduct(id)}
+            />
+            {this.state.reviewData && (
+              <RatingsReviews
+                data={this.state.reviewData}
+                product={currentProduct}
+                fetch={(params) => this.fetchReviewData(params)}
+              />
+            )}
+          </Container>
+        )}
       </ThemeProvider>
     );
   }
