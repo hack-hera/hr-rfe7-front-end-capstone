@@ -154,11 +154,14 @@ class ProductDetail extends Component {
                   addToCart={this.addToCart}
                 />
               </Cart>
-              <ShareButtons />
-              {currentProduct && <ProductDescription currentProduct={currentProduct} />}
+              <ShareButtons/>
+              {/* {currentProduct && <ProductDescription currentProduct={currentProduct} />} */}
             </ProductInfoContainer>
           </ProductContainer>
         )}
+        <br></br>
+        {currentProduct && <ProductDescription currentProduct={currentProduct} />}
+        <br></br>
       </Container>
     );
   }

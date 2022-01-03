@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from '../Shared/Modal.jsx';
 
 const ProductImage = (props) => {
+
   if (props.currentPhoto.url) {
     return (
       <Image

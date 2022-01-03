@@ -6,9 +6,11 @@ const ProductDescription = (props) => {
     return (
       <Container>
         <Description>
+          <b>Description:  </b>
           {props.currentProduct.description}
         </Description>
         <Features>
+          <b>Features</b>
           {props.currentProduct.features.map((feature, key) => (
             <li key={key}>{feature.feature}: {feature.value}</li>
           ))}
