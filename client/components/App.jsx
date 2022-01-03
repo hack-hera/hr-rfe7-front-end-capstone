@@ -28,6 +28,12 @@ class App extends Component {
     });
   }
 
+  fetchQuestionData({ product_id, page = 1, count = 100 }) {
+    api.getQuestionData({ product_id, page, count, sort }, false).then((res) => {
+      this.setState({ questionData: res });
+    });
+  }
+
   componentDidMount() {
     api.getProducts({ count: 100 }).then((products) => {
       this.setState({ products: products }, () => {
