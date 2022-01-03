@@ -15,6 +15,7 @@ class App extends Component {
     this.state = {
       products: [],
       currentProduct: null,
+      // relatedProducts: null,
       reviewData: null,
       darkMode: false,
     };
@@ -28,29 +29,24 @@ class App extends Component {
 
   componentDidMount() {
     api.getProducts({ count: 100 }).then((products) => {
-      api.getProductData({ product_id: products[0].id }).then((currentProduct) => {
-        api
-          .getReviewData({
-            product_id: products[0].id,
-            page: 1,
-            count: 100,
-            sort: 'newest',
-          })
-          .then((reviewData) => {
-            this.setState({ products, currentProduct, reviewData });
-          });
+      api.getAllData({ product_id: products[0].id }).then((data) => {
+        this.setState({
+          products: products,
+          currentProduct: data.currentProduct,
+          // relatedProducts: data.relatedProducts,
+          reviewData: data.reviewData,
+        });
       });
     });
   }
 
   //Handler to update the main product
   updateProduct(id) {
-    api.getProductData({ product_id: id }).then((currentProduct) => {
-      api
-        .getReviewData({ product_id: id, page: 1, count: 100, sort: 'newest' })
-        .then((reviewData) => {
-          this.setState({ currentProduct, reviewData });
-        });
+    api.getAllData({ product_id: id }).then((data) => {
+      this.setState({
+        currentProduct: data.currentProduct,
+        reviewData: data.reviewData,
+      });
     });
   }
 
@@ -74,7 +70,12 @@ class App extends Component {
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
             rating={this.state.reviewData}
+<<<<<<< HEAD
             state={this.state} />
+=======
+            state={this.state}
+          />
+>>>>>>> master
           <QuestionsAnswers
             product={currentProduct}
             updateProduct={(id) => this.updateProduct(id)}
