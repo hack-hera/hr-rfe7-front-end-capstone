@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 
 
-export const AnswerModal = ({ product_name, handleClose, question}) => {
+export const AnswerModal = ({ product_name, handleClose, question, submitForm}) => {
 
   return (
     <Container>
@@ -34,7 +34,7 @@ export const AnswerModal = ({ product_name, handleClose, question}) => {
 
         <br/>
         <br/>
-        <button>Submit</button>
+        <button onClick={submitForm}>Submit</button>
       </ModalForm>
     </Container>
   );

@@ -1,59 +1,74 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import api from '../../api.js';
 import ls from 'local-storage';
 
 export const MarkAnswerHelpfulAndReported = ({answer}) => {
-
-  let answerHelpfulMarked = (ls.get('markedAnswers') || []).includes(answer.id);
-  let answerReportMarked = (ls.get('markedAnswersReport') || []).includes(answer.reported);
+  let markedAnswers = ls.get('markedAnswers') || [];
+  let markedReported = ls.get('markedReported') || [];
 
   let [alreadyMarked, setAlreadyMarked] = useState(
-    markedReviews.includes(answer.id)
+    markedAnswers.includes(answer.id)
+  );
+  let [alreadyReported, setAlreadyReported] = useState(
+    markedReported.includes(answer.id)
   );
 
+  useEffect(() => {
+    setAlreadyMarked(markedAnswers.includes(answer.id));
+    setAlreadyReported(markedReported.includes(answer.id));
+  }, [answer.id]);
+
   let MarkAnswerHelpful = () => {
-    let markedAnswers = ls.get('markedAnswers') || [];
     ls.set('markedAnswers', [...markedAnswers, answer.id]);
     api.markAnswerAsHelpful({answer_id: answer.id});
+    setAlreadyMarked(true);
   };
 
   let MarkAnswerReported = () => {
-    let markedReported = ls.get('markedReported' || []);
-    ls.get('markedReported', [markedReported, answer.reported]);
+    ls.get('markedReported', [...markedReported, answer.id]);
     api.reportAnswer({answer_id: answer.id});
+    setAlreadyReported(true);
   };
+
 
   return (
     <span>
       <span>
-        {answerHelpfulMarked === true && <>✓ Helpful {answer.helpfuless} <u>Yes</u>({answer.helpfulness})&emsp;|&emsp;</>}
-        {answerHelpfulMarked === false && <span>Helpful?{answer.helpfuless} <u onClick={MarkAnswerHelpful}>Yes</u>({answer.helpfulness})&emsp;|&emsp;</span>}
+        {alreadyMarked === true && <>✓ Helpful  <u>Yes</u>({answer.helpfulness + 1})&emsp;|&emsp;</>}
+        {alreadyMarked === false && <span>Helpful? <u onClick={MarkAnswerHelpful}>Yes</u>({answer.helpfulness})&emsp;|&emsp;</span>}
       </span>
       <span>
-        {answerReportMarked === true && <u>Reported</u>}
-        {answerReportMarked === false && <u onClick={MarkAnswerReported}>Report</u>}
+        {alreadyReported === true && <u>Reported</u>}
+        {alreadyReported === false && <u onClick={MarkAnswerReported}>Report</u>}
       </span>
     </span>
   );
 };
 
-export const MarkQuestionHelpfulAndReported = ({question, product_id}) => {
+export const MarkQuestionHelpfulAndReported = ({question}) => {
 
-  let questionHelpfulMarked = (ls.get('markedQuestions') || []).includes(question.question_id);
+  let markedQuestions = ls.get('markedQuestions') || [];
+
+  let [alreadyMarked, setAlreadyMarked] = useState(
+    markedQuestions.includes(question.question_id)
+  );
+
+  useEffect(() => {
+    setAlreadyMarked(markedQuestions.includes(question.question_id));
+  }, [question.question_id]);
+
 
   let MarkQuestionHelpful = () => {
-    let markedQuestions = ls.get('markedQuestions') || [];
     ls.set('markedQuestions', [...markedQuestions, question.question_id]);
     api.markQuestionAsHelpful({question_id: question.question_id});
-
-    // api.getQuestions({product_id: product_id, count: 100});
+    setAlreadyMarked(true);
   };
 
   return (
     <AlignRight>
-      {questionHelpfulMarked === true && <>✓ Helpful {question.question_helpfuless + 1} <u>Yes</u>({question.question_helpfulness + 1})&emsp;|&emsp;</>}
-      {questionHelpfulMarked === false && <span>Helpful?{question.question_helpfuless} <u onClick={MarkQuestionHelpful}>Yes</u>({question.question_helpfulness})&emsp;|&emsp;</span>}
+      {alreadyMarked === true && <>✓ Helpful  <u>Yes</u>({question.question_helpfulness + 1})&emsp;|&emsp;</>}
+      {alreadyMarked === false && <span>Helpful? <u onClick={MarkQuestionHelpful}>Yes</u>({question.question_helpfulness})&emsp;|&emsp;</span>}
     </AlignRight>
   );
 };
