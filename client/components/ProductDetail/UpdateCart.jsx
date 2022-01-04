@@ -1,64 +1,81 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AddToCart from './AddToCart.jsx';
 
-const UpdateCart = (props) => {
-  var availability = [{
-    size: 'Select Size',
-    quantity: null
-  }];
+const UpdateCart = ({ style }) => {
+  console.log(style);
+  const [selectedSize, setSelectedSize] = useState(0);
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
 
-  for (var key in props.currentStyle.skus) {
-    if (!props.currentStyle.skus[key].quantity) {
-      continue;
-    }
-    var obj = {
-      size: props.currentStyle.skus[key].size,
-      quantity: props.currentStyle.skus[key].quantity
-    };
-    availability.push(obj);
-  }
+  useEffect(() => {
+    setSelectedSize(0);
+    setSelectedQuantity(0);
+  }, [style.style_id]);
 
-  if (availability.length === 1) {
-    availability[0].size = 'Out of Stock';
-  }
+  let sizes = Object.keys(style.skus).map((x) => style.skus[x].size);
+  let quantities = Object.keys(style.skus).map((x) => style.skus[x].quantity);
 
-  var amountAvailable = ['-'];
-  var count = 1;
-  while (count <= props.selectedSize.quantity) {
-    amountAvailable.push(count);
-    count++;
-    if (count === 16) {
-      break;
-    }
-  }
-
-  if (amountAvailable.length > 1) {
-    amountAvailable.shift();
-  }
+  let availableQuantities = new Array(Math.min(15, quantities[selectedSize]))
+    .fill(0)
+    .map((x, i) => i + 1);
 
   return (
     <Container>
-      <Warning id="warning">Please Select Size</Warning>
       <Selections>
-        <SizeSelection id="size" onChange = {(event) => {
-          warning.style.visibility = 'hidden';
-          return props.changeSize(event.target.value);
-        }}>
-          {availability.map((option, i) => (
-            <option key={i} value = {option.size}>{option.size}</option>
+        <SizeSelection
+          onChange={(e) => {
+            setSelectedSize(parseInt(e.target.value));
+            setSelectedQuantity(0);
+          }}
+          value={selectedSize}
+        >
+          <option>Select Size</option>
+          {sizes.map((size, i) => (
+            <option key={i} value={i}>
+              {size}
+            </option>
           ))}
         </SizeSelection>
-        <QuantitySelection onChange = {(event) => (props.changeQuantity(event.target.value))}>
+        <QuantitySelection
+          value={selectedQuantity}
+          onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}
+        >
+          {availableQuantities.map((quantity, i) => (
+            <option key={i} value={i}>
+              {quantity}
+            </option>
+          ))}
+        </QuantitySelection>
+      </Selections>
+
+      {/* <Warning id='warning'>Please Select Size</Warning>
+      <Selections>
+        <SizeSelection
+          id='size'
+          onChange={(event) => {
+            warning.style.visibility = 'hidden';
+            return props.changeSize(event.target.value);
+          }}
+        >
+          {availability.map((option, i) => (
+            <option key={i} value={option.size}>
+              {option.size}
+            </option>
+          ))}
+        </SizeSelection>
+        <QuantitySelection onChange={(event) => props.changeQuantity(event.target.value)}>
           {amountAvailable.map((option) => (
-            <option key={option} value = {option}>{option}</option>
+            <option key={option} value={option}>
+              {option}
+            </option>
           ))}
         </QuantitySelection>
       </Selections>
       <AddToCart
         availability={availability}
         addToCart={props.addToCart}
-        selectedSize={props.selectedSize}/>
+        selectedSize={props.selectedSize}
+      /> */}
     </Container>
   );
 };

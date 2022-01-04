@@ -14,34 +14,23 @@ import ProductDescription from './ProductDescription.jsx';
 import ScrollToReviews from './ScrollToReviews.jsx';
 
 const ProductDetail = ({ product, productReviews }) => {
-  const [style, setStyle] = useState(product.styles[0]);
-  const [photo, setPhoto] = useState(product.styles[0].photos[0]);
-  const [selectedSize, setSelectedSize] = useState('');
-  const [selectedQuantity, setSelectedQuantity] = useState('');
+  console.log('>>>>>', product);
+
+  const [style, setStyle] = useState(product.styles.length > 0 ? product.styles[0] : {});
+  const [photo, setPhoto] = useState(product.styles.length > 0 ? product.styles[0].photos[0] : {});
 
   let rating = totalRating(productReviews.ratings);
   let allRatings = productReviews.numReviews;
 
   useEffect(() => {
-    setStyle(product.styles[0]);
-    setPhoto(product.styles[0].photos[0]);
+    if (product.styles.length > 0) {
+      setStyle(product.styles.length > 0 ? product.styles[0] : {});
+      setPhoto(product.styles.length > 0 ? product.styles[0].photos[0] : {});
+    } else {
+      setStyle({});
+      setPhoto({});
+    }
   }, [product.id]);
-
-  let changeSize = (size) => {
-    if (size === 'Select Size') {
-      setSelectedSize('');
-    }
-    for (var key in style.skus) {
-      if (style.skus[key].size === size) {
-        setSelectedSize(style.skus[key]);
-        break;
-      }
-    }
-  };
-
-  let addToCart = (id, size, quantity) => {
-    console.log(id, size, quantity, '<<<<<');
-  };
 
   return (
     <Container id='ProductDetail'>
@@ -81,13 +70,7 @@ const ProductDetail = ({ product, productReviews }) => {
             }}
           />
           <Cart>
-            <UpdateCart
-              currentStyle={style}
-              changeSize={(n) => changeSize(n)}
-              selectedSize={selectedSize}
-              changeQuantity={(q) => setSelectedQuantity(q)}
-              addToCart={addToCart}
-            />
+            <UpdateCart style={style} />
           </Cart>
           <ShareButtons />
         </ProductInfoContainer>
