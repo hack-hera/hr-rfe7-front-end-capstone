@@ -1,64 +1,86 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import AddToCart from './AddToCart.jsx';
+import ls from 'local-storage';
+import { Button } from '../Shared/Form';
 
-const UpdateCart = (props) => {
-  var availability = [{
-    size: 'Select Size',
-    quantity: null
-  }];
+const UpdateCart = ({ style, product, addToCart }) => {
+  //Define Variables for Functional Component
+  const [selectedSize, setSelectedSize] = useState(0);
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
+  const [warning, setWarning] = useState(false);
+  let sizes;
+  let availableQuantities;
+  let quantities;
 
-  for (var key in props.currentStyle.skus) {
-    if (!props.currentStyle.skus[key].quantity) {
-      continue;
+  //If the user switches the style, then reset the state
+  useEffect(() => {
+    setSelectedSize(0);
+    setSelectedQuantity(0);
+  }, [style]);
+
+  //Handle a click on the cart
+  let handleAddCartClick = (validation) => {
+    console.log(selectedSize);
+    if (selectedSize === 0 && validation === true) {
+      setWarning(true);
+    } else {
+      addToCart({
+        product_id: product.id,
+        style_id: style ? style.style_id : null,
+        sku_id: style ? Object.keys(style.skus)[selectedSize] : null,
+        size: style && selectedSize > 0 ? sizes[selectedSize] : null,
+        quantity: style && selectedSize > 0 ? availableQuantities[selectedQuantity] : null,
+      });
     }
-    var obj = {
-      size: props.currentStyle.skus[key].size,
-      quantity: props.currentStyle.skus[key].quantity
-    };
-    availability.push(obj);
+  };
+
+  //If the style is not defined, then we simply return a Button
+  if (!style || !style.skus || Object.keys(style.skus)[0] === 'null') {
+    return <Button onClick={() => handleAddCartClick(false)}>Add to Cart</Button>;
   }
 
-  if (availability.length === 1) {
-    availability[0].size = 'Out of Stock';
-  }
+  //Update the sizes/quantities/available quantities
+  sizes = Object.keys(style.skus).map((x) => style.skus[x].size);
+  sizes.unshift('Select Size');
+  quantities = Object.keys(style.skus).map((x) => style.skus[x].quantity);
 
-  var amountAvailable = ['-'];
-  var count = 1;
-  while (count <= props.selectedSize.quantity) {
-    amountAvailable.push(count);
-    count++;
-    if (count === 16) {
-      break;
-    }
-  }
+  availableQuantities = new Array(Math.min(15, quantities[Math.max(0, selectedSize - 1)]))
+    .fill(0)
+    .map((x, i) => i + 1);
 
-  if (amountAvailable.length > 1) {
-    amountAvailable.shift();
-  }
-
+  //Update the sizes/quantities/available quantities
   return (
     <Container>
-      <Warning id="warning">Please Select Size</Warning>
+      {warning && <Warning>Must make a selection</Warning>}
       <Selections>
-        <SizeSelection id="size" onChange = {(event) => {
-          warning.style.visibility = 'hidden';
-          return props.changeSize(event.target.value);
-        }}>
-          {availability.map((option, i) => (
-            <option key={i} value = {option.size}>{option.size}</option>
+        <SizeSelection
+          onChange={(e) => {
+            setSelectedSize(parseInt(e.target.value));
+            setSelectedQuantity(0);
+            setWarning(false);
+          }}
+          value={selectedSize}
+        >
+          {sizes.map((size, i) => (
+            <option key={i} value={i}>
+              {size}
+            </option>
           ))}
         </SizeSelection>
-        <QuantitySelection onChange = {(event) => (props.changeQuantity(event.target.value))}>
-          {amountAvailable.map((option) => (
-            <option key={option} value = {option}>{option}</option>
-          ))}
-        </QuantitySelection>
+        {selectedSize > 0 && (
+          <QuantitySelection
+            value={selectedQuantity}
+            onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}
+          >
+            {availableQuantities.map((quantity, i) => (
+              <option key={i} value={i}>
+                {quantity}
+              </option>
+            ))}
+          </QuantitySelection>
+        )}
       </Selections>
-      <AddToCart
-        availability={availability}
-        addToCart={props.addToCart}
-        selectedSize={props.selectedSize}/>
+      <Button onClick={() => handleAddCartClick(true)}>Add to Cart</Button>
     </Container>
   );
 };
@@ -70,7 +92,6 @@ const Selections = styled.div`
 `;
 
 const Warning = styled.div`
-  visibility: hidden;
   color: red;
 `;
 
@@ -81,10 +102,14 @@ const Container = styled.div`
 
 const SizeSelection = styled.select`
   width: 50%;
+  padding: 10px;
   margin-right: 5px;
+  margin-bottom: 15px;
 `;
 
 const QuantitySelection = styled.select`
   width: 50%;
+  padding: 10px;
   margin-right: 5px;
+  margin-bottom: 15px;
 `;
