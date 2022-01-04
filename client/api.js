@@ -45,7 +45,7 @@ const api = {
   // page	integer	Selects the page of results to return. Default 1.
   // count	integer	Specifies how many results per page to return. Default 5.
   getProducts: function (params = {}) {
-    const { page = 1, count = 5 } = params;
+    const { page = 1, count = 100 } = params;
     return axios
       .get(host + `/products?page=${page}&count=${count}`, headers)
       .then((res) => Promise.resolve(res.data))
@@ -163,7 +163,7 @@ const api = {
   // product_id	integer	Specifies the product for which to retrieve reviews.
   // TODO - implement CACHING for getReviews
   getReviews: function (params = {}) {
-    const { product_id, count = 5, page = 1, sort = 'newest' } = params;
+    const { product_id, count = 100, page = 1, sort = 'newest' } = params;
     if (!product_id) {
       return Promise.reject(new Error('must provide product_id'));
     }
@@ -354,8 +354,8 @@ const api = {
   // photos	[text]	An array of urls corresponding to images to display
 
   addAnswer: function (params = {}) {
-    const { question_id, body, name, email } = params;
-    if (!question_id || !body || !name || !email || Object.keys(params).length !== 4) {
+    const { question_id, body, name, email, photos } = params;
+    if (!question_id || !body || !name || !email || !photos || Object.keys(params).length !== 5) {
       return Promise.reject(new Error('params must contain only {question_id, body, name, email}'));
     }
     let url = `${host}/qa/questions/${question_id}/answers`;
