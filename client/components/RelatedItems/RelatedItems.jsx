@@ -6,6 +6,7 @@ import RelatedCarousel from './RelatedCarousel.jsx';
 import OutfitCarousel from './OutfitCarousel.jsx';
 
 var RelatedItems = (props) => {
+  console.log(props);
   var outfit = ls.get('myoutfit') || [];
   const [outfitData, setOutfit] = useState(outfit);
 
@@ -36,6 +37,7 @@ var RelatedItems = (props) => {
       <RelatedCarousel
         relatedItems={props.related.related}
         currentProduct={props.product}
+        relatedRating={props.related.ratings}
         update={props.updateProduct}
       />
       <Header>YourOutfit</Header>

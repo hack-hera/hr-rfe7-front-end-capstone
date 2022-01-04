@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { COLORS } from '../../settings/colors';
 import styled from 'styled-components';
 import { Stars } from '../Shared/Stars.jsx';
+import { totalRating } from '../../lib/ratingFunctions.js';
 import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -55,6 +56,9 @@ var CardItem = (props) => {
     </Button>;
   }
 
+  var starNum = totalRating(props.rating);
+  console.log(props.item);
+  console.log('this is stars rating', starNum);
 
   return (
     <Container>
