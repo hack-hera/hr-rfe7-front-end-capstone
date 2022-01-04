@@ -51,7 +51,7 @@ const UpdateCart = ({ style, product, addToCart }) => {
   //Update the sizes/quantities/available quantities
   return (
     <Container>
-      {warning && <Warning>Must make a selection</Warning>}
+      {warning && <Warning>Please select size</Warning>}
       <Selections>
         <SizeSelection
           onChange={(e) => {
@@ -67,7 +67,7 @@ const UpdateCart = ({ style, product, addToCart }) => {
             </option>
           ))}
         </SizeSelection>
-        {selectedSize > 0 && (
+        {selectedSize > 0 ? (
           <QuantitySelection
             value={selectedQuantity}
             onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}
@@ -77,6 +77,10 @@ const UpdateCart = ({ style, product, addToCart }) => {
                 {quantity}
               </option>
             ))}
+          </QuantitySelection>
+        ) : (
+          <QuantitySelection disabled>
+            <option>-</option>
           </QuantitySelection>
         )}
       </Selections>
