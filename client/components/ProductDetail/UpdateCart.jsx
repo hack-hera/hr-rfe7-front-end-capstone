@@ -19,8 +19,9 @@ const UpdateCart = ({ style, product, addToCart }) => {
   }, [style]);
 
   //Handle a click on the cart
-  let handleAddCartClick = (bypass) => {
-    if (selectedSize === 0 && !bypass) {
+  let handleAddCartClick = (validation) => {
+    console.log(selectedSize);
+    if (selectedSize === 0 && validation === true) {
       setWarning(true);
     } else {
       addToCart({
@@ -35,7 +36,7 @@ const UpdateCart = ({ style, product, addToCart }) => {
 
   //If the style is not defined, then we simply return a Button
   if (!style || !style.skus || Object.keys(style.skus)[0] === 'null') {
-    return <Button onClick={() => handleAddCartClick(true)}>Add to Cart</Button>;
+    return <Button onClick={() => handleAddCartClick(false)}>Add to Cart</Button>;
   }
 
   //Update the sizes/quantities/available quantities
@@ -79,7 +80,7 @@ const UpdateCart = ({ style, product, addToCart }) => {
           </QuantitySelection>
         )}
       </Selections>
-      <Button onClick={handleAddCartClick}>Add to Cart</Button>
+      <Button onClick={() => handleAddCartClick(true)}>Add to Cart</Button>
     </Container>
   );
 };
