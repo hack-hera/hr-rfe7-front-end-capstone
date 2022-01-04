@@ -71,6 +71,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  background: black;
+  padding: 5px 50px;
 `;
 
 export default RelatedItems;

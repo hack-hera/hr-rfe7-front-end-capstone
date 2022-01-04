@@ -70,6 +70,7 @@ const CarouselContainer = styled.div`
   width: 100%;
   justify-content: center;
   position: relative;
+  background: green;
 `;
 
 const CarouselWrapper = styled.div`
