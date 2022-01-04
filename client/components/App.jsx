@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   fetchQuestionData({ product_id, page = 1, count = 100 }) {
-    api.getQuestionData({ product_id, page, count, sort }, false).then((res) => {
+    api.getQuestionData({ product_id, page, count }, false).then((res) => {
       this.setState({ questionData: res });
     });
   }
@@ -80,8 +80,10 @@ class App extends Component {
               />
             }
             <QuestionsAnswers
+              data={this.state.questionData}
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
+              fetch={(params) => this.fetchQuestionData(params)}
             />
             {this.state.reviewData && (
               <RatingsReviews

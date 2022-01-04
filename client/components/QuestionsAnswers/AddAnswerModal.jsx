@@ -10,7 +10,7 @@ class AddAnswer extends React.Component {
 
     this.state = {
       answer: '',
-      nickName: '',
+      name: '',
       email: '',
       show: false
     };
@@ -39,7 +39,7 @@ class AddAnswer extends React.Component {
 
   nickNameOnChange(e) {
     this.setState({
-      nickName: e.target.value
+      name: e.target.value
     });
   }
 
@@ -50,15 +50,21 @@ class AddAnswer extends React.Component {
   }
 
   submitForm() {
+    console.log(this.state);
     api.addAnswer({
       question_id: this.props.question.question_id,
       body: this.state.answer,
-      name: this.state.nickName,
-      email: this.state.email
+      name: this.state.name,
+      email: this.state.email,
+      photos: []
     });
+    // .then(() => {
+    //   fetch({product_id: this.props.question.question_id})
+    // })
   }
 
   render() {
+
     return (
       <AlignRight>
         {this.state.show === true && <AnswerModal
