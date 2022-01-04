@@ -6,14 +6,12 @@ import RelatedCarousel from './RelatedCarousel.jsx';
 import OutfitCarousel from './OutfitCarousel.jsx';
 
 var RelatedItems = (props) => {
-  console.log(props);
   var outfit = ls.get('myoutfit') || [];
   const [outfitData, setOutfit] = useState(outfit);
 
   const add = () => {
     let product = props.product;
     product.rating = props.rating;
-    console.log('this product was added', product);
     let id = product.id;
     if (outfit.length === 0) {
       ls.set('myoutfit', [...outfit, product]);
@@ -32,7 +30,6 @@ var RelatedItems = (props) => {
     let update = ls.get('myoutfit') || [];
     setOutfit(update);
   };
-
   return (
     <Container>
       <Header>RelatedItems</Header>
@@ -48,7 +45,6 @@ var RelatedItems = (props) => {
         removeItem={remove}
         addOutfit={add}
         currentProduct={props.product}
-
       />
     </Container>
   );
