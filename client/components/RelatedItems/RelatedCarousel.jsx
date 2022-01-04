@@ -27,7 +27,6 @@ const RelatedCarousel = (props) => {
   const ratings = props.relatedRating.map((rating, index) => {
     return rating.ratings;
   });
-  console.log('this is ratings', ratings);
 
   return (
     <CarouselComponent>

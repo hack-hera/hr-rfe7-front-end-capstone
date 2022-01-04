@@ -57,8 +57,6 @@ var CardItem = (props) => {
   }
 
   var starNum = totalRating(props.rating);
-  console.log(props.item);
-  console.log('this is stars rating', starNum);
 
   return (
     <Container>
@@ -87,7 +85,7 @@ var CardItem = (props) => {
         {props.item.name}
       </Name>
       <Price>${props.item.default_price}</Price>
-      <Stars />
+      <Stars number={starNum} />
     </Container>
   );
 };
@@ -108,6 +106,7 @@ const Category = styled.div`
 `;
 
 const Name = styled.div`
+  cursor: pointer;
   font-size: 14px;
   font-weight: bold;
 `;
@@ -123,6 +122,7 @@ const PictureContainer = styled.div`
 `;
 
 const Picture = styled.div`
+  cursor: pointer;
   img {
     height: 150px;
     width: 150px;
