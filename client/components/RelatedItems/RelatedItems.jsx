@@ -30,7 +30,6 @@ var RelatedItems = (props) => {
     let update = ls.get('myoutfit') || [];
     setOutfit(update);
   };
-
   return (
     <Container>
       <Header>RelatedItems</Header>
@@ -46,7 +45,6 @@ var RelatedItems = (props) => {
         removeItem={remove}
         addOutfit={add}
         currentProduct={props.product}
-
       />
     </Container>
   );

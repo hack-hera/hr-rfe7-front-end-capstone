@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import api from '../../api';
 import { Stars } from '../Shared/Stars';
@@ -13,159 +13,80 @@ import ShareButtons from './ShareButtons.jsx';
 import ProductDescription from './ProductDescription.jsx';
 import ScrollToReviews from './ScrollToReviews.jsx';
 
-class ProductDetail extends Component {
-  constructor(props) {
-    super(props);
+const ProductDetail = ({ product, productReviews, addToCart }) => {
+  console.log('>>>>>', product);
 
-    this.state = {
-      currentProduct: null,
-      productStyles: null,
-      currentStyle: null,
-      currentPhoto: null,
-      selectedSize: '',
-      selectedQuantity: '',
-      cart: [],
-      rating: null,
-      allRatings: null,
-    };
+  const [style, setStyle] = useState(product.styles.length > 0 ? product.styles[0] : null);
+  const [photo, setPhoto] = useState(
+    product.styles.length > 0 ? product.styles[0].photos[0] : null
+  );
 
-    this.changeStyle = this.changeStyle.bind(this);
-    this.changePhoto = this.changePhoto.bind(this);
-    this.changeSize = this.changeSize.bind(this);
-    this.changeQuantity = this.changeQuantity.bind(this);
-    this.addToCart = this.addToCart.bind(this);
-  }
+  let rating = totalRating(productReviews.ratings);
+  let allRatings = productReviews.numReviews;
 
-  addToCart(id, size, quantity) {
-    var newCart = this.state.cart.slice();
-    var item = {
-      item: this.state.currentProduct,
-      style: this.state.currentStyle,
-      size: this.state.selectedSize.size,
-      quantity: this.state.selectedQuantity,
-    };
-    newCart.push(item);
-    this.setState({
-      cart: newCart,
-    });
-  }
-
-  changeSize(size) {
-    if (size === 'Select Size') {
-      this.setState({
-        selectedSize: '',
-      });
+  useEffect(() => {
+    if (product.styles.length > 0) {
+      setStyle(product.styles.length > 0 ? product.styles[0] : null);
+      setPhoto(product.styles.length > 0 ? product.styles[0].photos[0] : null);
+    } else {
+      setStyle(null);
+      setPhoto(null);
     }
-    for (var key in this.state.currentStyle.skus) {
-      if (this.state.currentStyle.skus[key].size === size) {
-        this.setState({
-          selectedSize: this.state.currentStyle.skus[key],
-        });
-        break;
-      }
-    }
-    console.log(this.state.selectedSize);
-  }
+  }, [product.id]);
 
-  changeQuantity(quantity) {
-    this.setState({
-      selectedQuantity: quantity,
-    });
-  }
-
-  changeStyle(style) {
-    this.setState({
-      currentStyle: style,
-      currentPhoto: style.photos[0],
-    });
-  }
-
-  changePhoto(photo) {
-    this.setState({
-      currentPhoto: photo,
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { id } = this.props.product;
-    if (id && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
-      api.getProductData({ product_id: id }).then((res) => {
-        this.setState({
-          productStyles: res.styles,
-          currentProduct: res,
-          currentStyle: res.styles[0],
-          currentPhoto: res.styles[0].photos[0],
-          rating: totalRating(this.props.productReviews.ratings),
-          allRatings: this.props.productReviews.numReviews,
-        });
-      });
-    }
-  }
-
-  render() {
-    const {
-      currentProduct,
-      productStyles,
-      currentStyle,
-      currentPhoto,
-      selectedSize,
-      selectedQuantity,
-      rating,
-      allRatings,
-    } = this.state;
-    return (
-      <Container id='ProductDetail'>
-        <h3>Product Details</h3>
-        {currentProduct && (
-          <ProductContainer>
-            <DisplayContainer>
-              <ImageGalleryContainer>
-                <ImageGallery currentStyle={currentStyle} changePhoto={this.changePhoto} />
-              </ImageGalleryContainer>
-              <ImageContainer>
-                <ProductImage currentPhoto={currentPhoto} />
-              </ImageContainer>
-            </DisplayContainer>
-            <ProductInfoContainer>
-              <ReviewsContainer>
-                <Stars number={rating} />
-                <ScrollToReviews allRatings={allRatings} />
-              </ReviewsContainer>
-              <br></br>
-              <div>
-                <b>Category:</b> {currentProduct.category}
-              </div>
-              <p>
-                <b>Product Name: </b>
-                {currentProduct.name}
-              </p>
+  return (
+    <Container id='ProductDetail'>
+      <h3>Product Details</h3>
+      <ProductContainer>
+        {style && (
+          <DisplayContainer>
+            <ImageGalleryContainer>
+              <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />
+            </ImageGalleryContainer>
+            <ImageContainer>{photo && <ProductImage currentPhoto={photo} />}</ImageContainer>
+          </DisplayContainer>
+        )}
+        <ProductInfoContainer>
+          <ReviewsContainer>
+            <Stars number={rating} />
+            <ScrollToReviews allRatings={allRatings} />
+          </ReviewsContainer>
+          <br></br>
+          <div>
+            <b>Category:</b> {product.category}
+          </div>
+          <p>
+            <b>Product Name: </b>
+            {product.name}
+          </p>
+          {style && (
+            <>
               <p>
                 <b>Style: </b>
-                {currentStyle.name}
+                {style.name}
               </p>
-              <RenderPrice currentStyle={currentStyle} />
-              <StyleSelector productStyles={productStyles} changeStyle={this.changeStyle} />
-              <Cart>
-                <UpdateCart
-                  currentStyle={currentStyle}
-                  changeSize={this.changeSize}
-                  selectedSize={selectedSize}
-                  changeQuantity={this.changeQuantity}
-                  addToCart={this.addToCart}
-                />
-              </Cart>
-              <ShareButtons/>
-              {/* {currentProduct && <ProductDescription currentProduct={currentProduct} />} */}
-            </ProductInfoContainer>
-          </ProductContainer>
-        )}
-        <br></br>
-        {currentProduct && <ProductDescription currentProduct={currentProduct} />}
-        <br></br>
-      </Container>
-    );
-  }
-}
+
+              {/* TODO - Refactor this to accept default price if there styles.length === 0 */}
+              <RenderPrice currentStyle={style} />
+              <StyleSelector
+                productStyles={product.styles}
+                changeStyle={(style) => {
+                  setStyle(style);
+                  setPhoto(style.photos[0]);
+                }}
+              />
+            </>
+          )}
+          <Cart>
+            <UpdateCart style={style} product={product} addToCart={addToCart} />
+          </Cart>
+          <ShareButtons />
+        </ProductInfoContainer>
+      </ProductContainer>
+      <ProductDescription currentProduct={product} />
+    </Container>
+  );
+};
 
 const ReviewsContainer = styled.div`
   display: flex;
