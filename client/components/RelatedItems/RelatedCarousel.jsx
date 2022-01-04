@@ -76,6 +76,7 @@ const CarouselContainer = styled.div`
   height: 100%;
   justify-content: center;
   position: relative;
+  background: green;
 `;
 
 const CarouselWrapper = styled.div`
@@ -98,7 +99,7 @@ const LeftButton = styled.div`
   transform: translateY(-50%);
   width: 100px;
   left: 0px;
-  background-image: red;
+  background: red;
 `;
 // background-image: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 
@@ -109,7 +110,7 @@ const RightButton = styled.div`
   transform: translateY(-50%);
   width: 100px;
   right: 0px;
-  background-image: red;
+  background: blue;
 `;
 // background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 
