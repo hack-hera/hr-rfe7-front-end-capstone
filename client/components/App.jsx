@@ -22,6 +22,10 @@ class App extends Component {
     };
   }
 
+  addToCart(obj) {
+    console.log('>>>adding to cart!', obj);
+  }
+
   fetchReviewData({ product_id, page = 1, count = 100, sort = 'newest' }) {
     api.getReviewData({ product_id, page, count, sort }, false).then((res) => {
       this.setState({ reviewData: res });
@@ -70,6 +74,7 @@ class App extends Component {
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
               productReviews={reviewData}
+              addToCart={(obj) => this.addToCart(obj)}
             />
             {this.state.relatedProducts && (
               <RelatedItems

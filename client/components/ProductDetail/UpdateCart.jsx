@@ -1,81 +1,85 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import AddToCart from './AddToCart.jsx';
+import ls from 'local-storage';
+import { Button } from '../Shared/Form';
 
-const UpdateCart = ({ style }) => {
-  console.log(style);
+const UpdateCart = ({ style, product, addToCart }) => {
+  //Define Variables for Functional Component
   const [selectedSize, setSelectedSize] = useState(0);
   const [selectedQuantity, setSelectedQuantity] = useState(0);
+  const [warning, setWarning] = useState(false);
+  let sizes;
+  let availableQuantities;
+  let quantities;
 
+  //If the user switches the style, then reset the state
   useEffect(() => {
     setSelectedSize(0);
     setSelectedQuantity(0);
-  }, [style.style_id]);
+  }, [style]);
 
-  let sizes = Object.keys(style.skus).map((x) => style.skus[x].size);
-  let quantities = Object.keys(style.skus).map((x) => style.skus[x].quantity);
+  //Handle a click on the cart
+  let handleAddCartClick = (bypass) => {
+    if (selectedSize === 0 && !bypass) {
+      setWarning(true);
+    } else {
+      addToCart({
+        product_id: product.id,
+        style_id: style ? style.style_id : null,
+        sku_id: style ? Object.keys(style.skus)[selectedSize] : null,
+        size: style && selectedSize > 0 ? sizes[selectedSize] : null,
+        quantity: style && selectedSize > 0 ? availableQuantities[selectedQuantity] : null,
+      });
+    }
+  };
 
-  let availableQuantities = new Array(Math.min(15, quantities[selectedSize]))
+  //If the style is not defined, then we simply return a Button
+  if (!style || !style.skus || Object.keys(style.skus)[0] === 'null') {
+    return <Button onClick={() => handleAddCartClick(true)}>Add to Cart</Button>;
+  }
+
+  //Update the sizes/quantities/available quantities
+  sizes = Object.keys(style.skus).map((x) => style.skus[x].size);
+  sizes.unshift('Select Size');
+  quantities = Object.keys(style.skus).map((x) => style.skus[x].quantity);
+
+  availableQuantities = new Array(Math.min(15, quantities[Math.max(0, selectedSize - 1)]))
     .fill(0)
     .map((x, i) => i + 1);
 
+  //Update the sizes/quantities/available quantities
   return (
     <Container>
+      {warning && <Warning>Must make a selection</Warning>}
       <Selections>
         <SizeSelection
           onChange={(e) => {
             setSelectedSize(parseInt(e.target.value));
             setSelectedQuantity(0);
+            setWarning(false);
           }}
           value={selectedSize}
         >
-          <option>Select Size</option>
           {sizes.map((size, i) => (
             <option key={i} value={i}>
               {size}
             </option>
           ))}
         </SizeSelection>
-        <QuantitySelection
-          value={selectedQuantity}
-          onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}
-        >
-          {availableQuantities.map((quantity, i) => (
-            <option key={i} value={i}>
-              {quantity}
-            </option>
-          ))}
-        </QuantitySelection>
+        {selectedSize > 0 && (
+          <QuantitySelection
+            value={selectedQuantity}
+            onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}
+          >
+            {availableQuantities.map((quantity, i) => (
+              <option key={i} value={i}>
+                {quantity}
+              </option>
+            ))}
+          </QuantitySelection>
+        )}
       </Selections>
-
-      {/* <Warning id='warning'>Please Select Size</Warning>
-      <Selections>
-        <SizeSelection
-          id='size'
-          onChange={(event) => {
-            warning.style.visibility = 'hidden';
-            return props.changeSize(event.target.value);
-          }}
-        >
-          {availability.map((option, i) => (
-            <option key={i} value={option.size}>
-              {option.size}
-            </option>
-          ))}
-        </SizeSelection>
-        <QuantitySelection onChange={(event) => props.changeQuantity(event.target.value)}>
-          {amountAvailable.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </QuantitySelection>
-      </Selections>
-      <AddToCart
-        availability={availability}
-        addToCart={props.addToCart}
-        selectedSize={props.selectedSize}
-      /> */}
+      <Button onClick={handleAddCartClick}>Add to Cart</Button>
     </Container>
   );
 };
@@ -87,7 +91,6 @@ const Selections = styled.div`
 `;
 
 const Warning = styled.div`
-  visibility: hidden;
   color: red;
 `;
 
@@ -98,10 +101,14 @@ const Container = styled.div`
 
 const SizeSelection = styled.select`
   width: 50%;
+  padding: 10px;
   margin-right: 5px;
+  margin-bottom: 15px;
 `;
 
 const QuantitySelection = styled.select`
   width: 50%;
+  padding: 10px;
   margin-right: 5px;
+  margin-bottom: 15px;
 `;

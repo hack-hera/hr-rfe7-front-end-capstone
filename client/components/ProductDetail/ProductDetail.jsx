@@ -13,22 +13,24 @@ import ShareButtons from './ShareButtons.jsx';
 import ProductDescription from './ProductDescription.jsx';
 import ScrollToReviews from './ScrollToReviews.jsx';
 
-const ProductDetail = ({ product, productReviews }) => {
+const ProductDetail = ({ product, productReviews, addToCart }) => {
   console.log('>>>>>', product);
 
-  const [style, setStyle] = useState(product.styles.length > 0 ? product.styles[0] : {});
-  const [photo, setPhoto] = useState(product.styles.length > 0 ? product.styles[0].photos[0] : {});
+  const [style, setStyle] = useState(product.styles.length > 0 ? product.styles[0] : null);
+  const [photo, setPhoto] = useState(
+    product.styles.length > 0 ? product.styles[0].photos[0] : null
+  );
 
   let rating = totalRating(productReviews.ratings);
   let allRatings = productReviews.numReviews;
 
   useEffect(() => {
     if (product.styles.length > 0) {
-      setStyle(product.styles.length > 0 ? product.styles[0] : {});
-      setPhoto(product.styles.length > 0 ? product.styles[0].photos[0] : {});
+      setStyle(product.styles.length > 0 ? product.styles[0] : null);
+      setPhoto(product.styles.length > 0 ? product.styles[0].photos[0] : null);
     } else {
-      setStyle({});
-      setPhoto({});
+      setStyle(null);
+      setPhoto(null);
     }
   }, [product.id]);
 
@@ -36,14 +38,14 @@ const ProductDetail = ({ product, productReviews }) => {
     <Container id='ProductDetail'>
       <h3>Product Details</h3>
       <ProductContainer>
-        <DisplayContainer>
-          <ImageGalleryContainer>
-            {style && (
+        {style && (
+          <DisplayContainer>
+            <ImageGalleryContainer>
               <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />
-            )}
-          </ImageGalleryContainer>
-          <ImageContainer>{photo && <ProductImage currentPhoto={photo} />}</ImageContainer>
-        </DisplayContainer>
+            </ImageGalleryContainer>
+            <ImageContainer>{photo && <ProductImage currentPhoto={photo} />}</ImageContainer>
+          </DisplayContainer>
+        )}
         <ProductInfoContainer>
           <ReviewsContainer>
             <Stars number={rating} />
@@ -57,20 +59,26 @@ const ProductDetail = ({ product, productReviews }) => {
             <b>Product Name: </b>
             {product.name}
           </p>
-          <p>
-            <b>Style: </b>
-            {style.name}
-          </p>
-          <RenderPrice currentStyle={style} />
-          <StyleSelector
-            productStyles={product.styles}
-            changeStyle={(style) => {
-              setStyle(style);
-              setPhoto(style.photos[0]);
-            }}
-          />
+          {style && (
+            <>
+              <p>
+                <b>Style: </b>
+                {style.name}
+              </p>
+
+              {/* TODO - Refactor this to accept default price if there styles.length === 0 */}
+              <RenderPrice currentStyle={style} />
+              <StyleSelector
+                productStyles={product.styles}
+                changeStyle={(style) => {
+                  setStyle(style);
+                  setPhoto(style.photos[0]);
+                }}
+              />
+            </>
+          )}
           <Cart>
-            <UpdateCart style={style} />
+            <UpdateCart style={style} product={product} addToCart={addToCart} />
           </Cart>
           <ShareButtons />
         </ProductInfoContainer>
