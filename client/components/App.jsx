@@ -22,6 +22,10 @@ class App extends Component {
     };
   }
 
+  addToCart(obj) {
+    console.log('>>>adding to cart!', obj);
+  }
+
   fetchReviewData({ product_id, page = 1, count = 100, sort = 'newest' }) {
     api.getReviewData({ product_id, page, count, sort }, false).then((res) => {
       this.setState({ reviewData: res });
@@ -55,7 +59,7 @@ class App extends Component {
   }
 
   render() {
-    const { products, currentProduct, darkMode } = this.state;
+    const { products, currentProduct, reviewData, darkMode } = this.state;
     return (
       <ThemeProvider theme={THEMES[darkMode ? 'darkMode' : 'default']}>
         <Header
@@ -69,25 +73,26 @@ class App extends Component {
             <ProductDetail
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
-              productReviews={this.state.reviewData}
+              productReviews={reviewData}
+              addToCart={(obj) => this.addToCart(obj)}
             />
-            {this.state.relatedProducts &&
+            {this.state.relatedProducts && (
               <RelatedItems
                 product={currentProduct}
                 related={this.state.relatedProducts}
                 updateProduct={(id) => this.updateProduct(id)}
                 rating={this.state.reviewData}
               />
-            }
+            )}
             <QuestionsAnswers
               data={this.state.questionData}
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
               fetch={(params) => this.fetchQuestionData(params)}
             />
-            {this.state.reviewData && (
+            {reviewData && (
               <RatingsReviews
-                data={this.state.reviewData}
+                data={reviewData}
                 product={currentProduct}
                 fetch={(params) => this.fetchReviewData(params)}
               />
