@@ -24,6 +24,10 @@ const RelatedCarousel = (props) => {
     }
   };
 
+  const ratings = props.relatedRating.map((rating, index) => {
+    return rating.ratings;
+  });
+
   return (
     <CarouselComponent>
       <CarouselContainer>
@@ -39,7 +43,7 @@ const RelatedCarousel = (props) => {
                 <CardItem
                   key={i}
                   item={item}
-                  // rating={}
+                  rating={ratings[i]}
                   inOutfit={false}
                   add={props.addOutfit}
                   currentProduct={props.currentProduct}

@@ -11,6 +11,7 @@ var RelatedItems = (props) => {
 
   const add = () => {
     let product = props.product;
+    product.rating = props.rating;
     let id = product.id;
     if (outfit.length === 0) {
       ls.set('myoutfit', [...outfit, product]);
@@ -29,13 +30,13 @@ var RelatedItems = (props) => {
     let update = ls.get('myoutfit') || [];
     setOutfit(update);
   };
-
   return (
     <Container>
       <Header>RelatedItems</Header>
       <RelatedCarousel
         relatedItems={props.related.related}
         currentProduct={props.product}
+        relatedRating={props.related.ratings}
         update={props.updateProduct}
       />
       <Header>YourOutfit</Header>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { COLORS } from '../../settings/colors';
 import styled from 'styled-components';
 import { Stars } from '../Shared/Stars.jsx';
+import { totalRating } from '../../lib/ratingFunctions.js';
 import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -55,6 +56,7 @@ var CardItem = (props) => {
     </Button>;
   }
 
+  var starNum = totalRating(props.rating);
 
   return (
     <Container>
@@ -83,7 +85,7 @@ var CardItem = (props) => {
         {props.item.name}
       </Name>
       <Price>${props.item.default_price}</Price>
-      <Stars />
+      <Stars number={starNum} />
     </Container>
   );
 };
@@ -104,6 +106,7 @@ const Category = styled.div`
 `;
 
 const Name = styled.div`
+  cursor: pointer;
   font-size: 14px;
   font-weight: bold;
 `;
@@ -119,6 +122,7 @@ const PictureContainer = styled.div`
 `;
 
 const Picture = styled.div`
+  cursor: pointer;
   img {
     height: 150px;
     width: 150px;

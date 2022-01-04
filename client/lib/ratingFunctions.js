@@ -29,6 +29,9 @@ export const ratingPercentages = (ratings) => {
 
 //Sum up a ratings object and return the total rating
 export const totalRating = (ratings) => {
+  if (!ratings) {
+    return 0;
+  }
   let total = 0;
   let count = 0;
   [5, 4, 3, 2, 1].forEach((x) => {

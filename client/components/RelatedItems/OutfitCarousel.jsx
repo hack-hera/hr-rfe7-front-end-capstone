@@ -36,7 +36,15 @@ var OutfitCarousel = (props) => {
           <CarouselContent style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}>
             <CardItem firstCard={true} add={props.addOutfit} />
             {props.outfitData.map((item, i) => {
-              return <CardItem key={i} item={item} inOutfit={true} remove={props.removeItem} />;
+              return (
+                <CardItem
+                  key={i}
+                  item={item}
+                  inOutfit={true}
+                  rating={item.rating.ratings}
+                  remove={props.removeItem}
+                />
+              );
             })}
           </CarouselContent>
         </CarouselWrapper>
