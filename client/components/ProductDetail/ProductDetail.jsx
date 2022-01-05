@@ -43,7 +43,7 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
             <ImageGalleryContainer>
               <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />
             </ImageGalleryContainer>
-            <ImageContainer>{photo && <ProductImage currentPhoto={photo} />}</ImageContainer>
+            <ImageContainer>{photo && <ProductImage currentPhoto={photo} currentStyle={style} changePhoto={(photo) => setPhoto(photo)}/>}</ImageContainer>
           </DisplayContainer>
         )}
         <ProductInfoContainer>
