@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from '../Shared/Modal.jsx';
+import ModalImage from './ModalImage.jsx';
 
 const ProductImage = (props) => {
   const [showing, setShowing] = useState(false);
@@ -20,9 +21,7 @@ const ProductImage = (props) => {
             height={100}
             width={100}
             onClose={() => setShowing(false)}>
-            <ModalImage>
-              <img src={props.currentPhoto.url}/>
-            </ModalImage>
+            <ModalImage currentPhoto={props.currentPhoto} currentStyle={props.currentStyle} changePhoto={props.changePhoto}/>
           </Modal>
         )}
       </Container>
@@ -47,17 +46,6 @@ const Image = styled.img`
   cursor: zoom-in;
 `;
 
-const ModalImage = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 100vw;
-  max-height: 100vh;
-  img {
-    max-width: 88vw;
-    max-height: 88vh;
-  }
-  cursor: crosshair;
-`;
+
 
 export default ProductImage;
