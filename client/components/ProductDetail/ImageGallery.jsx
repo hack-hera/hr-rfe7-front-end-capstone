@@ -32,7 +32,7 @@ const ImageGallery = (props) => {
         </UpArrow>
         }
         <Carousel_content_wrapper>
-          <Carousel_content style={{ transform: `translateX(-${currentImage * (41)}px)` }}>
+          <Carousel_content style={{ transform: `translateY(-${currentImage * (41)}px)` }}>
             {props.currentStyle.photos.map((photo, key) => (
               <Thumbnail
                 key={key}
@@ -96,6 +96,7 @@ const Carousel_content_wrapper = styled.div`
 
 const Carousel_content = styled.div`
   display: flex;
+  flex-direction: column;
   transition: all 250ms linear;
   -ms-overflow-style: none;
   scrollbar-width: none;

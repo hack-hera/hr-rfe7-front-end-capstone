@@ -45,7 +45,7 @@ const api = {
   // page	integer	Selects the page of results to return. Default 1.
   // count	integer	Specifies how many results per page to return. Default 5.
   getProducts: function (params = {}) {
-    const { page = 1, count = 5 } = params;
+    const { page = 1, count = 100 } = params;
     return axios
       .get(host + `/products?page=${page}&count=${count}`, headers)
       .then((res) => Promise.resolve(res.data))
@@ -163,7 +163,7 @@ const api = {
   // product_id	integer	Specifies the product for which to retrieve reviews.
   // TODO - implement CACHING for getReviews
   getReviews: function (params = {}) {
-    const { product_id, count = 5, page = 1, sort = 'newest' } = params;
+    const { product_id, count = 100, page = 1, sort = 'newest' } = params;
     if (!product_id) {
       return Promise.reject(new Error('must provide product_id'));
     }
