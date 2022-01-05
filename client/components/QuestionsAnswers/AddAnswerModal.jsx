@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import api from '../../api.js';
+import axios from 'axios';
 import { AnswerModal } from './ModalForm.jsx';
 import { formValidation } from './lib/dataFunctions';
 
@@ -14,6 +15,7 @@ class AddAnswer extends React.Component {
       answer: '',
       name: '',
       email: '',
+      photos: [],
       show: false
     };
 
@@ -23,6 +25,8 @@ class AddAnswer extends React.Component {
     this.nickNameOnChange = this.nickNameOnChange.bind(this);
     this.emailOnChange = this.emailOnChange.bind(this);
     this.submitAnswerForm = this.submitAnswerForm.bind(this);
+    this.upload = this.upload.bind(this);
+    this.removePhoto = this.removePhoto.bind(this);
   }
 
   showModal() {
@@ -51,6 +55,27 @@ class AddAnswer extends React.Component {
     });
   }
 
+  upload(e) {
+    if (e.target.files[0]) {
+      const data = new FormData();
+      data.append('file', e.target.files[0]);
+      data.append('upload_preset', 'ea2t0ulv');
+      axios.post('https://api.cloudinary.com/v1_1/dkit4ixkx/upload', data)
+        .then((res) => {
+          this.setState({
+            photos: [...this.state.photos, res.data.url]
+          });
+        });
+    }
+  }
+
+  removePhoto(e) {
+    let temp = this.state.photos.filter(url => url !== e.target.src);
+    this.setState({
+      photos: temp
+    });
+  }
+
   submitAnswerForm() {
     let formData = {question_id: this.props.question.question_id,
       body: this.state.answer,
@@ -72,11 +97,9 @@ class AddAnswer extends React.Component {
     } else {
       alert('email must be in xxx@yyy.com format');
     }
-
   }
 
   render() {
-
     return (
       <AlignRight>
         {this.state.show === true && <AnswerModal
@@ -87,6 +110,9 @@ class AddAnswer extends React.Component {
           nickName={this.nickNameOnChange}
           email={this.emailOnChange}
           submitAnswerForm={this.submitAnswerForm}
+          upload={this.upload}
+          photos={this.state.photos}
+          removePhoto={this.removePhoto}
         />}
         <AddLink onClick={this.showModal}>Add Answer</AddLink>
       </AlignRight>

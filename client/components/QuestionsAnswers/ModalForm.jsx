@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+
+import AddPhotos from './AddPhotos.jsx';
 import { Button } from '../Shared/Form';
 
 
 
-export const AnswerModal = ({ product_name, handleClose, question, submitAnswerForm, answerBody, nickName, email }) => {
+export const AnswerModal = ({ product_name, handleClose, question, submitAnswerForm, answerBody, nickName, email, upload, photos, removePhoto }) => {
 
   return (
     <Container>
@@ -29,9 +31,11 @@ export const AnswerModal = ({ product_name, handleClose, question, submitAnswerF
         <input placeholder="Example: jack@email.com" maxLength="60" onChange={email} required></input>
         <div>For authentication reasons, you will not be emailed.</div>
         <br/>
-
-        <Photos type="file" name="my_file[]" multiple></Photos>
-
+        <AddPhotos
+          upload={upload}
+          photos={photos}
+          removePhoto={removePhoto}
+        />
         <br/>
         <br/>
         <Button onClick={submitAnswerForm}>Submit your answer</Button>
@@ -39,8 +43,6 @@ export const AnswerModal = ({ product_name, handleClose, question, submitAnswerF
     </Container>
   );
 };
-
-
 
 export const QuestionModal = ({ product_name, handleClose, submitQuestionForm, questionBody, nickName, email }) => {
   return (
@@ -63,7 +65,6 @@ export const QuestionModal = ({ product_name, handleClose, submitQuestionForm, q
         <div>Your email*</div>
         <input placeholder="Example: jack@email.com" maxLength="60" onChange={email} required></input>
         <div>For authentication reasons, you will not be emailed.</div>
-
         <br/>
         <Button onClick={submitQuestionForm}>Submit your question</Button>
       </div>
@@ -72,6 +73,7 @@ export const QuestionModal = ({ product_name, handleClose, submitQuestionForm, q
 };
 
 const Container = styled.div`
+  z-index: 200;
   position:fixed;
   background: white;
   width: 80%;
