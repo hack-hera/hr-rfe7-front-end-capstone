@@ -62,9 +62,13 @@ class AddAnswer extends React.Component {
       data.append('upload_preset', 'ea2t0ulv');
       axios.post('https://api.cloudinary.com/v1_1/dkit4ixkx/upload', data)
         .then((res) => {
-          this.setState({
-            photos: [...this.state.photos, res.data.url]
-          });
+          if (this.state.photos.length < 5) {
+            this.setState({
+              photos: [...this.state.photos, res.data.url]
+            });
+          } else {
+            alert('You can only submit photos up to 5');
+          }
         });
     }
   }

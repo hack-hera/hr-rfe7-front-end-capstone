@@ -32,7 +32,7 @@ const Photos = styled.div`
 
   img {
     width: 90px;
-    height: 65px;
+    height: 100px;
     margin-right: 10px;
     margin-left: 10px;
     margin-top: 15px;
