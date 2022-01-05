@@ -52,6 +52,7 @@ class App extends Component {
   updateProduct(id) {
     this.setState({ loading: true });
     api.getAllData({ product_id: id }).then((data) => {
+      console.log(data);
       this.setState({
         currentProduct: data.currentProduct,
         relatedProducts: data.relatedProducts,

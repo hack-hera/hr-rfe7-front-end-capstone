@@ -156,7 +156,7 @@ const api = {
         }
       }
 
-      let resMeta = await axios.get(reviewUrl, headers);
+      let resMeta = await axios.get(metaUrl, headers);
       let resReviews = await axios.get(reviewUrl, headers);
       let data = resMeta.data;
 
