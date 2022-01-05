@@ -5,8 +5,6 @@ import AddPhotos from './AddPhotos.jsx';
 import { Button, Input } from '../Shared/Form';
 
 
-
-
 export const AnswerModal = ({ product_name, handleClose, question, submitAnswerForm, answerBody, nickName, email, upload, photos, removePhoto }) => {
 
   return (
