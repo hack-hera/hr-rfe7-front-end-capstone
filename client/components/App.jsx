@@ -7,6 +7,7 @@ import { QuestionsAnswers } from './QuestionsAnswers';
 import { RatingsReviews } from './RatingsReviews';
 import { RelatedItems } from './RelatedItems';
 import { Header } from './Header/Header';
+import { Loader } from './Shared/Loader';
 import api from '../api';
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
       questionData: null,
       reviewData: null,
       darkMode: false,
+      loading: false,
     };
   }
 
@@ -48,18 +50,21 @@ class App extends Component {
 
   //Handler to update the main product
   updateProduct(id) {
+    this.setState({ loading: true });
     api.getAllData({ product_id: id }).then((data) => {
+      console.log(data);
       this.setState({
         currentProduct: data.currentProduct,
         relatedProducts: data.relatedProducts,
         questionData: data.questionData,
         reviewData: data.reviewData,
+        loading: false,
       });
     });
   }
 
   render() {
-    const { products, currentProduct, reviewData, darkMode } = this.state;
+    const { products, currentProduct, reviewData, darkMode, loading } = this.state;
     return (
       <ThemeProvider theme={THEMES[darkMode ? 'darkMode' : 'default']}>
         <Header
@@ -68,7 +73,12 @@ class App extends Component {
           product={currentProduct}
           updateProduct={(id) => this.updateProduct(id)}
         />
-        {currentProduct && (
+        {loading === true && (
+          <Container>
+            <Loader />
+          </Container>
+        )}
+        {currentProduct && loading === false && (
           <Container>
             <ProductDetail
               product={currentProduct}
@@ -108,6 +118,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  width: 100%;
+  height: 100%;
   background-color: ${(props) => props.theme.bgLight};
 `;
 
