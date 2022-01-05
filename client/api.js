@@ -337,7 +337,6 @@ const api = {
     }
 
     const url = host + '/qa/questions';
-
     return axios
       .post(url, params, headers)
       .then((res) => Promise.resolve(res))
