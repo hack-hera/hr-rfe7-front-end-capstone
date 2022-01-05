@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import AddPhotos from './AddPhotos.jsx';
-import { Button } from '../Shared/Form';
+import { Button, Input } from '../Shared/Form';
+
 
 
 
@@ -10,25 +11,26 @@ export const AnswerModal = ({ product_name, handleClose, question, submitAnswerF
 
   return (
     <Container>
-      <div>
+      <BodyContainer>
         <div>
-          <h3>Submit your answer <CloseButton type="button" onClick={handleClose}>
+          <h2>Submit your answer <CloseButton type="button" onClick={handleClose}>
             Close
-          </CloseButton></h3>
+          </CloseButton></h2>
         </div>
+        <br/>
         <div>{product_name} : {question.question_body}</div>
         <br/>
         <div>Your Answer Below*</div>
-        <textarea rows="10" cols="100" maxLength="1000" onChange={answerBody} required>
-        </textarea>
+        <TextArea rows="10" cols="100" maxLength="1000" onChange={answerBody} required>
+        </TextArea>
         <br/>
         <br/>
         <div>What is your nickname*</div>
-        <input placeholder="Example: jack543!" type = "text" maxLength="60" onChange={nickName} required></input>
+        <Input placeholder="Example: jack543!" type = "text" maxLength="60" onChange={nickName} required></Input>
         <div>For privacy reasons, do not use your full name or email address.</div>
         <br/>
         <div>Your email*</div>
-        <input placeholder="Example: jack@email.com" maxLength="60" onChange={email} required></input>
+        <Input placeholder="Example: jack@email.com" maxLength="60" onChange={email} required></Input>
         <div>For authentication reasons, you will not be emailed.</div>
         <br/>
         <AddPhotos
@@ -39,7 +41,7 @@ export const AnswerModal = ({ product_name, handleClose, question, submitAnswerF
         <br/>
         <br/>
         <Button onClick={submitAnswerForm}>Submit your answer</Button>
-      </div>
+      </BodyContainer>
     </Container>
   );
 };
@@ -47,27 +49,27 @@ export const AnswerModal = ({ product_name, handleClose, question, submitAnswerF
 export const QuestionModal = ({ product_name, handleClose, submitQuestionForm, questionBody, nickName, email }) => {
   return (
     <Container>
-      <div>
+      <BodyContainer>
         <div>
-          <h3>Ask your question about the {product_name}<CloseButton type="button" onClick={handleClose}>
+          <h2>Ask your question about the {product_name}<CloseButton type="button" onClick={handleClose}>
             Close
-          </CloseButton></h3>
+          </CloseButton></h2>
         </div>
         <br/>
         <div>Your Questiton*</div>
-        <textarea rows="10" cols="100" maxLength="1000" onChange={questionBody} required></textarea>
+        <TextArea rows="10" cols="100" maxLength="1000" onChange={questionBody} required></TextArea>
         <br/>
         <br/>
         <div>What is your nickname*</div>
-        <input placeholder="Example: jack11!" type = "text" maxLength="60" onChange={nickName} required></input>
+        <Input placeholder="Example: jack11!" type = "text" maxLength="60" onChange={nickName} required></Input>
         <div>For privacy reasons, do not use your full name or email address.</div>
         <br/>
         <div>Your email*</div>
-        <input placeholder="Example: jack@email.com" maxLength="60" onChange={email} required></input>
+        <Input placeholder="Example: jack@email.com" maxLength="60" onChange={email} required></Input>
         <div>For authentication reasons, you will not be emailed.</div>
         <br/>
         <Button onClick={submitQuestionForm}>Submit your question</Button>
-      </div>
+      </BodyContainer>
     </Container>
   );
 };
@@ -93,7 +95,13 @@ const CloseButton = styled.span`
   cursor: pointer;
 `;
 
-const ModalForm = styled.form`
+const BodyContainer = styled.div`
   margin-left: 20px;
+`;
+
+const TextArea = styled.textarea`
+  background-color: ${(props) => props.theme.bgLight};
+  color: ${(props) => props.theme.textLight};
+  outline: 1px solid ${(props) => props.theme.textLight};
 `;
 

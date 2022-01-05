@@ -5,6 +5,7 @@ const AddPhotos = ({ upload, photos, removePhoto }) => {
 
   return (
     <div>
+      <div>Add Images</div>
       <div>
         <input type='file' onChange={(e) => upload(e)} />
       </div>
@@ -29,10 +30,11 @@ const PhotosContainer = styled.div`
 `;
 
 const Photos = styled.div`
+  display: inline;
 
   img {
     width: 90px;
-    height: 100px;
+    height: 75px;
     margin-right: 10px;
     margin-left: 10px;
     margin-top: 15px;
