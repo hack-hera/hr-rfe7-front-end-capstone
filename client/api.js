@@ -37,6 +37,12 @@ const api = {
     return obj;
   },
 
+  isProductCached: async function ({ product_id }) {
+    console.log('is cached?', product_id);
+    let cachedProduct = getCache('product', parseInt(product_id));
+    console.log(cachedProduct);
+  },
+
   /******************************************************************************
    * Product
    ******************************************************************************/
@@ -62,6 +68,7 @@ const api = {
     try {
       let cachedProduct = getCache('product', product_id);
       if (cachedProduct) {
+        console.log('YAY its cached', product_id);
         return cachedProduct;
       }
       let productRes = await axios.get(productUrl, headers);
