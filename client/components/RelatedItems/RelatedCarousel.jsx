@@ -68,6 +68,8 @@ const CarouselComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: green;
+  padding: 5px;
 `;
 
 const CarouselContainer = styled.div`
@@ -76,20 +78,26 @@ const CarouselContainer = styled.div`
   height: 100%;
   justify-content: center;
   position: relative;
-  background: green;
+  background: yellow;
+  padding: 5px;
 `;
 
 const CarouselWrapper = styled.div`
   overflow: hidden;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 50%;
   height: 100%;
+  padding: 5px;
+  background: red;
 `;
 
 const CarouselContent = styled.div`
   display: flex;
-  transition: all 250ms linear;
-  width: calc(100% / 2);
+  transition: all 400ms linear;
+  width: 100%;
   padding: 5px;
+  background: blue;
 `;
 
 const LeftButton = styled.div`
@@ -109,8 +117,10 @@ const RightButton = styled.div`
   top: 50%;
   transform: translateY(-50%);
   width: 100px;
-  right: 0px;
+  right: 300px;
   background: blue;
+  display: flex;
+  justify-content: center;
 `;
 // background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 

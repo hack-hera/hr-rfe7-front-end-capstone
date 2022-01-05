@@ -25,16 +25,14 @@ var CardItem = (props) => {
 
   if (props.firstCard) {
     return (
-      <Container>
-        <AddCard>
-          <AddTitle>
-            Add item to your outfit
-          </AddTitle>
-          <AddButton>
-            <FontAwesomeIcon icon={faPlusCircle} onClick={props.add} />
-          </AddButton>
-        </AddCard>
-      </Container>
+      <AddCard>
+        <AddTitle>
+          Add item to your outfit
+        </AddTitle>
+        <AddButton>
+          <FontAwesomeIcon icon={faPlusCircle} onClick={props.add} />
+        </AddButton>
+      </AddCard>
     );
   }
 
@@ -91,13 +89,14 @@ var CardItem = (props) => {
 };
 
 const Container = styled.div`
-  padding: 0px 10px 10px 10px;
-  margin: 10px 0px;
-  width: 180px;
+  margin: 0px 10px;
+  padding: 10px;
+  width: 200px;
   height: 250px;
   display: flex;
   flex-direction: column;
   border: 1px solid ${(props) => props.theme.bgDark};
+  background: grey;
 `;
 
 const Category = styled.div`
@@ -119,6 +118,7 @@ const PictureContainer = styled.div`
   border: 1px solid ${(props) => props.theme.bgDark};
   display: flex;
   flex-direction: row;
+  position: relative;
 `;
 
 const Picture = styled.div`
@@ -131,6 +131,10 @@ const Picture = styled.div`
 
 const Button = styled.div`
 z-index: 1;
+position: absolute;
+background: red;
+right: 0px;
+cursor: pointer;
 `;
 
 const AddCard = styled.div`
