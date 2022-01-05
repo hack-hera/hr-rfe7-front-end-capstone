@@ -6,39 +6,73 @@ import { MarkAnswerHelpfulAndReported } from './MarkHelpfulAndReported.jsx';
 import { sortedAnswer } from './lib/dataFunctions.jsx';
 
 
-const AnswersList = ({ answers, answersShow, showMoreA }) => {
-
-  return (
-    <Container>
-      <AnswerContainer>
-        <TitleA>A:</TitleA>
-        <AnswerContent>
-          {answers.sort(sortedAnswer).slice(0, answersShow).map((answer, i) => {
-            let timeArr = answer.date.split('T')[0].split('-');
-            return (
-              <div key={i}>
-                <div>{answer.body}</div>
-                <div>
-                  {answer.photos.map((photo, i) => {
-                    return (
-                      <Photos key={i}>
-                        <img src={photo} alt='photo'/>
-                      </Photos>
-                    );
-                  })}
+const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
+  if (clicked === false) {
+    return (
+      <Container>
+        <AnswerContainer>
+          <TitleA>A:</TitleA>
+          <AnswerContent>
+            {answers.sort(sortedAnswer).slice(0, 2).map((answer, i) => {
+              let timeArr = answer.date.split('T')[0].split('-');
+              return (
+                <div key={i}>
+                  <div>{answer.body}</div>
+                  <div>
+                    {answer.photos.map((photo, i) => {
+                      return (
+                        <Photos key={i}>
+                          <img src={photo} alt='photo'/>
+                        </Photos>
+                      );
+                    })}
+                  </div>
+                  <ByUser>
+                    <span>by { answer.answerer_name }, { months[timeArr[1]] } { timeArr[2] }, { timeArr[0] }&emsp;|&emsp;</span>
+                    <MarkAnswerHelpfulAndReported answer={answer}/>
+                  </ByUser>
                 </div>
-                <ByUser>
-                  <span>by { answer.answerer_name }, { months[timeArr[1]] } { timeArr[2] }, { timeArr[0] }&emsp;|&emsp;</span>
-                  <MarkAnswerHelpfulAndReported answer={answer}/>
-                </ByUser>
-              </div>
-            );
-          })}
-          {answersShow < answers.length && <LoadMA onClick={ showMoreA }>See more answers</LoadMA>}
-        </AnswerContent>
-      </AnswerContainer>
-    </Container>
-  );
+              );
+            })}
+            {answers.length > 2 && <LoadMA onClick={ showMoreA }>See more answers</LoadMA>}
+          </AnswerContent>
+        </AnswerContainer>
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        <AnswerContainer>
+          <TitleA>A:</TitleA>
+          <AnswerContent>
+            {answers.sort(sortedAnswer).map((answer, i) => {
+              let timeArr = answer.date.split('T')[0].split('-');
+              return (
+                <div key={i}>
+                  <div>{answer.body}</div>
+                  <div>
+                    {answer.photos.map((photo, i) => {
+                      return (
+                        <Photos key={i}>
+                          <img src={photo} alt='photo'/>
+                        </Photos>
+                      );
+                    })}
+                  </div>
+                  <ByUser>
+                    <span>by { answer.answerer_name }, { months[timeArr[1]] } { timeArr[2] }, { timeArr[0] }&emsp;|&emsp;</span>
+                    <MarkAnswerHelpfulAndReported answer={answer}/>
+                  </ByUser>
+                </div>
+              );
+            })}
+            <LoadMA onClick={ showLessA }>Collapse answers</LoadMA>
+          </AnswerContent>
+        </AnswerContainer>
+      </Container>
+    );
+  }
+
 };
 
 const Photos = styled.div`
