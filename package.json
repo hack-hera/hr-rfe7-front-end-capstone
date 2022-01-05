@@ -25,6 +25,7 @@
     "babel-plugin-react-generate-property": "^1.1.2",
     "express": "^4.17.2",
     "local-storage": "^2.0.0",
+    "localforage": "^1.10.0",
     "lorem-ipsum": "^2.0.4",
     "moment": "^2.29.1",
     "nodemon": "^2.0.15",

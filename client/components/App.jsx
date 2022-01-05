@@ -57,16 +57,21 @@ class App extends Component {
   }
 
   //Handler to update the main product
-  updateProduct(id) {
-    this.setState({ loading: true });
-    api.getAllData({ product_id: id }).then((data) => {
-      this.setState({
-        currentProduct: data.currentProduct,
-        relatedProducts: data.relatedProducts,
-        questionData: data.questionData,
-        reviewData: data.reviewData,
-        loading: false,
-      });
+  async updateProduct(id) {
+    let isCached = await api.isProductCached({ product_id: id });
+
+    if (!isCached) {
+      await this.setState({ loading: true });
+    }
+
+    let data = await api.getAllData({ product_id: id });
+
+    this.setState({
+      currentProduct: data.currentProduct,
+      relatedProducts: data.relatedProducts,
+      questionData: data.questionData,
+      reviewData: data.reviewData,
+      loading: false,
     });
   }
 

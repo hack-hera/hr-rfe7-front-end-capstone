@@ -1,5 +1,6 @@
 import axios from 'axios';
 import ls from 'local-storage';
+import localforage from 'localforage';
 
 const { github_token, campus } = require('./env/config.js');
 
@@ -9,14 +10,14 @@ const headers = {
   },
 };
 
-const cache = (key, id, value) => {
-  let obj = ls.get(key) || {};
+const cache = async (key, id, value) => {
+  let obj = (await localforage.getItem(key)) || {};
   obj[id] = value;
-  ls.set(key, obj);
+  await localforage.setItem(key, obj);
 };
 
-const getCache = (key, id) => {
-  let obj = ls.get(key) || {};
+const getCache = async (key, id) => {
+  let obj = (await localforage.getItem(key)) || {};
   return obj[id];
 };
 
@@ -29,18 +30,25 @@ const api = {
 
   getAllData: async function (params = {}) {
     const { product_id } = params;
+
+    let cachedData = await getCache('data', product_id);
+    if (cachedData) {
+      return cachedData;
+    }
+
     let obj = {};
     obj.currentProduct = await this.getProductData({ product_id });
     obj.reviewData = await this.getReviewData({ product_id });
     obj.relatedProducts = await this.getRelatedProductData({ product_id });
     obj.questionData = await this.getQuestionData({ product_id });
+
+    await cache('data', product_id, obj);
     return obj;
   },
 
   isProductCached: async function ({ product_id }) {
-    console.log('is cached?', product_id);
-    let cachedProduct = getCache('product', parseInt(product_id));
-    console.log(cachedProduct);
+    let cachedProduct = await getCache('data', parseInt(product_id));
+    return !!cachedProduct;
   },
 
   /******************************************************************************
@@ -66,16 +74,15 @@ const api = {
     let productUrl = `${host}/products/${product_id}`;
     let stylesUrl = `${host}/products/${product_id}/styles`;
     try {
-      let cachedProduct = getCache('product', product_id);
+      let cachedProduct = await getCache('product', product_id);
       if (cachedProduct) {
-        console.log('YAY its cached', product_id);
         return cachedProduct;
       }
       let productRes = await axios.get(productUrl, headers);
       let obj = productRes.data;
       let stylesRes = await axios.get(stylesUrl, headers);
       obj.styles = stylesRes.data.results;
-      cache('product', product_id, obj);
+      await cache('product', product_id, obj);
       return obj;
     } catch (err) {
       return {};
@@ -89,10 +96,10 @@ const api = {
 
     try {
       let obj = {};
-      let related = getCache('related', product_id);
+      let related = await getCache('related', product_id);
       if (!related) {
         let res = await axios.get(url, headers);
-        cache('related', product_id, res.data);
+        await cache('related', product_id, res.data);
         related = res.data;
       }
       obj.related_product_ids = related;
@@ -157,7 +164,7 @@ const api = {
 
     try {
       if (useCache === true) {
-        let cachedReviews = getCache('reviews', product_id);
+        let cachedReviews = await getCache('reviews', product_id);
         if (cachedReviews) {
           return cachedReviews;
         }
@@ -170,7 +177,7 @@ const api = {
       data.reviews = resReviews.data.results;
       data.numReviews = resReviews.data.results.length;
 
-      cache('reviews', product_id, data);
+      await cache('reviews', product_id, data);
       return data;
     } catch (err) {
       throw new Error(err);
@@ -278,13 +285,13 @@ const api = {
 
     try {
       if (useCache === true) {
-        let cachedQuestions = getCache('questions', product_id);
+        let cachedQuestions = await getCache('questions', product_id);
         if (cachedQuestions) {
           return cachedQuestions;
         }
       }
       let questionRes = await axios.get(host + url, headers);
-      cache('questions', product_id, questionRes.data);
+      await cache('questions', product_id, questionRes.data);
       return questionRes.data;
     } catch (err) {
       throw new Error(err);
