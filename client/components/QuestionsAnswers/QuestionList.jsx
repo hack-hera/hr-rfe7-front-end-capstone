@@ -9,102 +9,113 @@ import { sortedQuestion, QuestionBody } from './lib/dataFunctions.jsx';
 
 
 
-class QuestionList extends React.Component {
-  constructor(props) {
-    super(props);
+const QuestionList = ({ searchText, questions, questionsShow, product_name, product_id, showMoreA, showMoreQ, answeredQuestionShow, answeredQuestion, searchQuestions, answeredSearchQuestion, showLessQ, clicked, showLessA, fetchQuestionData }) => {
 
-  }
+  return (
 
-  render() {
-    return (
-      <Container>
-        {this.props.searchText.length < 3 && <div>
-          {this.props.questions.sort(sortedQuestion).slice(0, this.props.questionsShow).map((question, i) => {
-            const answers = Object.values(question.answers);
-            return (
-              <div key={i}>
-                <QuestionText><span>Q:{question.question_body}</span>
-                  <AddAnswer
-                    product_name={this.props.product_name}
-                    question={question}
-                  />
-                  <MarkQuestionHelpfulAndReported question={question} product_id={this.props.product_id}/>
-                </QuestionText>
-                <AnswersList
-                  answers={answers}
-                  answersShow={this.props.answersShow}
-                  showMoreA={this.props.showMoreA}
+    <Container>
+      {searchText.length < 3 && <div>
+        {questions.sort(sortedQuestion).slice(0, questionsShow).map((question, i) => {
+          const answers = Object.values(question.answers);
+          return (
+            <div key={i}>
+              <QuestionText><span>Q:{question.question_body}</span>
+                <AddAnswer
+                  product_name={product_name}
+                  question={question}
+                  product_id={product_id}
+                  fetchQuestionData={fetchQuestionData}
                 />
-              </div>
-            );
-          })}
-          {this.props.answeredQuestion.sort(sortedQuestion).slice(0, this.props.answeredQuestionShow).map((question, i) => {
-            const answers = Object.values(question.answers);
-            return (
-              <div key={i}>
-                <QuestionText><span>Q:{question.question_body}</span>
-                  <AddAnswer
-                    product_name={this.props.product_name}
-                    question={question}
-                    question_id={question.question_id}
-                  />
-                  <MarkQuestionHelpfulAndReported question={question}/>
-                </QuestionText>
-                <AnswersList
-                  answers={answers}
-                  answersShow={this.props.answersShow}
-                  showMoreA={this.props.showMoreA}
+                <MarkQuestionHelpfulAndReported question={question} product_id={product_id}/>
+              </QuestionText>
+              <AnswersList
+                answers={answers}
+                showMoreA={showMoreA}
+                clicked={clicked}
+                showLessA={showLessA}
+              />
+            </div>
+          );
+        })}
+        {answeredQuestion.sort(sortedQuestion).slice(0, answeredQuestionShow).map((question, i) => {
+          const answers = Object.values(question.answers);
+          return (
+            <div key={i}>
+              <QuestionText><span>Q:{question.question_body}</span>
+                <AddAnswer
+                  product_name={product_name}
+                  question={question}
+                  product_id={product_id}
+                  fetchQuestionData={fetchQuestionData}
                 />
-              </div>
-            );
-          })}
-        </div>}
-        {this.props.searchText.length >= 3 && <div>
-          {this.props.searchQuestions.sort(sortedQuestion).slice(0, this.props.questionsShow).map((question, i) => {
-            const answers = Object.values(question.answers);
-            return (
-              <div key={i}>
-                <QuestionText><span>Q:{question.question_body}</span>
-                  <AddAnswer
-                    product_name={this.props.product_name}
-                    question={question}
-                  />
-                  <MarkQuestionHelpfulAndReported question={question}/>
-                </QuestionText>
-                <AnswersList
-                  answers={answers}
-                  answersShow={this.props.answersShow}
-                  showMoreA={this.props.showMoreA}
+                <MarkQuestionHelpfulAndReported question={question}/>
+              </QuestionText>
+              <AnswersList
+                answers={answers}
+                showMoreA={showMoreA}
+                clicked={clicked}
+                showLessA={showLessA}
+              />
+            </div>
+          );
+        })}
+      </div>}
+      {searchText.length >= 3 && <div>
+        {searchQuestions.sort(sortedQuestion).slice(0, questionsShow).map((question, i) => {
+          const answers = Object.values(question.answers);
+          return (
+            <div key={i}>
+              <QuestionText><span>Q:{question.question_body}</span>
+                <AddAnswer
+                  product_name={product_name}
+                  question={question}
+                  product_id={product_id}
+                  fetchQuestionData={fetchQuestionData}
                 />
-              </div>
-            );
-          })}
-          {this.props. answeredSearchQuestion.sort(sortedQuestion).slice(0, this.props.answeredQuestionShow).map((question, i) => {
-            const answers = Object.values(question.answers);
-            return (
-              <div key={i}>
-                <QuestionText><span>Q:{question.question_body}</span>
-                  <AddAnswer
-                    product_name={this.props.product_name}
-                    question={question}
-                  />
-                  <MarkQuestionHelpfulAndReported question={question}/>
-                </QuestionText>
-                <AnswersList
-                  answers={answers}
-                  answersShow={this.props.answersShow}
-                  showMoreA={this.props.showMoreA}
+                <MarkQuestionHelpfulAndReported question={question}/>
+              </QuestionText>
+              <AnswersList
+                answers={answers}
+                showMoreA={showMoreA}
+                clicked={clicked}
+                showLessA={showLessA}
+              />
+            </div>
+          );
+        })}
+        {answeredSearchQuestion.sort(sortedQuestion).slice(0, answeredQuestionShow).map((question, i) => {
+          const answers = Object.values(question.answers);
+          return (
+            <div key={i}>
+              <QuestionText><span>Q:{question.question_body}</span>
+                <AddAnswer
+                  product_name={props.product_name}
+                  question={question}
+                  product_id={product_id}
+                  fetchQuestionData={fetchQuestionData}
                 />
-              </div>
-            );
-          })}
-        </div>}
-        <Button onClick={this.props.showMoreQ}>MORE ANSWERED QUESTIONS</Button>
-        <AddQuestion product_name={this.props.product_name}/>
-      </Container>
-    );
-  }
-}
+                <MarkQuestionHelpfulAndReported question={question}/>
+              </QuestionText>
+              <AnswersList
+                answers={answers}
+                showMoreA={showMoreA}
+                clicked={clicked}
+                showLessA={showLessA}
+              />
+            </div>
+          );
+        })}
+      </div>}
+      <Button onClick={showMoreQ}>MORE ANSWERED QUESTIONS</Button>
+      <Button onClick={showLessQ}>COLLAPSE QUESTIONS</Button>
+      <AddQuestion
+        product_name={product_name}
+        product_id={product_id}
+        fetchQuestionData={fetchQuestionData}
+      />
+    </Container>
+  );
+};
 
 const Container = styled.div`
   color: ${(props) => props.theme.textLight};
