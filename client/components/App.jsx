@@ -130,7 +130,7 @@ class App extends Component {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
   background-color: ${(props) => props.theme.bgLight};
 
   padding: 0px 80px 80px 80px;
@@ -138,7 +138,6 @@ const Container = styled.div`
   width: calc(100% - 160px);
 
   @media (max-width: 880px) {
-    background-color: blue;
     padding: 0px 30px 80px 30px;
     width: calc(100% - 60px);
   }
