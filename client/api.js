@@ -137,15 +137,13 @@ const api = {
       obj.related_product_ids = related;
       obj.related = [];
       obj.ratings = [];
-      related.forEach(async (product_id) => {
-        let temp = await this.getProductData({ product_id });
-        obj.related.push(temp);
-      });
 
-      related.forEach(async (product_id) => {
-        let ratings = await this.getReviewData({ product_id });
-        obj.ratings.push(ratings);
-      });
+      for (let i = 0; i < related.length; i++) {
+        let temp1 = await this.getProductData({ product_id: related[i] });
+        let temp2 = await this.getReviewData({ product_id: related[i] });
+        obj.related.push(temp1);
+        obj.ratings.push(temp2);
+      }
 
       return obj;
     } catch (err) {
