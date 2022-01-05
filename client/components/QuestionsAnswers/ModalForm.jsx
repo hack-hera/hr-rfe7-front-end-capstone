@@ -4,11 +4,11 @@ import { Button } from '../Shared/Form';
 
 
 
-export const AnswerModal = ({ product_name, handleClose, question, submitForm, answerBody, nickName, email}) => {
+export const AnswerModal = ({ product_name, handleClose, question, submitAnswerForm, answerBody, nickName, email }) => {
 
   return (
     <Container>
-      <ModalForm action="" method="post" enctype="multipart/form-data">
+      <div>
         <div>
           <h3>Submit your answer <CloseButton type="button" onClick={handleClose}>
             Close
@@ -34,18 +34,18 @@ export const AnswerModal = ({ product_name, handleClose, question, submitForm, a
 
         <br/>
         <br/>
-        <Button onClick={submitForm}>Submit your answer</Button>
-      </ModalForm>
+        <Button onClick={submitAnswerForm}>Submit your answer</Button>
+      </div>
     </Container>
   );
 };
 
 
 
-export const QuestionModal = ({product_name, handleClose}) => {
+export const QuestionModal = ({ product_name, handleClose, submitQuestionForm, questionBody, nickName, email }) => {
   return (
     <Container>
-      <ModalForm action="" method="post" enctype="multipart/form-data">
+      <div>
         <div>
           <h3>Ask your question about the {product_name}<CloseButton type="button" onClick={handleClose}>
             Close
@@ -53,20 +53,20 @@ export const QuestionModal = ({product_name, handleClose}) => {
         </div>
         <br/>
         <div>Your Questiton*</div>
-        <textarea rows="10" cols="100" maxLength="1000" required></textarea>
+        <textarea rows="10" cols="100" maxLength="1000" onChange={questionBody} required></textarea>
         <br/>
         <br/>
         <div>What is your nickname*</div>
-        <input placeholder="Example: jack11!" type = "text" maxLength="60" required></input>
+        <input placeholder="Example: jack11!" type = "text" maxLength="60" onChange={nickName} required></input>
         <div>For privacy reasons, do not use your full name or email address.</div>
         <br/>
         <div>Your email*</div>
-        <input placeholder="Example: jack@email.com" maxLength="60" required></input>
+        <input placeholder="Example: jack@email.com" maxLength="60" onChange={email} required></input>
         <div>For authentication reasons, you will not be emailed.</div>
 
         <br/>
-        <Button >Submit your question</Button>
-      </ModalForm>
+        <Button onClick={submitQuestionForm}>Submit your question</Button>
+      </div>
     </Container>
   );
 };

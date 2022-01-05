@@ -339,7 +339,6 @@ const api = {
     }
 
     const url = host + '/qa/questions';
-
     return axios
       .post(url, params, headers)
       .then((res) => Promise.resolve(res))
@@ -360,7 +359,6 @@ const api = {
     }
     let url = `${host}/qa/questions/${question_id}/answers`;
     delete params.question_id;
-
     return axios
       .post(url, params, headers)
       .then((res) => Promise.resolve(res))

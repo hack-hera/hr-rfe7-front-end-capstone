@@ -88,7 +88,7 @@ class App extends Component {
               data={this.state.questionData}
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
-              fetch={(params) => this.fetchQuestionData(params)}
+              fetchQuestionData={(params) => this.fetchQuestionData(params)}
             />
             {reviewData && (
               <RatingsReviews

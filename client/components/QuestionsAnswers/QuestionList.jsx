@@ -9,7 +9,7 @@ import { sortedQuestion, QuestionBody } from './lib/dataFunctions.jsx';
 
 
 
-const QuestionList = ({ searchText, questions, questionsShow, product_name, product_id, showMoreA, showMoreQ, answeredQuestionShow, answeredQuestion, searchQuestions, answeredSearchQuestion, showLessQ, clicked, showLessA }) => {
+const QuestionList = ({ searchText, questions, questionsShow, product_name, product_id, showMoreA, showMoreQ, answeredQuestionShow, answeredQuestion, searchQuestions, answeredSearchQuestion, showLessQ, clicked, showLessA, fetchQuestionData }) => {
 
   return (
 
@@ -23,8 +23,8 @@ const QuestionList = ({ searchText, questions, questionsShow, product_name, prod
                 <AddAnswer
                   product_name={product_name}
                   question={question}
-                  question_id={question.question_id}
-
+                  product_id={product_id}
+                  fetchQuestionData={fetchQuestionData}
                 />
                 <MarkQuestionHelpfulAndReported question={question} product_id={product_id}/>
               </QuestionText>
@@ -45,7 +45,8 @@ const QuestionList = ({ searchText, questions, questionsShow, product_name, prod
                 <AddAnswer
                   product_name={product_name}
                   question={question}
-                  question_id={question.question_id}
+                  product_id={product_id}
+                  fetchQuestionData={fetchQuestionData}
                 />
                 <MarkQuestionHelpfulAndReported question={question}/>
               </QuestionText>
@@ -68,7 +69,8 @@ const QuestionList = ({ searchText, questions, questionsShow, product_name, prod
                 <AddAnswer
                   product_name={product_name}
                   question={question}
-                  question_id={question.question_id}
+                  product_id={product_id}
+                  fetchQuestionData={fetchQuestionData}
                 />
                 <MarkQuestionHelpfulAndReported question={question}/>
               </QuestionText>
@@ -89,7 +91,8 @@ const QuestionList = ({ searchText, questions, questionsShow, product_name, prod
                 <AddAnswer
                   product_name={props.product_name}
                   question={question}
-                  question_id={question.question_id}
+                  product_id={product_id}
+                  fetchQuestionData={fetchQuestionData}
                 />
                 <MarkQuestionHelpfulAndReported question={question}/>
               </QuestionText>
@@ -105,7 +108,11 @@ const QuestionList = ({ searchText, questions, questionsShow, product_name, prod
       </div>}
       <Button onClick={showMoreQ}>MORE ANSWERED QUESTIONS</Button>
       <Button onClick={showLessQ}>COLLAPSE QUESTIONS</Button>
-      <AddQuestion product_name={product_name}/>
+      <AddQuestion
+        product_name={product_name}
+        product_id={product_id}
+        fetchQuestionData={fetchQuestionData}
+      />
     </Container>
   );
 };

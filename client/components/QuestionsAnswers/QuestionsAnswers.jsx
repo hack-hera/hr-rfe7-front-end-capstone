@@ -56,6 +56,7 @@ class QuestionsAnswers extends React.Component {
             searchQuestions={searchQuestions}
             answeredSearchQuestion={answeredSearchQuestion}
             clicked={clicked}
+            fetchQuestionData={this.props.fetchQuestionData}
           />
         </div>
       </div>

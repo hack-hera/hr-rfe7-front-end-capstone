@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import api from '../../api.js';
 import { AnswerModal } from './ModalForm.jsx';
+import { formValidation } from './lib/dataFunctions';
+
 
 
 class AddAnswer extends React.Component {
@@ -20,7 +22,7 @@ class AddAnswer extends React.Component {
     this.answerBody = this.answerBody.bind(this);
     this.nickNameOnChange = this.nickNameOnChange.bind(this);
     this.emailOnChange = this.emailOnChange.bind(this);
-    this.submitForm = this.submitForm.bind(this);
+    this.submitAnswerForm = this.submitAnswerForm.bind(this);
   }
 
   showModal() {
@@ -49,18 +51,28 @@ class AddAnswer extends React.Component {
     });
   }
 
-  submitForm() {
-    console.log(this.state);
-    api.addAnswer({
-      question_id: this.props.question.question_id,
+  submitAnswerForm() {
+    let formData = {question_id: this.props.question.question_id,
       body: this.state.answer,
       name: this.state.name,
       email: this.state.email,
       photos: []
-    });
-    // .then(() => {
-    //   fetch({product_id: this.props.question.question_id})
-    // })
+    };
+
+    let currentErrors = formValidation(formData);
+
+    if (Object.keys(currentErrors).length === 0) {
+      api.addAnswer(formData)
+        .then(() => {
+          this.props.fetchQuestionData({ product_id: this.props.product_id, page: 1,
+            count: 100 });
+          this.hideModal();
+          alert ('Your answer has submitted');
+        });
+    } else {
+      alert('email must be in xxx@yyy.com format');
+    }
+
   }
 
   render() {
@@ -74,7 +86,7 @@ class AddAnswer extends React.Component {
           answerBody={this.answerBody}
           nickName={this.nickNameOnChange}
           email={this.emailOnChange}
-          submitForm={this.submitForm}
+          submitAnswerForm={this.submitAnswerForm}
         />}
         <AddLink onClick={this.showModal}>Add Answer</AddLink>
       </AlignRight>
