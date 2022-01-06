@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { COLORS } from "../../settings/colors";
-import styled from "styled-components";
-import { Stars } from "../Shared/Stars.jsx";
-import { totalRating } from "../../lib/ratingFunctions.js";
-import CompareModal from "./CompareModal.jsx";
-import { Modal } from "../Shared/Modal.jsx";
+import React, { useState } from 'react';
+import { COLORS } from '../../settings/colors';
+import styled from 'styled-components';
+import { Stars } from '../Shared/Stars.jsx';
+import { totalRating } from '../../lib/ratingFunctions.js';
+import CompareModal from './CompareModal.jsx';
+import { Modal } from '../Shared/Modal.jsx';
 
 var CardItem = (props) => {
   const [showing, setShowing] = useState(false);
@@ -29,7 +29,6 @@ var CardItem = (props) => {
           <AddButton onClick={props.add}>+</AddButton>
         </AddButtonContainer>
       </AddCard>
-
     );
   }
 
@@ -38,7 +37,7 @@ var CardItem = (props) => {
     pictureSrc = props.item.styles[0].photos[0].thumbnail_url;
   } else {
     pictureSrc =
-      "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg";
+      'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg';
   }
 
   var button;
@@ -134,7 +133,7 @@ const Button = styled.div`
 `;
 
 const AddCard = styled.div`
-margin: 0px 10px;
+  margin: 0px 10px;
   padding: 10px;
   width: 165px;
   height: 272px;

@@ -26,7 +26,10 @@ var RelatedItems = (props) => {
   };
 
   const remove = (removeId) => {
-    ls.set('myoutfit', outfit.filter(item => item.id !== removeId));
+    ls.set(
+      'myoutfit',
+      outfit.filter((item) => item.id !== removeId)
+    );
     let update = ls.get('myoutfit') || [];
     setOutfit(update);
   };

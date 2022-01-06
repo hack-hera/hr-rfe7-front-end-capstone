@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import CardItem from "./CardItem.jsx";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import CardItem from './CardItem.jsx';
 
 var OutfitCarousel = (props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -87,25 +87,25 @@ const CarouselContent = styled.div`
 `;
 
 const LeftButton = styled.div`
-cursor: pointer;
-font-size: 50px;
-z-index: 1;
-top: 50%;
-left: 220px;
-display: flex;
-justify-content: center;
-align-items: center;
+  cursor: pointer;
+  font-size: 50px;
+  z-index: 1;
+  top: 50%;
+  left: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const RightButton = styled.div`
-cursor: pointer;
-font-size: 50px;
-z-index: 1;
-top: 50%;
-right: 220px;
-display: flex;
-justify-content: center;
-align-items: center;
+  cursor: pointer;
+  font-size: 50px;
+  z-index: 1;
+  top: 50%;
+  right: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default OutfitCarousel;
