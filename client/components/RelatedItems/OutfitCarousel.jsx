@@ -28,7 +28,7 @@ var OutfitCarousel = (props) => {
         {currentIndex > 0 && <LeftButton onClick={prev}>&#171;</LeftButton>}
         <CarouselWrapper>
           <CarouselContent
-            style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
+            style={{ transform: `translateX(-${currentIndex * (100 / 4)}%)` }}
           >
             <CardItem firstCard={true} add={props.addOutfit} />
             {props.outfitData.map((item, i) => {
@@ -81,39 +81,31 @@ const CarouselWrapper = styled.div`
 
 const CarouselContent = styled.div`
   display: flex;
-  transition: all 400ms linear;
+  transition: all 250ms linear;
   width: 100%;
   padding: 5px;
 `;
 
 const LeftButton = styled.div`
-  cursor: pointer;
-  position: absolute;
-  font-size: 25px;
-  z-index: 1;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 13px;
-  height: 100%;
-  left: 220px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+cursor: pointer;
+font-size: 50px;
+z-index: 1;
+top: 50%;
+left: 220px;
+display: flex;
+justify-content: center;
+align-items: center;
 `;
 
 const RightButton = styled.div`
-  cursor: pointer;
-  position: absolute;
-  font-size: 25px;
-  z-index: 1;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 13px;
-  height: 100%;
-  right: 220px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+cursor: pointer;
+font-size: 50px;
+z-index: 1;
+top: 50%;
+right: 220px;
+display: flex;
+justify-content: center;
+align-items: center;
 `;
 
 export default OutfitCarousel;
