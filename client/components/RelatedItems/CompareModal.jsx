@@ -89,20 +89,17 @@ var CompareModal = (props) => {
 };
 
 const Container = styled.div`
-
+height: 100%
 `;
+// bgLight
 
 const Table = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  font-size: .8rem;
-  margin: 0.5rem;
-  line-height: 1.5;
-  flex: 1 1 auto;
 `;
 
 const Title = styled.div`
-
+padding: 5px 0px;
+display: flex;
+justify-content: center;
 `;
 
 const Header = styled.div`
@@ -111,19 +108,21 @@ const Header = styled.div`
   flex-flow: row nowrap;
   justify-content: space-between;
   border-bottom: 1px solid black;
-  margin-bottom: 5px;
+  margin: 10px 0px;
 `;
 
 const Current = styled.div`
-
+margin: 0px 40px;
 `;
 
 const Related = styled.div`
+margin: 0px 40px;
 `;
 
 const RowsContainer = styled.div`
 display: flex;
 flex-direction: column;
+margin: 20px 0px;
 `;
 
 const Row = styled.div`
@@ -131,15 +130,17 @@ margin: 10px 0px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
-border-bottom: 1px solid black;
+align-items: center;
 `;
 
 const Column = styled.div`
 display: flex;
+margin: 0px 40px;
 `;
 
 const Empty = styled.div`
-
+width: 10px;
+height: 10px;
 `;
 
 export default CompareModal;
