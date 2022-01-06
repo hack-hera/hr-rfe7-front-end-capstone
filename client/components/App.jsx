@@ -29,11 +29,16 @@ class App extends Component {
       reviewData: null,
       darkMode: false,
       loading: false,
+      cart: [],
     };
   }
 
   addToCart(obj) {
-    console.log('>>>adding to cart!', obj);
+    if (!this.state.cart.map((x) => x.id).includes(this.state.currentProduct.id)) {
+      this.setState({ cart: [...this.state.cart, this.state.currentProduct] }, () =>
+        console.log(this.state.cart)
+      );
+    }
   }
 
   fetchReviewData({ product_id, page = 1, count = 100, sort = 'newest' }) {

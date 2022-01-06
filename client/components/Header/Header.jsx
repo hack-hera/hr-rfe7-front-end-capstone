@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Autocomplete from './Autocomplete';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Search from './Search';
 import localforage from 'localforage';
 
 export const Header = ({ product, products, updateProduct, toggleColors }) => {
-  const [query, setQuery] = useState('');
-  const [showing, setShowing] = useState(false);
-
   const clearCache = async () => {
     let sure = confirm('Are you sure?');
     if (sure) {
@@ -26,35 +21,7 @@ export const Header = ({ product, products, updateProduct, toggleColors }) => {
         </h1>
       </div>
       <div>
-        {product && (
-          <select value={product.id} onChange={(e) => updateProduct(e.target.value)}>
-            {products.map((x, i) => (
-              <option key={x.id} value={x.id}>
-                {x.id} - {x.name}
-              </option>
-            ))}
-          </select>
-        )}
-      </div>
-      <div>
-        <StyledInput
-          type='text'
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => setShowing(true)}
-          onBlur={() => setShowing(false)}
-        ></StyledInput>
-        <FontAwesomeIcon icon={faSearch} />
-        {showing && query.length >= 1 && (
-          <Autocomplete
-            items={products}
-            query={query}
-            onClick={(id) => {
-              setShowing(false);
-              updateProduct(id);
-            }}
-          />
-        )}
+        <Search items={products} updateProduct={updateProduct} />
       </div>
     </Navbar>
   );
@@ -84,16 +51,6 @@ const Navbar = styled.div`
   svg {
     color: ${(props) => props.theme.textInv};
   }
-`;
-
-const StyledInput = styled.input`
-  background-color: transparent;
-  width: 200px;
-  border: 0px;
-  border-bottom: 2px solid ${(props) => props.theme.textInv};
-  margin-right: 20px;
-  outline: none;
-  color: ${(props) => props.theme.textInv};
 `;
 
 const Toggle = styled.a`
