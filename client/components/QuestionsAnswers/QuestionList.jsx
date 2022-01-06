@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AnswersList from './AnswersList.jsx';
 import AddAnswer from './AddAnswerModal.jsx';
@@ -9,13 +9,19 @@ import { sortedQuestion, QuestionBody } from './lib/dataFunctions.jsx';
 
 
 
-const QuestionList = ({ searchText, questions, questionShow, product_name, product_id, showMoreA, showMoreQ, searchQuestions, showLessQ, clicked, showLessA, fetchQuestionData }) => {
+const QuestionList = ({ searchText, questions, questionShow, product_name, product_id, showMoreA, searchQuestions, clicked, showLessA, fetchQuestionData, questionClicked }) => {
+
+  const [show, setShow] = useState(2);
+
+  useEffect(() => {
+    setShow(2);
+  }, [product_id]);
 
   return (
 
     <Container>
       {searchText.length < 3 && <ScrollDiv>
-        {questions.sort(sortedQuestion).slice(0, questionShow).map((question, i) => {
+        {questions.sort(sortedQuestion).slice(0, show).map((question, i) => {
           const answers = Object.values(question.answers);
           return (
             <ListContainer key={i}>
@@ -27,8 +33,7 @@ const QuestionList = ({ searchText, questions, questionShow, product_name, produ
                   product_id={product_id}
                   fetchQuestionData={fetchQuestionData}
                 />
-                <MarkQuestionHelpfulAndReported question={question} product_id={product_id}/>
-
+                <MarkQuestionHelpfulAndReported question={question}/>
               </QuestionText>
               <AnswersList
                 answers={answers}
@@ -41,7 +46,7 @@ const QuestionList = ({ searchText, questions, questionShow, product_name, produ
         })}
       </ScrollDiv>}
       {searchText.length >= 3 && <ScrollDiv>
-        {searchQuestions.sort(sortedQuestion).slice(0, questionShow).map((question, i) => {
+        {searchQuestions.sort(sortedQuestion).slice(0, show).map((question, i) => {
           const answers = Object.values(question.answers);
           return (
             <div key={i}>
@@ -66,8 +71,8 @@ const QuestionList = ({ searchText, questions, questionShow, product_name, produ
         })}
       </ScrollDiv>}
       <ButtonContainer>
-        {questions.length > questionShow && <Button onClick={showMoreQ}>SEE MORE QUESTIONS</Button>}
-        {questions.length === questionShow && <Button onClick={showLessQ}>COLLAPSE     QUESTIONS</Button>}
+        {questions.length > show && <Button onClick={() => setShow(questions.length)}>SEE MORE QUESTIONS</Button>}
+        {questions.length === show && <Button onClick={() => setShow(2)}>COLLAPSE QUESTIONS</Button>}
         <AddQuestion
           product_name={product_name}
           product_id={product_id}

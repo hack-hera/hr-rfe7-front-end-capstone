@@ -81,7 +81,7 @@ const Container = styled.div`
   z-index: 200;
   position:fixed;
   background: ${(props) => props.theme.bgLight};
-  width: 70%;
+  width: 80%;
   height: 80%;
   top:50%;
   left:50%;
@@ -89,7 +89,8 @@ const Container = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 80%;
-
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 `;
 
 const Label = styled.div`
@@ -113,8 +114,13 @@ const BodyContainer = styled.div`
 `;
 
 const TextArea = styled.textarea`
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   background-color: ${(props) => props.theme.bgLight};
   color: ${(props) => props.theme.textLight};
+  padding: 10px;
+  border: 0px;
+  margin: 0px 10px 10px 0px;
   outline: 1px solid ${(props) => props.theme.textLight};
 `;
 

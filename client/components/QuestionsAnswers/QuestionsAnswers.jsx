@@ -14,7 +14,6 @@ class QuestionsAnswers extends React.Component {
     super(props);
 
     this.state = {
-      questionShow: 2,
       searchText: '',
       searchQuestions: [],
       clicked: false
@@ -32,7 +31,7 @@ class QuestionsAnswers extends React.Component {
 
   render() {
 
-    const { searchText, searchQuestions, clicked, questionShow } = this.state;
+    const { searchText, searchQuestions, clicked } = this.state;
 
     return (
       <Container>
@@ -43,10 +42,7 @@ class QuestionsAnswers extends React.Component {
             product_id={this.props.data.product_id}
             product_name={this.props.product.name}
             questions={this.props.data.results}
-            questionShow={questionShow}
             showMoreA={() => this.setState({clicked: true})}
-            showMoreQ={() => this.setState({questionShow: this.props.data.results.length})}
-            showLessQ={() => this.setState({questionShow: 2})}
             showLessA={() => this.setState({clicked: false})}
             searchText={searchText}
             searchQuestions={searchQuestions}
