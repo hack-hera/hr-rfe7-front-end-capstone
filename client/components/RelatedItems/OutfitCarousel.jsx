@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowCircleRight, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import CardItem from './CardItem.jsx';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import CardItem from "./CardItem.jsx";
 
 var OutfitCarousel = (props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,13 +25,11 @@ var OutfitCarousel = (props) => {
   return (
     <CarouselComponent>
       <CarouselContainer>
-        {currentIndex > 0 && (
-          <LeftButton>
-            <FontAwesomeIcon icon={faArrowCircleLeft} onClick={prev} />
-          </LeftButton>
-        )}
+        {currentIndex > 0 && <LeftButton>&#171;</LeftButton>}
         <CarouselWrapper>
-          <CarouselContent style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}>
+          <CarouselContent
+            style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
+          >
             <CardItem firstCard={true} add={props.addOutfit} />
             {props.outfitData.map((item, i) => {
               return (
@@ -48,11 +44,7 @@ var OutfitCarousel = (props) => {
             })}
           </CarouselContent>
         </CarouselWrapper>
-        {currentIndex < length - 1 && (
-          <RightButton>
-            <FontAwesomeIcon icon={faArrowCircleRight} onClick={next} />
-          </RightButton>
-        )}
+        {currentIndex < length - 1 && <RightButton>&#187;</RightButton>}
       </CarouselContainer>
     </CarouselComponent>
   );
@@ -63,7 +55,8 @@ const CarouselComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: green;
+  padding: 5px;
+  color: ${(props) => props.theme.textLight};
 `;
 
 const CarouselContainer = styled.div`
@@ -72,39 +65,64 @@ const CarouselContainer = styled.div`
   height: 100%;
   justify-content: center;
   position: relative;
+  padding: 5px;
 `;
 
 const CarouselWrapper = styled.div`
   overflow: hidden;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 65%;
   height: 100%;
+  padding: 5px;
 `;
 
 const CarouselContent = styled.div`
   display: flex;
-  transition: all 500ms linear;
+  transition: all 400ms linear;
   width: 100%;
   padding: 5px;
 `;
 
 const LeftButton = styled.div`
+  cursor: pointer;
   position: absolute;
+  font-size: 25px;
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
-  width: 100px;
-  left: 0px;
-  background: purple;
+  width: 13px;
+  height: 100%;
+  left: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(
+    to left,
+    rgba(247, 247, 247, 0),
+    rgba(247, 247, 247, 1)
+  );
 `;
 // background-image: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 
 const RightButton = styled.div`
+  cursor: pointer;
   position: absolute;
+  font-size: 25px;
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
-  width: 100px;
-  background: pink;
+  width: 13px;
+  height: 100%;
+  right: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(
+    to right,
+    rgba(247, 247, 247, 0),
+    rgba(247, 247, 247, 1)
+  );
 `;
 // background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 
