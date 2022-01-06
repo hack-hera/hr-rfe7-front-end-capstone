@@ -57,15 +57,19 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
             <b>Product Name: </b>
             {product.name}
           </p>
-          {style && (
-            <>
+          <>
+            {style && (
+
               <p>
-                <b>Style: </b>
+                <b>Styles: </b>
                 {style.name}
               </p>
-
-              {/* TODO - Refactor this to accept default price if there styles.length === 0 */}
-              <RenderPrice currentStyle={style} />
+            )}
+            {/* TODO - Refactor this to accept default price if there styles.length === 0 */}
+            <RenderPrice
+              currentStyle={style}
+              default_price={product.default_price}/>
+            {style && (
               <StyleSelector
                 productStyles={product.styles}
                 changeStyle={(style) => {
@@ -73,8 +77,9 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
                   setPhoto(style.photos[0]);
                 }}
               />
-            </>
-          )}
+            )}
+          </>
+
           <Cart>
             <UpdateCart style={style} product={product} addToCart={addToCart} />
           </Cart>
@@ -116,14 +121,14 @@ const ProductContainer = styled.div`
 
 const ImageGalleryContainer = styled.div`
   display: inline-block;
-  width: 33px;
+  width: 10%;
   height: 440px;
   margin-right: 30px;
 `;
 
 const ImageContainer = styled.div`
   display: flex;
-  width: 50%;
+  width: 40%;
 `;
 
 const Thumbnail = styled.img`
