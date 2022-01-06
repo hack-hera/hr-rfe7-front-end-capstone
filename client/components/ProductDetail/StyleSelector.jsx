@@ -38,7 +38,7 @@ const StyleSelector = (props) => {
             {props.productStyles.map((style, key) => (
               <Thumbnail
                 key={key}
-                src={style.photos[0].thumbnail_url}
+                src={style.photos[0].thumbnail_url || 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'}
                 onClick={() => {
                   props.changeStyle(style);
                 }}

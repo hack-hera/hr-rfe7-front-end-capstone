@@ -26,18 +26,22 @@ const ImageGallery = (props) => {
   return (
     <Carousel_Container>
       <Carousel_Wrapper>
-        {currentImage > 0 &&
-        <UpArrow>
-          <FontAwesomeIcon icon = {faArrowCircleUp} onClick = {previous}/>
-        </UpArrow>
-        }
+        {currentImage > 0 ? (
+          <UpArrow>
+            <FontAwesomeIcon icon = {faArrowCircleUp} onClick = {previous}/>
+          </UpArrow>
+        ) : (
+          <HiddenArrow>
+            <FontAwesomeIcon icon = {faArrowCircleUp}/>
+          </HiddenArrow>
+        )}
         <Carousel_content_wrapper>
           <Carousel_content style={{ transform: `translateY(-${currentImage * (41)}px)` }}>
             {props.currentStyle.photos.map((photo, key) => (
-              <Thumbnail_Container>
+
+              <Thumbnail_Container key={key}>
                 <Thumbnail
-                  key={key}
-                  src={photo.thumbnail_url}
+                  src={photo.thumbnail_url || 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'}
                   onClick={() => {
                     props.changePhoto(photo);
                     setCurrentImage(key);
@@ -59,22 +63,30 @@ const ImageGallery = (props) => {
 
 export default ImageGallery;
 
+const HiddenArrow = styled.div`
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+
+  visibility: hidden;
+`;
+
 const UpArrow = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
 
-  width: 30px;
-  height: 30px;
+
 `;
 
 const DownArrow = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
-  transform: translateY(60px);
-  width: 30px;
-  height: 30px;
+  position: absolute;
+  bottom: 0;
+
+  background: red;
 `;
 
 const Carousel_Container = styled.div`
