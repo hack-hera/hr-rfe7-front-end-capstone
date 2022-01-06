@@ -25,7 +25,7 @@ var OutfitCarousel = (props) => {
   return (
     <CarouselComponent>
       <CarouselContainer>
-        {currentIndex > 0 && <LeftButton>&#171;</LeftButton>}
+        {currentIndex > 0 && <LeftButton onClick={prev}>&#171;</LeftButton>}
         <CarouselWrapper>
           <CarouselContent
             style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
@@ -44,7 +44,9 @@ var OutfitCarousel = (props) => {
             })}
           </CarouselContent>
         </CarouselWrapper>
-        {currentIndex < length - 1 && <RightButton>&#187;</RightButton>}
+        {currentIndex < length - 1 && (
+          <RightButton onClick={next}>&#187;</RightButton>
+        )}
       </CarouselContainer>
     </CarouselComponent>
   );
@@ -97,13 +99,7 @@ const LeftButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(
-    to left,
-    rgba(247, 247, 247, 0),
-    rgba(247, 247, 247, 1)
-  );
 `;
-// background-image: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 
 const RightButton = styled.div`
   cursor: pointer;
@@ -118,12 +114,6 @@ const RightButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(
-    to right,
-    rgba(247, 247, 247, 0),
-    rgba(247, 247, 247, 1)
-  );
 `;
-// background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 
 export default OutfitCarousel;

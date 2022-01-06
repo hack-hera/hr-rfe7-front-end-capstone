@@ -25,8 +25,11 @@ var CardItem = (props) => {
     return (
       <AddCard>
         <AddTitle>Add item to your outfit</AddTitle>
-        <AddButton onClick={props.add}>+</AddButton>
+        <AddButtonContainer>
+          <AddButton onClick={props.add}>+</AddButton>
+        </AddButtonContainer>
       </AddCard>
+
     );
   }
 
@@ -75,8 +78,8 @@ var CardItem = (props) => {
 const Container = styled.div`
   margin: 0px 10px;
   padding: 10px;
-  width: 200px;
-  height: 250px;
+  width: 165px;
+  height: 272px;
   display: flex;
   flex-direction: column;
   border: 1px solid ${(props) => props.theme.bgDark};
@@ -110,6 +113,9 @@ const PictureContainer = styled.div`
   flex-direction: row;
   position: relative;
   margin-bottom: 7px;
+  background: grey;
+  height: 150px;
+  width: 165px;
 `;
 
 const Picture = styled.div`
@@ -128,12 +134,16 @@ const Button = styled.div`
 `;
 
 const AddCard = styled.div`
-  width: 200px;
-  height: 250px;
+margin: 0px 10px;
+  padding: 10px;
+  width: 165px;
+  height: 272px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid ${(props) => props.theme.bgDark};
+  position: relative;
 `;
 
 const AddTitle = styled.div`
@@ -142,8 +152,21 @@ const AddTitle = styled.div`
   text-align: center;
 `;
 
+const AddButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  position: relative;
+  margin-bottom: 7px;
+  height: 150px;
+  width: 165px;
+`;
+
 const AddButton = styled.div`
   font-size: 100px;
+  cursor: pointer;
 `;
+// width 122
+// height 272
 
 export default CardItem;

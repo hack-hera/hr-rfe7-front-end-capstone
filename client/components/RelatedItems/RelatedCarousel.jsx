@@ -105,11 +105,6 @@ const LeftButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(
-    to left,
-    rgba(247, 247, 247, 0),
-    rgba(247, 247, 247, 1)
-  );
 `;
 
 const RightButton = styled.div`
@@ -125,11 +120,6 @@ const RightButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(
-    to right,
-    rgba(247, 247, 247, 0),
-    rgba(247, 247, 247, 1)
-  );
 `;
 
 export default RelatedCarousel;
