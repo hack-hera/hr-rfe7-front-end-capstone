@@ -12,31 +12,30 @@ const ImageGallery = (props) => {
   }, [props.currentStyle.photos]);
 
   const next = () => {
-    if (currentImage < (galleryLength - 1)) {
-      setCurrentImage(prevState => prevState + 1);
+    if (currentImage < galleryLength - 1) {
+      setCurrentImage((prevState) => prevState + 1);
     }
   };
 
   const previous = () => {
     if (currentImage > 0) {
-      setCurrentImage(prevState => prevState - 1);
+      setCurrentImage((prevState) => prevState - 1);
     }
   };
 
   return (
     <Carousel_Container>
       <Carousel_Wrapper>
-        {currentImage > 0 &&
-        <UpArrow>
-          <FontAwesomeIcon icon = {faArrowCircleUp} onClick = {previous}/>
-        </UpArrow>
-        }
+        {currentImage > 0 && (
+          <UpArrow>
+            <FontAwesomeIcon icon={faArrowCircleUp} onClick={previous} />
+          </UpArrow>
+        )}
         <Carousel_content_wrapper>
-          <Carousel_content style={{ transform: `translateY(-${currentImage * (41)}px)` }}>
+          <Carousel_content style={{ transform: `translateY(-${currentImage * 41}px)` }}>
             {props.currentStyle.photos.map((photo, key) => (
-              <Thumbnail_Container>
+              <Thumbnail_Container key={key}>
                 <Thumbnail
-                  key={key}
                   src={photo.thumbnail_url}
                   onClick={() => {
                     props.changePhoto(photo);
@@ -47,11 +46,11 @@ const ImageGallery = (props) => {
             ))}
           </Carousel_content>
         </Carousel_content_wrapper>
-        {currentImage < (galleryLength - 1) &&
-        <DownArrow>
-          <FontAwesomeIcon icon = {faArrowCircleDown} onClick = {next}/>
-        </DownArrow>
-        }
+        {currentImage < galleryLength - 1 && (
+          <DownArrow>
+            <FontAwesomeIcon icon={faArrowCircleDown} onClick={next} />
+          </DownArrow>
+        )}
       </Carousel_Wrapper>
     </Carousel_Container>
   );
