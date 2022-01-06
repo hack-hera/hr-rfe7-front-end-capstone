@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import CardItem from "./CardItem.jsx";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import CardItem from './CardItem.jsx';
 
 var OutfitCarousel = (props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -28,7 +28,7 @@ var OutfitCarousel = (props) => {
         {currentIndex > 0 && <LeftButton onClick={prev}>&#171;</LeftButton>}
         <CarouselWrapper>
           <CarouselContent
-            style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
+            style={{ transform: `translateX(-${currentIndex * (100 / 4)}%)` }}
           >
             <CardItem firstCard={true} add={props.addOutfit} />
             {props.outfitData.map((item, i) => {
@@ -81,20 +81,16 @@ const CarouselWrapper = styled.div`
 
 const CarouselContent = styled.div`
   display: flex;
-  transition: all 400ms linear;
+  transition: all 250ms linear;
   width: 100%;
   padding: 5px;
 `;
 
 const LeftButton = styled.div`
   cursor: pointer;
-  position: absolute;
-  font-size: 25px;
+  font-size: 50px;
   z-index: 1;
   top: 50%;
-  transform: translateY(-50%);
-  width: 13px;
-  height: 100%;
   left: 220px;
   display: flex;
   justify-content: center;
@@ -103,13 +99,9 @@ const LeftButton = styled.div`
 
 const RightButton = styled.div`
   cursor: pointer;
-  position: absolute;
-  font-size: 25px;
+  font-size: 50px;
   z-index: 1;
   top: 50%;
-  transform: translateY(-50%);
-  width: 13px;
-  height: 100%;
   right: 220px;
   display: flex;
   justify-content: center;

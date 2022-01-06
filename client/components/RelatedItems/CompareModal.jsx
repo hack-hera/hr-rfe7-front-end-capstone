@@ -2,9 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 var CompareModal = (props) => {
-  const relatedFeatArr = props.related.features.reduce((result, current) => result.concat(current.feature), []);
-  const currentFeatArr = props.current.features.reduce((result, current) => result.concat(current.feature), []);
-
+  const relatedFeatArr = props.related.features.reduce(
+    (result, current) => result.concat(current.feature),
+    []
+  );
+  const currentFeatArr = props.current.features.reduce(
+    (result, current) => result.concat(current.feature),
+    []
+  );
 
   var allFeats = relatedFeatArr.concat(currentFeatArr);
   var unique = [];
@@ -41,28 +46,18 @@ var CompareModal = (props) => {
     if (hasFeature) {
       return (
         <Row key={index}>
-          <Column >
-            {current}
-          </Column>
-          <Column >
-            {char}
-          </Column>
-          <Column >
-            {related}
-          </Column>
+          <Column>{current}</Column>
+          <Column>{char}</Column>
+          <Column>{related}</Column>
         </Row>
       );
     } else {
       return (
         <Row key={index}>
-          <Column >
-          </Column>
-          <Column >
-            {char}
-          </Column>
-          <Column >
-          </Column>
-        </Row >
+          <Column></Column>
+          <Column>{char}</Column>
+          <Column></Column>
+        </Row>
       );
     }
   });
@@ -72,34 +67,27 @@ var CompareModal = (props) => {
       <Title>Comparing</Title>
       <Table>
         <Header>
-          <Current>
-            {props.current.name}
-          </Current>
+          <Current>{props.current.name}</Current>
           <Empty />
-          <Related>
-            {props.related.name}
-          </Related>
+          <Related>{props.related.name}</Related>
         </Header>
-        <RowsContainer>
-          {characteristics}
-        </RowsContainer>
+        <RowsContainer>{characteristics}</RowsContainer>
       </Table>
-    </Container >
+    </Container>
   );
 };
 
 const Container = styled.div`
-height: 100%
+  height: 100%;
 `;
 // bgLight
 
-const Table = styled.div`
-`;
+const Table = styled.div``;
 
 const Title = styled.div`
-padding: 5px 0px;
-display: flex;
-justify-content: center;
+  padding: 5px 0px;
+  display: flex;
+  justify-content: center;
 `;
 
 const Header = styled.div`
@@ -112,35 +100,35 @@ const Header = styled.div`
 `;
 
 const Current = styled.div`
-margin: 0px 40px;
+  margin: 0px 40px;
 `;
 
 const Related = styled.div`
-margin: 0px 40px;
+  margin: 0px 40px;
 `;
 
 const RowsContainer = styled.div`
-display: flex;
-flex-direction: column;
-margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0px;
 `;
 
 const Row = styled.div`
-margin: 10px 0px;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Column = styled.div`
-display: flex;
-margin: 0px 40px;
+  display: flex;
+  margin: 0px 40px;
 `;
 
 const Empty = styled.div`
-width: 10px;
-height: 10px;
+  width: 10px;
+  height: 10px;
 `;
 
 export default CompareModal;
