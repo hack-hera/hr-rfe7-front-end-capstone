@@ -14,8 +14,6 @@ import ProductDescription from './ProductDescription.jsx';
 import ScrollToReviews from './ScrollToReviews.jsx';
 
 const ProductDetail = ({ product, productReviews, addToCart }) => {
-  console.log('>>>>>', product);
-
   const [style, setStyle] = useState(product.styles.length > 0 ? product.styles[0] : null);
   const [photo, setPhoto] = useState(
     product.styles.length > 0 ? product.styles[0].photos[0] : null
@@ -43,7 +41,7 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
             <ImageGalleryContainer>
               <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />
             </ImageGalleryContainer>
-            <ImageContainer>{photo && <ProductImage currentPhoto={photo} />}</ImageContainer>
+            <ImageContainer>{photo && <ProductImage currentPhoto={photo} currentStyle={style} changePhoto={(photo) => setPhoto(photo)}/>}</ImageContainer>
           </DisplayContainer>
         )}
         <ProductInfoContainer>

@@ -20,7 +20,7 @@ const Ratings = ({ data, updateFilter, filters }) => {
     <Container>
       <Header>
         <h1>{displayTotalRating}</h1>
-        <Stars number={displayTotalRating} />
+        <Stars number={displayTotalRating} size={20} />
       </Header>
 
       <TableContainer>

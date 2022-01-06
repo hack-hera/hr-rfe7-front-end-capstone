@@ -51,7 +51,7 @@ const UpdateCart = ({ style, product, addToCart }) => {
   //Update the sizes/quantities/available quantities
   return (
     <Container>
-      {warning && <Warning>Must make a selection</Warning>}
+      {warning && <Warning>Please select size</Warning>}
       <Selections>
         <SizeSelection
           onChange={(e) => {

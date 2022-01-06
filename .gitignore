@@ -24,8 +24,7 @@ coverage
 build/
 dist/
 
-public/bundle.js
-public/components.js
+public/*.js
 
 #Test Snapshots
 tests/__snapshots__

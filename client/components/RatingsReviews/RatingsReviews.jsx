@@ -14,7 +14,7 @@ const RatingsReviews = ({ data, product, fetch }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <Container id="RatingsReviews">
+    <Container id='RatingsReviews'>
       {showModal === true && (
         <AddReview
           product={product}
@@ -62,18 +62,40 @@ const Container = styled.div`
 
 const MainContainer = styled.div`
   display: flex;
+  @media (max-width: 880px) {
+  }
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+  }
 `;
 
 const LeftContainer = styled.div`
   width: 30%;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 880px) {
+    width: 45%;
+  }
+
+  @media (max-width: 540px) {
+    width: 100%;
+  }
 `;
 
 const RightContainer = styled.div`
   width: 70%;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 880px) {
+    width: 55%;
+  }
+
+  @media (max-width: 540px) {
+    width: 100%;
+  }
 `;
 
 export default RatingsReviews;
