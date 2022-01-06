@@ -7,7 +7,16 @@ import { QuestionsAnswers } from './QuestionsAnswers';
 import { RatingsReviews } from './RatingsReviews';
 import { RelatedItems } from './RelatedItems';
 import { Header } from './Header/Header';
+import { Loader } from './Shared/Loader';
 import api from '../api';
+import { useWorker } from 'react-hooks-worker';
+
+const createWorker = () => new Worker(new URL('../webworker.js', import.meta.url));
+
+const BackgroundCache = ({ current }) => {
+  const { result, error } = useWorker(createWorker, current);
+  return <></>;
+};
 
 class App extends Component {
   constructor(props) {
@@ -19,6 +28,7 @@ class App extends Component {
       questionData: null,
       reviewData: null,
       darkMode: false,
+      loading: false,
     };
   }
 
@@ -33,7 +43,7 @@ class App extends Component {
   }
 
   fetchQuestionData({ product_id, page = 1, count = 100 }) {
-    api.getQuestionData({ product_id, page, count, sort }, false).then((res) => {
+    api.getQuestionData({ product_id, page, count }, false).then((res) => {
       this.setState({ questionData: res });
     });
   }
@@ -47,28 +57,41 @@ class App extends Component {
   }
 
   //Handler to update the main product
-  updateProduct(id) {
-    api.getAllData({ product_id: id }).then((data) => {
-      this.setState({
-        currentProduct: data.currentProduct,
-        relatedProducts: data.relatedProducts,
-        questionData: data.questionData,
-        reviewData: data.reviewData,
-      });
+  async updateProduct(id) {
+    let isCached = await api.isProductCached({ product_id: id });
+
+    if (!isCached) {
+      await this.setState({ loading: true });
+    }
+
+    let data = await api.getAllData({ product_id: id });
+
+    this.setState({
+      currentProduct: data.currentProduct,
+      relatedProducts: data.relatedProducts,
+      questionData: data.questionData,
+      reviewData: data.reviewData,
+      loading: false,
     });
   }
 
   render() {
-    const { products, currentProduct, reviewData, darkMode } = this.state;
+    const { products, currentProduct, relatedProducts, reviewData, darkMode, loading } = this.state;
     return (
       <ThemeProvider theme={THEMES[darkMode ? 'darkMode' : 'default']}>
+        <BackgroundCache current={{ current: currentProduct, related: relatedProducts }} />
         <Header
           toggleColors={() => this.setState({ darkMode: !darkMode })}
           products={products}
           product={currentProduct}
           updateProduct={(id) => this.updateProduct(id)}
         />
-        {currentProduct && (
+        {loading === true && (
+          <Container>
+            <Loader />
+          </Container>
+        )}
+        {currentProduct && loading === false && (
           <Container>
             <ProductDetail
               product={currentProduct}
@@ -85,8 +108,10 @@ class App extends Component {
               />
             )}
             <QuestionsAnswers
+              data={this.state.questionData}
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
+              fetchQuestionData={(params) => this.fetchQuestionData(params)}
             />
             {reviewData && (
               <RatingsReviews
@@ -105,8 +130,17 @@ class App extends Component {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  min-height: 100%;
   background-color: ${(props) => props.theme.bgLight};
+
+  padding: 0px 80px 80px 80px;
+
+  width: calc(100% - 160px);
+
+  @media (max-width: 880px) {
+    padding: 0px 30px 80px 30px;
+    width: calc(100% - 60px);
+  }
 `;
 
 export default App;

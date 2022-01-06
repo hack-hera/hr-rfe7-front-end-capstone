@@ -1,5 +1,6 @@
 import axios from 'axios';
 import ls from 'local-storage';
+import localforage from 'localforage';
 
 const { github_token, campus } = require('./env/config.js');
 
@@ -9,14 +10,14 @@ const headers = {
   },
 };
 
-const cache = (key, id, value) => {
-  let obj = ls.get(key) || {};
+const cache = async (key, id, value) => {
+  let obj = (await localforage.getItem(key)) || {};
   obj[id] = value;
-  ls.set(key, obj);
+  await localforage.setItem(key, obj);
 };
 
-const getCache = (key, id) => {
-  let obj = ls.get(key) || {};
+const getCache = async (key, id) => {
+  let obj = (await localforage.getItem(key)) || {};
   return obj[id];
 };
 
@@ -29,12 +30,25 @@ const api = {
 
   getAllData: async function (params = {}) {
     const { product_id } = params;
+
+    let cachedData = await getCache('data', product_id);
+    if (cachedData) {
+      return cachedData;
+    }
+
     let obj = {};
     obj.currentProduct = await this.getProductData({ product_id });
     obj.reviewData = await this.getReviewData({ product_id });
     obj.relatedProducts = await this.getRelatedProductData({ product_id });
     obj.questionData = await this.getQuestionData({ product_id });
+
+    await cache('data', product_id, obj);
     return obj;
+  },
+
+  isProductCached: async function ({ product_id }) {
+    let cachedProduct = await getCache('data', parseInt(product_id));
+    return !!cachedProduct;
   },
 
   /******************************************************************************
@@ -44,71 +58,23 @@ const api = {
   // Parameter	Type	Description
   // page	integer	Selects the page of results to return. Default 1.
   // count	integer	Specifies how many results per page to return. Default 5.
-  getProducts: function (params = {}) {
+  getProducts: async function (params = {}) {
     const { page = 1, count = 100 } = params;
-    return axios
-      .get(host + `/products?page=${page}&count=${count}`, headers)
-      .then((res) => Promise.resolve(res.data))
-      .catch((err) => Promise.reject(new Error(err)));
-  },
-
-  getMultipleProducts: function (params = {}) {
-    const { product_ids } = params;
-    if (!product_ids) {
-      return Promise.reject(new Error('must provide product_id'));
-    }
-    let promises = product_ids.map((id) => this.getProduct({ product_id: id }));
-    return Promise.all(promises);
-  },
-
-  // Parameter	Type	Description
-  // product_id	integer	Required ID of the Product requested
-  getProduct: function (params = {}) {
-    const { product_id } = params;
-    if (!product_id) {
-      return Promise.reject(new Error('must provide product_id'));
-    }
-
-    return axios
-      .get(host + '/products/' + product_id, headers)
-      .then((res) => Promise.resolve(res.data))
-      .catch((err) => Promise.reject(new Error(err)));
-  },
-
-  // Parameter	Type	Description
-  // product_id	integer	Required ID of the Product requested
-  getProductStyles: function (params = {}) {
-    const { product_id } = params;
-    if (!product_id) {
-      return Promise.reject(new Error('must provide product_id'));
-    }
-
-    return axios
-      .get(host + '/products/' + product_id + '/styles', headers)
-      .then((res) => Promise.resolve(res.data))
-      .catch((err) => Promise.reject(new Error(err)));
-  },
-
-  // Parameter	Type	Description
-  // product_id	integer	Required ID of the Product requested
-  getRelatedProducts: function (params = {}) {
-    const { product_id } = params;
-    if (!product_id) {
-      return Promise.reject(new Error('must provide product_id'));
-    }
-
-    return axios
-      .get(host + '/products/' + product_id + '/related', headers)
-      .then((res) => this.getMultipleProducts({ product_ids: res.data }))
-      .catch((err) => Promise.reject(new Error(err)));
-  },
-
-  getProductData: async function (params = {}) {
-    const { product_id } = params;
-    let productUrl = host + '/products/' + product_id;
-    let stylesUrl = host + '/products/' + product_id + '/styles';
+    let url = `${host}/products?page=${page}&count=${count}`;
     try {
-      let cachedProduct = getCache('product', product_id);
+      let res = await axios.get(url, headers);
+      return res.data;
+    } catch (err) {
+      return {};
+    }
+  },
+
+  // Returns data for an individual product, includes style data
+  getProductData: async function ({ product_id }) {
+    let productUrl = `${host}/products/${product_id}`;
+    let stylesUrl = `${host}/products/${product_id}/styles`;
+    try {
+      let cachedProduct = await getCache('product', product_id);
       if (cachedProduct) {
         return cachedProduct;
       }
@@ -116,40 +82,40 @@ const api = {
       let obj = productRes.data;
       let stylesRes = await axios.get(stylesUrl, headers);
       obj.styles = stylesRes.data.results;
-      cache('product', product_id, obj);
+      await cache('product', product_id, obj);
       return obj;
     } catch (err) {
-      throw new Error(err);
+      return {};
     }
   },
 
-  getRelatedProductData: async function (params = {}) {
-    const { product_id } = params;
-    let relatedUrl = host + '/products/' + product_id + '/related';
+  //gets array of related products
+  //iterates through and returns product info + ratings info for each
+  getRelatedProductData: async function ({ product_id }) {
+    let url = `${host}/products/${product_id}/related`;
+
     try {
       let obj = {};
-      let related = getCache('related', product_id);
+      let related = await getCache('related', product_id);
       if (!related) {
-        let res = await axios.get(relatedUrl, headers);
-        cache('related', product_id, res.data);
+        let res = await axios.get(url, headers);
+        await cache('related', product_id, res.data);
         related = res.data;
       }
       obj.related_product_ids = related;
       obj.related = [];
       obj.ratings = [];
-      related.forEach(async (product_id) => {
-        let temp = await this.getProductData({ product_id });
-        obj.related.push(temp);
-      });
 
-      related.forEach(async (product_id) => {
-        let ratings = await this.getReviewData({ product_id });
-        obj.ratings.push(ratings);
-      });
+      for (let i = 0; i < related.length; i++) {
+        let temp1 = await this.getProductData({ product_id: related[i] });
+        let temp2 = await this.getReviewData({ product_id: related[i] });
+        obj.related.push(temp1);
+        obj.ratings.push(temp2);
+      }
 
       return obj;
     } catch (err) {
-      throw new Error(err);
+      return {};
     }
   },
 
@@ -193,23 +159,31 @@ const api = {
   getReviewData: async function (params = {}, useCache = true) {
     const { product_id, count = 100, page = 1, sort = 'newest' } = params;
 
+    const reviewUrl = `${host}/reviews?product_id=${product_id}&count=${count}&page=${page}&sort=${sort}`;
+    const metaUrl = `${host}/reviews/meta?product_id=${product_id}`;
+
     try {
       if (useCache === true) {
-        let cachedReviews = getCache('reviews', product_id);
+        let cachedReviews = await getCache('reviews', product_id);
         if (cachedReviews) {
           return cachedReviews;
         }
       }
-      let data = await this.getReviewMeta({ product_id });
-      let reviews = await this.getReviews(params);
-      data.reviews = reviews.results;
-      data.numReviews = reviews.results.length;
-      cache('reviews', product_id, data);
+
+      let resMeta = await axios.get(metaUrl, headers);
+      let resReviews = await axios.get(reviewUrl, headers);
+      let data = resMeta.data;
+
+      data.reviews = resReviews.data.results;
+      data.numReviews = resReviews.data.results.length;
+
+      await cache('reviews', product_id, data);
       return data;
     } catch (err) {
       throw new Error(err);
     }
   },
+
   // product_id	integer	Required ID of the product to post the review for
   // rating	int	Integer (1-5) indicating the review rating
   // summary	text	Summary text of the review
@@ -219,7 +193,6 @@ const api = {
   // email	text	Email address for question asker
   // photos	[text]	Array of text urls that link to images to be shown
   // characteristics	object	Object of keys representing characteristic_id and values representing the review value for that characteristic. { "14": 5, "15": 5 //...}
-
   addReview: function (params = {}) {
     if (Object.keys(params).length !== 9) {
       return Promise.reject(new Error('params must contain exactly 9 properties'));
@@ -312,13 +285,13 @@ const api = {
 
     try {
       if (useCache === true) {
-        let cachedQuestions = getCache('questions', product_id);
+        let cachedQuestions = await getCache('questions', product_id);
         if (cachedQuestions) {
           return cachedQuestions;
         }
       }
       let questionRes = await axios.get(host + url, headers);
-      cache('questions', product_id, questionRes.data);
+      await cache('questions', product_id, questionRes.data);
       return questionRes.data;
     } catch (err) {
       throw new Error(err);
@@ -339,7 +312,6 @@ const api = {
     }
 
     const url = host + '/qa/questions';
-
     return axios
       .post(url, params, headers)
       .then((res) => Promise.resolve(res))
@@ -466,6 +438,10 @@ const api = {
   //     .then(res => Promise.resolve(res.data))
   //     .catch(err => Promise.reject(new Error(err)));
   // }
+
+  /******************************************************************************
+   * ARCHIVE
+   ******************************************************************************/
 };
 
 export default api;
