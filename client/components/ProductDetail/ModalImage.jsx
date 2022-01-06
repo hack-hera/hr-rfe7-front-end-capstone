@@ -11,16 +11,6 @@ const ModalImage = (props) => {
     /* Create magnifier glass: */
     var glass = document.createElement('DIV');
     glass.setAttribute('class', 'img-magnifier-glass');
-    // glass.setAttribute('style', 'position: absolute;');
-    // glass.setAttribute('style', 'border: 3px solid #000;');
-
-    // glass.setAttribute('style', 'cursor: none;');
-
-    /* Set the size of the magnifier glass: */
-    // glass.setAttribute('style', 'width: 100px;');
-    // glass.setAttribute('style', 'heigth: 100px;');
-
-    // glass.setAttribute('style', 'border-radius: 50%;');
 
     /* Insert magnifier glass: */
     img.parentElement.insertBefore(glass, img);
