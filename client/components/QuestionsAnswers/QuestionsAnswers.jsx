@@ -27,7 +27,7 @@ class QuestionsAnswers extends React.Component {
   searchInput(e) {
     this.setState({
       searchText: e.target.value,
-      searchQuestions: this.props.results.filter(question => question.question_body.toLowerCase().indexOf(e.target.value) !== -1),
+      searchQuestions: this.props.data.results.filter(question => question.question_body.toLowerCase().indexOf(e.target.value) !== -1),
       answeredSearchQuestion: this.state.searchQuestions.slice(2).filter(question => question.answers !== undefined)
     });
   }
@@ -50,7 +50,7 @@ class QuestionsAnswers extends React.Component {
             answeredQuestion={this.props.data.results.slice(2).filter(question => Object.keys(question.answers).length > 0)}
             showMoreA={() => this.setState({clicked: true})}
             showMoreQ={() => this.setState({answeredQuestionShow: answeredQuestionShow + 2})}
-            showLessQ={() => this.setState({answeredQuestionShow: answeredQuestionShow - 2})}
+            showLessQ={() => this.setState({answeredQuestionShow: 0})}
             showLessA={() => this.setState({clicked: false})}
             searchText={searchText}
             searchQuestions={searchQuestions}
