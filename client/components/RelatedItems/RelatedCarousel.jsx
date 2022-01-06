@@ -32,8 +32,8 @@ const RelatedCarousel = (props) => {
     <CarouselComponent>
       <CarouselContainer>
         {currentIndex > 0 && (
-          <LeftButton>
-            <FontAwesomeIcon icon={faArrowCircleLeft} onClick={prev} />
+          <LeftButton onClick={prev}>
+            &#171;
           </LeftButton>
         )}
         <CarouselWrapper>
@@ -54,8 +54,8 @@ const RelatedCarousel = (props) => {
           </CarouselContent>
         </CarouselWrapper>
         {currentIndex < length - 1 && (
-          <RightButton>
-            <FontAwesomeIcon icon={faArrowCircleRight} onClick={next} />
+          <RightButton onClick={next}>
+            &#187;
           </RightButton>
         )}
       </CarouselContainer>
@@ -69,6 +69,7 @@ const CarouselComponent = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 5px;
+  color: ${(props) => props.theme.textLight};
 `;
 
 const CarouselContainer = styled.div`
@@ -84,10 +85,9 @@ const CarouselWrapper = styled.div`
   overflow: hidden;
   display: flex;
   justify-content: center;
-  width: 50%;
+  width: 65%;
   height: 100%;
   padding: 5px;
-  background: red;
 `;
 
 const CarouselContent = styled.div`
@@ -95,36 +95,39 @@ const CarouselContent = styled.div`
   transition: all 400ms linear;
   width: 100%;
   padding: 5px;
-  background: blue;
 `;
 
 const LeftButton = styled.div`
+  cursor: pointer;
   position: absolute;
+  font-size: 25px;
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
-  width: 100px;
+  width: 13px;
   height: 100%;
-  left: 300px;
+  left: 220px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  background-image: linear-gradient(to left, rgba(247, 247, 247, 0), rgba(247, 247, 247, 1));
 `;
 
 
 const RightButton = styled.div`
+  cursor: pointer;
   position: absolute;
+  font-size: 25px;
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
-  width: 100px;
+  width: 13px;
   height: 100%;
-  right: 300px;
+  right: 220px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  background-image: linear-gradient(to right, rgba(247, 247, 247, 0), rgba(247, 247, 247, 1));
 `;
 
 export default RelatedCarousel;

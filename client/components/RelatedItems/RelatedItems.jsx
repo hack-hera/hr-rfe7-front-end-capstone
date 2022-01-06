@@ -72,8 +72,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: black;
   padding: 5px 50px;
+  color: ${(props) => props.theme.bgLight};
 `;
 
 export default RelatedItems;

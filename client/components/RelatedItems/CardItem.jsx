@@ -96,7 +96,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid ${(props) => props.theme.bgDark};
-  background: grey;
   position: relative;
 `;
 
@@ -133,14 +132,13 @@ const Picture = styled.div`
   cursor: pointer;
   img {
     height: 150px;
-    width: 150px;
+    width: 165px;
   }
 `;
 
 const Button = styled.div`
 z-index: 1;
 position: absolute;
-background: red;
 right: 0px;
 cursor: pointer;
 `;
