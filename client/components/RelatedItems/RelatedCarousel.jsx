@@ -68,7 +68,6 @@ const CarouselComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: green;
   padding: 5px;
 `;
 
@@ -78,7 +77,6 @@ const CarouselContainer = styled.div`
   height: 100%;
   justify-content: center;
   position: relative;
-  background: yellow;
   padding: 5px;
 `;
 
@@ -106,10 +104,14 @@ const LeftButton = styled.div`
   top: 50%;
   transform: translateY(-50%);
   width: 100px;
-  left: 0px;
-  background: red;
+  height: 100%;
+  left: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 `;
-// background-image: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+
 
 const RightButton = styled.div`
   position: absolute;
@@ -117,11 +119,12 @@ const RightButton = styled.div`
   top: 50%;
   transform: translateY(-50%);
   width: 100px;
+  height: 100%;
   right: 300px;
-  background: blue;
   display: flex;
   justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 `;
-// background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 
 export default RelatedCarousel;
