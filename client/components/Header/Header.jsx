@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Search from './Search';
+import Cart from './Cart';
 import localforage from 'localforage';
 
-export const Header = ({ product, products, updateProduct, toggleColors }) => {
+export const Header = ({
+  product,
+  products,
+  updateProduct,
+  toggleColors,
+  cart,
+  removeItemFromCart,
+}) => {
   const clearCache = async () => {
     let sure = confirm('Are you sure?');
     if (sure) {
@@ -20,14 +28,18 @@ export const Header = ({ product, products, updateProduct, toggleColors }) => {
           <Toggle onClick={clearCache}>&#128465;</Toggle>
         </h1>
       </div>
-      <div>
+      <Container>
+        <Cart cart={cart} removeItemFromCart={removeItemFromCart} />
         <Search items={products} updateProduct={updateProduct} />
-      </div>
+      </Container>
     </Navbar>
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 const Navbar = styled.div`
   position: fixed;
@@ -36,7 +48,7 @@ const Navbar = styled.div`
   left: 0px;
   right: 0px;
   height: 60px;
-  padding: 0px 25px;
+  padding: 0px 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

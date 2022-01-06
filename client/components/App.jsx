@@ -35,9 +35,7 @@ class App extends Component {
 
   addToCart(obj) {
     if (!this.state.cart.map((x) => x.id).includes(this.state.currentProduct.id)) {
-      this.setState({ cart: [...this.state.cart, this.state.currentProduct] }, () =>
-        console.log(this.state.cart)
-      );
+      this.setState({ cart: [...this.state.cart, this.state.currentProduct] });
     }
   }
 
@@ -81,7 +79,8 @@ class App extends Component {
   }
 
   render() {
-    const { products, currentProduct, relatedProducts, reviewData, darkMode, loading } = this.state;
+    const { products, currentProduct, relatedProducts, reviewData, darkMode, loading, cart } =
+      this.state;
     return (
       <ThemeProvider theme={THEMES[darkMode ? 'darkMode' : 'default']}>
         <BackgroundCache current={{ current: currentProduct, related: relatedProducts }} />
@@ -90,6 +89,10 @@ class App extends Component {
           products={products}
           product={currentProduct}
           updateProduct={(id) => this.updateProduct(id)}
+          cart={cart}
+          removeItemFromCart={(id) =>
+            this.setState({ cart: this.state.cart.filter((x) => x.id !== id) })
+          }
         />
         {loading === true && (
           <Container>

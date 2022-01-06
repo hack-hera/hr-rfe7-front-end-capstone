@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Search = ({ items, updateProduct }) => {
   const [query, setQuery] = useState('');
@@ -7,15 +9,17 @@ const Search = ({ items, updateProduct }) => {
 
   let display = items.filter((x) => new RegExp(query, 'i').test(x.name));
   return (
-    <Container>
-      <StyledInput
-        type='text'
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onFocus={() => setShowing(true)}
-        onBlur={() => setShowing(false)}
-      ></StyledInput>
-      <IconSearch>&#x26B2;</IconSearch>
+    <>
+      <Container>
+        <StyledInput
+          type='text'
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => setShowing(true)}
+          onBlur={() => setShowing(false)}
+        ></StyledInput>
+        <FontAwesomeIcon icon={faSearch} />
+      </Container>
       {showing && (
         <Dropdown>
           <StyledUl>
@@ -32,19 +36,27 @@ const Search = ({ items, updateProduct }) => {
           </StyledUl>
         </Dropdown>
       )}
-    </Container>
+    </>
   );
 };
 
 export default Search;
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  width: 200px;
+  svg {
+    font-size: 16px;
+  }
+`;
 
 const Dropdown = styled.div`
   position: fixed;
-  right: 50px;
+  right: 20px;
   top: 60px;
   max-height: 400px;
+  opacity: 0.95;
   overflow-y: scroll;
   overflow-x: hidden;
   width: 200px;
@@ -74,17 +86,10 @@ const StyledUl = styled.ul`
 
 const StyledInput = styled.input`
   background-color: transparent;
-  width: 200px;
+  width: 160px;
   border: 0px;
   border-bottom: 2px solid ${(props) => props.theme.textInv};
   margin-right: 10px;
   outline: none;
   color: ${(props) => props.theme.textInv};
-`;
-
-const IconSearch = styled.span`
-  transform: rotate(-45deg);
-  font-style: bold;
-  display: inline-block;
-  font-size: 20px;
 `;
