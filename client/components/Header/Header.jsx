@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Autocomplete from './Autocomplete';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Search from './Search';
+import Cart from './Cart';
 import localforage from 'localforage';
 
-export const Header = ({ product, products, updateProduct, toggleColors }) => {
-  const [query, setQuery] = useState('');
-  const [showing, setShowing] = useState(false);
-
+export const Header = ({
+  product,
+  products,
+  updateProduct,
+  toggleColors,
+  cart,
+  removeItemFromCart,
+}) => {
   const clearCache = async () => {
     let sure = confirm('Are you sure?');
     if (sure) {
@@ -25,42 +28,18 @@ export const Header = ({ product, products, updateProduct, toggleColors }) => {
           <Toggle onClick={clearCache}>&#128465;</Toggle>
         </h1>
       </div>
-      <div>
-        {product && (
-          <select value={product.id} onChange={(e) => updateProduct(e.target.value)}>
-            {products.map((x, i) => (
-              <option key={x.id} value={x.id}>
-                {x.id} - {x.name}
-              </option>
-            ))}
-          </select>
-        )}
-      </div>
-      <div>
-        <StyledInput
-          type='text'
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => setShowing(true)}
-          onBlur={() => setShowing(false)}
-        ></StyledInput>
-        <FontAwesomeIcon icon={faSearch} />
-        {showing && query.length >= 1 && (
-          <Autocomplete
-            items={products}
-            query={query}
-            onClick={(id) => {
-              setShowing(false);
-              updateProduct(id);
-            }}
-          />
-        )}
-      </div>
+      <Container>
+        <Cart cart={cart} removeItemFromCart={removeItemFromCart} />
+        <Search items={products} updateProduct={updateProduct} />
+      </Container>
     </Navbar>
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 const Navbar = styled.div`
   position: fixed;
@@ -69,7 +48,7 @@ const Navbar = styled.div`
   left: 0px;
   right: 0px;
   height: 60px;
-  padding: 0px 25px;
+  padding: 0px 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -84,16 +63,6 @@ const Navbar = styled.div`
   svg {
     color: ${(props) => props.theme.textInv};
   }
-`;
-
-const StyledInput = styled.input`
-  background-color: transparent;
-  width: 200px;
-  border: 0px;
-  border-bottom: 2px solid ${(props) => props.theme.textInv};
-  margin-right: 20px;
-  outline: none;
-  color: ${(props) => props.theme.textInv};
 `;
 
 const Toggle = styled.a`
