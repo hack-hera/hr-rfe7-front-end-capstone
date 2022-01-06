@@ -7,10 +7,10 @@ import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
 
 var CardItem = (props) => {
-  const [showing, setShowing] = useState(false);
-
   const compare = () => {
-    setShowing(true);
+    console.log('star button pressed');
+    console.log('this is item info', props.item);
+    props.updateModal(props.item);
   };
 
   const updateCurrentProduct = () => {
@@ -51,12 +51,6 @@ var CardItem = (props) => {
 
   return (
     <Container>
-      {showing === true && (
-        <Modal onClose={() => setShowing(false)} width={100} height={100}>
-          <CompareModal related={props.item} current={props.currentProduct} />
-        </Modal>
-      )}
-
       <PictureContainer>
         <Picture onClick={updateCurrentProduct}>
           <img src={pictureSrc} />
