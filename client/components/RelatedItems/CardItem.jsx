@@ -5,8 +5,6 @@ import { Stars } from '../Shared/Stars.jsx';
 import { totalRating } from '../../lib/ratingFunctions.js';
 import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle, faStar, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 var CardItem = (props) => {
   const [showing, setShowing] = useState(false);
@@ -25,16 +23,14 @@ var CardItem = (props) => {
 
   if (props.firstCard) {
     return (
-      <Container>
-        <AddCard>
-          <AddTitle>
-            Add item to your outfit
-          </AddTitle>
-          <AddButton>
-            <FontAwesomeIcon icon={faPlusCircle} onClick={props.add} />
-          </AddButton>
-        </AddCard>
-      </Container>
+      <AddCard>
+        <AddTitle>
+          Add item to your outfit
+        </AddTitle>
+        <AddButton>
+          <Button onClick={props.add}>+</Button>
+        </AddButton>
+      </AddCard>
     );
   }
 
@@ -48,11 +44,11 @@ var CardItem = (props) => {
   var button;
   if (!props.inOutfit) {
     button = <Button onClick={() => compare()}>
-      <FontAwesomeIcon icon={faStar} />
+    &#9734;
     </Button>;
   } else {
     button = <Button onClick={() => remove()}>
-      <FontAwesomeIcon icon={faTimesCircle} />
+    &#10008;
     </Button>;
   }
 
@@ -84,58 +80,72 @@ var CardItem = (props) => {
       <Name onClick={updateCurrentProduct}>
         {props.item.name}
       </Name>
-      <Price>${props.item.default_price}</Price>
-      <Stars number={starNum} />
+      <PriceStarsContainer>
+        <Price>${props.item.default_price}</Price>
+        <Stars number={starNum} size={14}/>
+      </PriceStarsContainer>
     </Container>
   );
 };
 
 const Container = styled.div`
-  padding: 0px 10px 10px 10px;
-  margin: 10px 0px;
-  width: 180px;
+  margin: 0px 10px;
+  padding: 10px;
+  width: 200px;
   height: 250px;
   display: flex;
   flex-direction: column;
   border: 1px solid ${(props) => props.theme.bgDark};
+  position: relative;
 `;
 
 const Category = styled.div`
   grid-column
-  font-size: 12px;
+  font-size: 10px;
 `;
 
 const Name = styled.div`
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
+  margin: 5px 0px;
 `;
 
 const Price = styled.div`
-  font-size: 12px;
+  font-size: 10px;
+`;
+
+const PriceStarsContainer = styled.div`
+  position: absolute;
+  bottom: 10px;
 `;
 
 const PictureContainer = styled.div`
   border: 1px solid ${(props) => props.theme.bgDark};
   display: flex;
   flex-direction: row;
+  position: relative;
+  margin-bottom: 7px;
 `;
 
 const Picture = styled.div`
   cursor: pointer;
   img {
     height: 150px;
-    width: 150px;
+    width: 165px;
   }
 `;
 
 const Button = styled.div`
 z-index: 1;
+position: absolute;
+right: 0px;
+cursor: pointer;
 `;
 
 const AddCard = styled.div`
-height: 150px;
-width: 150px;
+width: 200px;
+height: 250px;
 display: flex;
 flex-direction: column;
 justify-content: center;
