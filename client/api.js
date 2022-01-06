@@ -51,23 +51,17 @@ const api = {
   getAllData: async function (params = {}, useCache = true) {
     const { product_id } = params;
 
-    let cachedData = await getCache('data', product_id);
-    if (cachedData) {
-      return cachedData;
-    }
-
     let obj = {};
     obj.currentProduct = await this.getProductData({ product_id });
     obj.reviewData = await this.getReviewData({ product_id }, useCache);
     obj.relatedProducts = await this.getRelatedProductData({ product_id });
     obj.questionData = await this.getQuestionData({ product_id }, useCache);
 
-    await cache('data', product_id, obj);
     return obj;
   },
 
   isProductCached: async function ({ product_id }) {
-    let cachedProduct = await getCache('data', parseInt(product_id));
+    let cachedProduct = await getCache('product', product_id);
     return !!cachedProduct;
   },
 
@@ -96,6 +90,7 @@ const api = {
     let stylesUrl = `${host}/products/${product_id}/styles`;
     try {
       let cachedProduct = await getCache('product', product_id);
+
       if (cachedProduct) {
         return cachedProduct;
       }

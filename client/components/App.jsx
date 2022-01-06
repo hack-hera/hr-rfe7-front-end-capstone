@@ -52,6 +52,7 @@ class App extends Component {
 
     api.getProducts({ count: 100 }).then((products) => {
       this.setState({ products: products }, () => {
+        backgroundCacher.postMessage(products);
         this.updateProduct(products[0].id);
       });
     });
@@ -66,8 +67,6 @@ class App extends Component {
     }
 
     let data = await api.getAllData({ product_id: id });
-
-    backgroundCacher.postMessage(data);
 
     this.setState({
       currentProduct: data.currentProduct,
