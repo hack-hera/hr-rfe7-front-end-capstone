@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { months } from './lib/dataFunctions.jsx';
 import api from '../../api.js';
@@ -7,9 +7,23 @@ import { sortedAnswer } from './lib/dataFunctions.jsx';
 
 
 const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
+
+  const [show, setShow] = useState(false);
+  const [url, setUrl] = useState();
+
+  const largerPhoto = (e) => {
+    setShow(true);
+    setUrl(e.target.src);
+  };
+
+
   if (clicked === false) {
     return (
       <Container>
+        {show === true && (
+          <LargerContainer >
+            <img src={url} onClick={() => setShow(false)}/>
+          </LargerContainer>)}
         <AnswerContainer>
           {answers.length > 0 && <TitleA>A:</TitleA>}
           <AnswerContent>
@@ -22,7 +36,8 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
                     {answer.photos.map((photo, i) => {
                       return (
                         <Photos key={i}>
-                          <img src={photo} alt='photo'/>
+                          <img src={photo} alt='photo' onClick={(e) => largerPhoto(e)}
+                          />
                         </Photos>
                       );
                     })}
@@ -53,7 +68,7 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
                   <div>
                     {answer.photos.map((photo, i) => {
                       return (
-                        <Photos key={i}>
+                        <Photos key={i} onClick={() => setShow(true)}>
                           <img src={photo} alt='photo'/>
                         </Photos>
                       );
@@ -83,6 +98,21 @@ const Photos = styled.div`
     height: 60px;
     margin-right: 15px;
   }
+`;
+
+const LargerContainer = styled.div`
+  z-index: 200;
+  position: fixed;
+  width: 80%;
+  height: 80%;
+  top:60%;
+  left:60%;
+  transform: translate(-50%,-50%);
+  img {
+    width: 80%;
+    height: 80%;
+  }
+
 `;
 
 const ByUser = styled.div`
