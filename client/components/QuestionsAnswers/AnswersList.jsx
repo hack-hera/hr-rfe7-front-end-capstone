@@ -11,7 +11,7 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
     return (
       <Container>
         <AnswerContainer>
-          <TitleA>A:</TitleA>
+          {answers.length > 0 && <TitleA>A:</TitleA>}
           <AnswerContent>
             {answers.sort(sortedAnswer).slice(0, 2).map((answer, i) => {
               let timeArr = answer.date.split('T')[0].split('-');
@@ -43,7 +43,7 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
     return (
       <Container>
         <AnswerContainer>
-          <TitleA>A:</TitleA>
+          {answers.length > 0 && <TitleA>A:</TitleA>}
           <AnswerContent>
             {answers.sort(sortedAnswer).map((answer, i) => {
               let timeArr = answer.date.split('T')[0].split('-');

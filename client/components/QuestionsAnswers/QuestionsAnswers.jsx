@@ -14,8 +14,7 @@ class QuestionsAnswers extends React.Component {
     super(props);
 
     this.state = {
-      answeredQuestionShow: 0,
-      answeredQuestion: [],
+      questionShow: 2,
       searchText: '',
       searchQuestions: [],
       clicked: false
@@ -28,16 +27,15 @@ class QuestionsAnswers extends React.Component {
     this.setState({
       searchText: e.target.value,
       searchQuestions: this.props.data.results.filter(question => question.question_body.toLowerCase().indexOf(e.target.value) !== -1),
-      answeredSearchQuestion: this.state.searchQuestions.slice(2).filter(question => question.answers !== undefined)
     });
   }
 
   render() {
 
-    const { answeredQuestionShow, searchText, searchQuestions, answeredSearchQuestion, clicked } = this.state;
+    const { searchText, searchQuestions, clicked, questionShow } = this.state;
 
     return (
-      <div>
+      <Container>
         <h3>Questions & Answers</h3>
         <SearchBar searchInput={this.searchInput}/>
         <div>
@@ -45,26 +43,24 @@ class QuestionsAnswers extends React.Component {
             product_id={this.props.data.product_id}
             product_name={this.props.product.name}
             questions={this.props.data.results}
-            questionsShow={2}
-            answeredQuestionShow={answeredQuestionShow}
-            answeredQuestion={this.props.data.results.slice(2).filter(question => Object.keys(question.answers).length > 0)}
+            questionShow={questionShow}
             showMoreA={() => this.setState({clicked: true})}
-            showMoreQ={() => this.setState({answeredQuestionShow: answeredQuestionShow + 2})}
-            showLessQ={() => this.setState({answeredQuestionShow: 0})}
+            showMoreQ={() => this.setState({questionShow: this.props.data.results.length})}
+            showLessQ={() => this.setState({questionShow: 2})}
             showLessA={() => this.setState({clicked: false})}
             searchText={searchText}
             searchQuestions={searchQuestions}
-            answeredSearchQuestion={answeredSearchQuestion}
             clicked={clicked}
             fetchQuestionData={this.props.fetchQuestionData}
           />
         </div>
-      </div>
+      </Container>
     );
   }
 }
 
-
-
+const Container = styled.div`
+  color: ${(props) => props.theme.textLight};
+`;
 
 export default QuestionsAnswers;
