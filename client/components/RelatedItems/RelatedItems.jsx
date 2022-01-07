@@ -41,21 +41,15 @@ var RelatedItems = (props) => {
   const updateRelated = (relatedObj) => {
     setRelated(relatedObj);
     setShowing(true);
-    console.log('this is in relatedItems function updateRelated');
-    console.log('this is the relatedObj', relatedObj);
-    console.log('this is the related state', related);
   };
 
   return (
     <Container>
       <Header>RelatedItems</Header>
       {showing === true && (
-        <Modal
-          onClose={() => setShowing(false)}
-          width={100}
-          height={100}
-          children={<CompareModal related={related} current={props.product} />}
-        ></Modal>
+        <Modal onClose={() => setShowing(false)} width={50} height={40}>
+          <CompareModal related={related} current={props.product} />
+        </Modal>
       )}
       <RelatedCarousel
         relatedItems={props.related.related}

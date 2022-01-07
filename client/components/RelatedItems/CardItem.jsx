@@ -8,8 +8,6 @@ import { Modal } from '../Shared/Modal.jsx';
 
 var CardItem = (props) => {
   const compare = () => {
-    console.log('star button pressed');
-    console.log('this is item info', props.item);
     props.updateModal(props.item);
   };
 

@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 var CompareModal = (props) => {
-  console.log('this is compareModal related props', props.related);
-  console.log('this is compareModal current props', props.current);
   const relatedFeatArr = props.related.features.reduce(
     (result, current) => result.concat(current.feature),
     []
@@ -65,28 +63,23 @@ var CompareModal = (props) => {
   });
 
   return (
-    // <Container>
-    //   <Title>Comparing</Title>
-    //   <Table>
-    //     <Header>
-    //       <Current>{props.current.name}</Current>
-    //       <Empty />
-    //       <Related>{props.related.name}</Related>
-    //     </Header>
-    //     <RowsContainer>{characteristics}</RowsContainer>
-    //   </Table>
-    // </Container>
     <Container>
-      <Row>{props.current.id}</Row>
-      <Row>{props.current.campus}</Row>
-      <Row>{props.current.name}</Row>
-      <Row>{props.current.description}</Row>
+      <Title>Comparing</Title>
+      <Table>
+        <Header>
+          <Current>{props.current.name}</Current>
+          <Empty />
+          <Related>{props.related.name}</Related>
+        </Header>
+        <RowsContainer>{characteristics}</RowsContainer>
+      </Table>
     </Container>
   );
 };
 
 const Container = styled.div`
   height: 100%;
+  color: ${(props) => props.theme.text};
 `;
 
 const Table = styled.div``;
