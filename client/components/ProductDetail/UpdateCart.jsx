@@ -20,22 +20,18 @@ const UpdateCart = ({ style, product, addToCart }) => {
 
   //Handle a click on the cart
   let handleAddCartClick = (validation) => {
-    console.log(selectedSize);
     if (selectedSize === 0 && validation === true) {
       setWarning(true);
     } else {
       addToCart({
-        product_id: product.id,
-        style_id: style ? style.style_id : null,
-        sku_id: style ? Object.keys(style.skus)[selectedSize] : null,
-        size: style && selectedSize > 0 ? sizes[selectedSize] : null,
-        quantity: style && selectedSize > 0 ? availableQuantities[selectedQuantity] : null,
+        style_id: style.style_id,
+        name: product.name,
+        url: style.photos && style.photos[0] ? style.photos[0].thumbnail_url : '',
       });
       setSelectedSize(0);
       setSelectedQuantity(0);
     }
   };
-  console.log(style);
   //If the style is not defined, then we simply return a Button
   if (!style || !style.skus || Object.keys(style.skus)[0] === 'null') {
     return <Button>OUT OF STOCK</Button>;
