@@ -37,7 +37,7 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
                       {answer.photos.map((photo, i) => {
                         return (
                           <Photos key={i}>
-                            <img src={photo} alt='photo' onClick={(e) => largerPhoto(e)} />
+                            <img src={photo} alt='photo' onClick={(e) => largerPhoto(e)}/>
                           </Photos>
                         );
                       })}
@@ -60,6 +60,11 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
   } else {
     return (
       <Container>
+        {show === true && (
+          <LargerContainer>
+            <img src={url} onClick={() => setShow(false)} />
+          </LargerContainer>
+        )}
         <AnswerContainer>
           {answers.length > 0 && <TitleA>A:&nbsp;&nbsp;</TitleA>}
           <AnswerContent>
@@ -71,8 +76,8 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
                   <div>
                     {answer.photos.map((photo, i) => {
                       return (
-                        <Photos key={i} onClick={() => setShow(true)}>
-                          <img src={photo} alt='photo' />
+                        <Photos key={i} >
+                          <img src={photo} alt='photo' onClick={(e) => largerPhoto(e)}/>
                         </Photos>
                       );
                     })}
@@ -108,14 +113,17 @@ const Photos = styled.div`
 const LargerContainer = styled.div`
   z-index: 200;
   position: fixed;
-  width: 80%;
-  height: 80%;
-  top: 60%;
-  left: 60%;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
+  object-fit: cover;
   img {
-    width: 80%;
-    height: 80%;
+    max-height: 125%;
+    max-width: 125%;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
   }
 `;
 
@@ -123,6 +131,7 @@ const ByUser = styled.div`
   clear: both;
   font-size: smaller;
   margin-bottom: 20px;
+  margin-top: 5px;
 `;
 
 const AnswerContainer = styled.div`
