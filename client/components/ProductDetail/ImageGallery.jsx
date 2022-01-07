@@ -117,23 +117,26 @@ const Carousel_Content = styled.div`
   transition: all 250ms linear;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  height: 25%;
 `;
 
 const Thumbnail_Container = styled.div`
   display: flex;
-  flex-direction: column;
+  position: relative;
+
   margin: 6px 12px;
-  height: 10vh;
-  max-width: 8vh;
-  border: 1px solid black;
+  height: 5vh;
+  width: 5vh;
+  position: relative;
 `;
 
 const Thumbnail = styled.img`
-  height: 8vh;
-  max-width: 8vh;
+  width: 100%;
+  height: 100%;
   :hover {
     opacity: 0.8;
     cursor: pointer;
   }
+  object-fit: cover;
+  position: absolute;
+  box-shadow: 0px 0px 3px #666;
 `;

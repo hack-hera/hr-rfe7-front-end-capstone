@@ -38,16 +38,17 @@ const StyleSelector = (props) => {
         <CarouselWrapper>
           <CarouselContent style={{ transform: `translateX(-${(styleIndex * 100) / 4}%)` }}>
             {props.productStyles.map((style, key) => (
-              <Thumbnail
-                key={key}
-                src={
-                  style.photos[0].thumbnail_url ||
-                  'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'
-                }
-                onClick={() => {
-                  props.changeStyle(style);
-                }}
-              />
+              <ImageContainer key={key}>
+                <Thumbnail
+                  src={
+                    style.photos[0].thumbnail_url ||
+                    'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'
+                  }
+                  onClick={() => {
+                    props.changeStyle(style);
+                  }}
+                />
+              </ImageContainer>
             ))}
           </CarouselContent>
         </CarouselWrapper>
@@ -127,13 +128,22 @@ const RightButton = styled.div`
   transform: translateY(35px);
 `;
 
-const Thumbnail = styled.img`
+const ImageContainer = styled.div`
   margin-right: 10px;
   height: 4vw;
   width: 4vw;
+  position: relative;
+`;
+
+const Thumbnail = styled.img`
   :hover {
     opacity: 0.8;
     cursor: pointer;
   }
+  width: 100%;
+  height: 100%;
   border-radius: 2vw;
+  object-fit: cover;
+  position: absolute;
+  box-shadow: 0px 0px 3px #666;
 `;
