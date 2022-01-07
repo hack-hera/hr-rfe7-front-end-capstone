@@ -35,7 +35,7 @@ const UpdateCart = ({ style, product, addToCart }) => {
       setSelectedQuantity(0);
     }
   };
-  console.log(style);
+
   //If the style is not defined, then we simply return a Button
   if (!style || !style.skus || Object.keys(style.skus)[0] === 'null') {
     return <Button>OUT OF STOCK</Button>;
