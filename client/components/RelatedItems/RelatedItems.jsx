@@ -4,10 +4,14 @@ import styled from 'styled-components';
 import ls from 'local-storage';
 import RelatedCarousel from './RelatedCarousel.jsx';
 import OutfitCarousel from './OutfitCarousel.jsx';
+import CompareModal from './CompareModal.jsx';
+import { Modal } from '../Shared/Modal.jsx';
 
 var RelatedItems = (props) => {
   var outfit = ls.get('myoutfit') || [];
   const [outfitData, setOutfit] = useState(outfit);
+  const [showing, setShowing] = useState(false);
+  const [related, setRelated] = useState(null);
 
   const add = () => {
     let product = props.product;
@@ -33,14 +37,26 @@ var RelatedItems = (props) => {
     let update = ls.get('myoutfit') || [];
     setOutfit(update);
   };
+
+  const updateRelated = (relatedObj) => {
+    setRelated(relatedObj);
+    setShowing(true);
+  };
+
   return (
     <Container>
       <Header>RelatedItems</Header>
+      {showing === true && (
+        <Modal onClose={() => setShowing(false)} width={50} height={40}>
+          <CompareModal related={related} current={props.product} />
+        </Modal>
+      )}
       <RelatedCarousel
         relatedItems={props.related.related}
         currentProduct={props.product}
         relatedRating={props.related.ratings}
         update={props.updateProduct}
+        updateModal={updateRelated}
       />
       <Header>YourOutfit</Header>
       <OutfitCarousel

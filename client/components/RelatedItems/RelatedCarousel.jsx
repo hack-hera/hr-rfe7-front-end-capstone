@@ -45,6 +45,7 @@ const RelatedCarousel = (props) => {
                   add={props.addOutfit}
                   currentProduct={props.currentProduct}
                   updateCurrent={props.update}
+                  updateModal={props.updateModal}
                 />
               );
             })}
