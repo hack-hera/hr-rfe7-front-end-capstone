@@ -35,15 +35,16 @@ const UpdateCart = ({ style, product, addToCart }) => {
       setSelectedQuantity(0);
     }
   };
-
+  console.log(style);
   //If the style is not defined, then we simply return a Button
   if (!style || !style.skus || Object.keys(style.skus)[0] === 'null') {
-    return <Button onClick={() => handleAddCartClick(false)}>Add to Cart</Button>;
+    return <Button>OUT OF STOCK</Button>;
   }
 
   //Update the sizes/quantities/available quantities
   sizes = Object.keys(style.skus).map((x) => style.skus[x].size);
   sizes.unshift('Select Size');
+
   quantities = Object.keys(style.skus).map((x) => style.skus[x].quantity);
 
   availableQuantities = new Array(Math.min(15, quantities[Math.max(0, selectedSize - 1)]))

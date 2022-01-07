@@ -67,7 +67,7 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
           />
         )}
         <CartContainer>
-          {style && product && <UpdateCart style={style} product={product} addToCart={addToCart} />}
+          {product && <UpdateCart style={style} product={product} addToCart={addToCart} />}
         </CartContainer>
         <ShareButtons />
       </RightContainer>
