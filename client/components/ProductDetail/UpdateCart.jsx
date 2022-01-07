@@ -109,6 +109,8 @@ const SizeSelection = styled.select`
   padding: 10px;
   margin-right: 5px;
   margin-bottom: 15px;
+  background-color: ${(props) => props.theme.bgLight};
+  color: ${(props) => props.theme.textDark};
 `;
 
 const QuantitySelection = styled.select`
@@ -116,4 +118,6 @@ const QuantitySelection = styled.select`
   padding: 10px;
   margin-right: 5px;
   margin-bottom: 15px;
+  background-color: ${(props) => props.theme.bgLight};
+  color: ${(props) => props.theme.textDark};
 `;

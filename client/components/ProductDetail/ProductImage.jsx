@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import { Modal } from '../Shared/Modal.jsx';
 import ModalImage from './ModalImage.jsx';
 
-const ProductImage = (props) => {
+const ProductImage = ({ currentPhoto, currentStyle }) => {
   const [showing, setShowing] = useState(false);
 
-  if (props.currentPhoto.url) {
+  if (currentPhoto && currentPhoto.url) {
     return (
       <Container>
         <Image
           id='image'
-          src={props.currentPhoto.url}
+          src={currentPhoto.url}
           onClick={() => {
             setShowing(true);
           }}
@@ -19,9 +19,9 @@ const ProductImage = (props) => {
         {showing && (
           <Modal height={100} width={100} onClose={() => setShowing(false)}>
             <ModalImage
-              currentPhoto={props.currentPhoto}
-              currentStyle={props.currentStyle}
-              changePhoto={props.changePhoto}
+              currentPhoto={currentPhoto}
+              currentStyle={currentStyle}
+              changePhoto={changePhoto}
             />
           </Modal>
         )}
@@ -29,10 +29,12 @@ const ProductImage = (props) => {
     );
   } else {
     return (
-      <Image
-        id='image'
-        src='https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'
-      />
+      <Container>
+        <Image
+          id='image'
+          src='https://res.cloudinary.com/dkit4ixkx/image/upload/v1641530491/dog_jxwvea.png'
+        />
+      </Container>
     );
   }
 };

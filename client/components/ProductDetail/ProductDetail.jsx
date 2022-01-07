@@ -35,7 +35,7 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
   return (
     <Container id='ProductDetail'>
       <LeftContainer>
-        <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />
+        {style && <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />}
         <ProductImage
           currentPhoto={photo}
           currentStyle={style}
@@ -51,9 +51,11 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
           <h3>{product.category}</h3>
           <h1>{product.name}</h1>
           <RenderPrice currentStyle={style} default_price={product.default_price} />
-          <span>
-            <b>Style &gt;</b> {style.name}
-          </span>
+          {style && (
+            <span>
+              <b>Style &gt;</b> {style.name}
+            </span>
+          )}
         </ProductHeader>
         {style && (
           <StyleSelector
@@ -65,7 +67,7 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
           />
         )}
         <CartContainer>
-          <UpdateCart style={style} product={product} addToCart={addToCart} />
+          {style && product && <UpdateCart style={style} product={product} addToCart={addToCart} />}
         </CartContainer>
         <ShareButtons />
       </RightContainer>
