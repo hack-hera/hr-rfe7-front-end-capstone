@@ -43,6 +43,16 @@ var RelatedItems = (props) => {
     setShowing(true);
   };
 
+  //Dedupe the to show every product id only once
+  //dedupe to NOT show the main product in related
+  let ids = props.related.related.map((x) => x.id);
+  let displayRelated = [];
+  props.related.related.forEach((x, i) => {
+    if (ids.indexOf(x.id) === i && x.id !== props.product.id) {
+      displayRelated.push(x);
+    }
+  });
+
   return (
     <Container>
       {showing === true && (
@@ -52,7 +62,7 @@ var RelatedItems = (props) => {
       )}
       <h3>Related Products</h3>
       <RelatedCarousel
-        relatedItems={props.related.related}
+        relatedItems={displayRelated}
         currentProduct={props.product}
         relatedRating={props.related.ratings}
         update={props.updateProduct}
