@@ -2,21 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 
 const RenderPrice = (props) => {
-  if (props.currentStyle.sale_price) {
-    return (
-      <Container>
-        <SalePrice>
-          Price ${props.currentStyle.sale_price}
-        </SalePrice>
-        <OriginalPrice>
-          ${props.currentStyle.original_price}
-        </OriginalPrice>
-      </Container>
-    );
+  if (props.currentStyle) {
+    if (props.currentStyle.sale_price) {
+      return (
+        <Container>
+          <SalePrice>
+            Price ${props.currentStyle.sale_price}
+          </SalePrice>
+          <OriginalPrice>
+            ${props.currentStyle.original_price}
+          </OriginalPrice>
+        </Container>
+      );
+    } else {
+      return (
+        <Price>
+          <b>Price:</b> ${props.currentStyle.original_price}
+        </Price>
+      );
+    }
   } else {
     return (
       <Price>
-        <b>Price:</b> ${props.currentStyle.original_price}
+        <b>Price:</b> ${props.default_price}
       </Price>
     );
   }

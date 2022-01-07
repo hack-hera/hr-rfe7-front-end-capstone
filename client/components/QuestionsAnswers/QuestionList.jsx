@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AnswersList from './AnswersList.jsx';
 import AddAnswer from './AddAnswerModal.jsx';
@@ -9,39 +9,24 @@ import { sortedQuestion, QuestionBody } from './lib/dataFunctions.jsx';
 
 
 
-const QuestionList = ({ searchText, questions, questionsShow, product_name, product_id, showMoreA, showMoreQ, answeredQuestionShow, answeredQuestion, searchQuestions, answeredSearchQuestion, showLessQ, clicked, showLessA, fetchQuestionData }) => {
+const QuestionList = ({ searchText, questions, questionShow, product_name, product_id, showMoreA, searchQuestions, clicked, showLessA, fetchQuestionData, questionClicked }) => {
+
+  const [show, setShow] = useState(2);
+
+  useEffect(() => {
+    setShow(2);
+  }, [product_id]);
 
   return (
 
     <Container>
-      {searchText.length < 3 && <div>
-        {questions.sort(sortedQuestion).slice(0, questionsShow).map((question, i) => {
+      {searchText.length < 3 && <ScrollDiv>
+        {questions.sort(sortedQuestion).slice(0, show).map((question, i) => {
           const answers = Object.values(question.answers);
           return (
-            <div key={i}>
-              <QuestionText><span>Q:{question.question_body}</span>
-                <AddAnswer
-                  product_name={product_name}
-                  question={question}
-                  product_id={product_id}
-                  fetchQuestionData={fetchQuestionData}
-                />
-                <MarkQuestionHelpfulAndReported question={question} product_id={product_id}/>
-              </QuestionText>
-              <AnswersList
-                answers={answers}
-                showMoreA={showMoreA}
-                clicked={clicked}
-                showLessA={showLessA}
-              />
-            </div>
-          );
-        })}
-        {answeredQuestion.sort(sortedQuestion).slice(0, answeredQuestionShow).map((question, i) => {
-          const answers = Object.values(question.answers);
-          return (
-            <div key={i}>
-              <QuestionText><span>Q:{question.question_body}</span>
+            <ListContainer key={i}>
+              <QuestionText>
+                <span>Q:{question.question_body}</span>
                 <AddAnswer
                   product_name={product_name}
                   question={question}
@@ -56,16 +41,17 @@ const QuestionList = ({ searchText, questions, questionsShow, product_name, prod
                 clicked={clicked}
                 showLessA={showLessA}
               />
-            </div>
+            </ListContainer>
           );
         })}
-      </div>}
-      {searchText.length >= 3 && <div>
-        {searchQuestions.sort(sortedQuestion).slice(0, questionsShow).map((question, i) => {
+      </ScrollDiv>}
+      {searchText.length >= 3 && <ScrollDiv>
+        {searchQuestions.sort(sortedQuestion).slice(0, show).map((question, i) => {
           const answers = Object.values(question.answers);
           return (
             <div key={i}>
-              <QuestionText><span>Q:{question.question_body}</span>
+              <QuestionText>
+                <span>Q:{question.question_body}</span>
                 <AddAnswer
                   product_name={product_name}
                   question={question}
@@ -83,36 +69,16 @@ const QuestionList = ({ searchText, questions, questionsShow, product_name, prod
             </div>
           );
         })}
-        {answeredSearchQuestion.sort(sortedQuestion).slice(0, answeredQuestionShow).map((question, i) => {
-          const answers = Object.values(question.answers);
-          return (
-            <div key={i}>
-              <QuestionText><span>Q:{question.question_body}</span>
-                <AddAnswer
-                  product_name={props.product_name}
-                  question={question}
-                  product_id={product_id}
-                  fetchQuestionData={fetchQuestionData}
-                />
-                <MarkQuestionHelpfulAndReported question={question}/>
-              </QuestionText>
-              <AnswersList
-                answers={answers}
-                showMoreA={showMoreA}
-                clicked={clicked}
-                showLessA={showLessA}
-              />
-            </div>
-          );
-        })}
-      </div>}
-      <Button onClick={showMoreQ}>MORE ANSWERED QUESTIONS</Button>
-      <Button onClick={showLessQ}>COLLAPSE QUESTIONS</Button>
-      <AddQuestion
-        product_name={product_name}
-        product_id={product_id}
-        fetchQuestionData={fetchQuestionData}
-      />
+      </ScrollDiv>}
+      <ButtonContainer>
+        {questions.length > show && <Button onClick={() => setShow(questions.length)}>SEE MORE QUESTIONS</Button>}
+        {questions.length === show && <Button onClick={() => setShow(2)}>COLLAPSE QUESTIONS</Button>}
+        <AddQuestion
+          product_name={product_name}
+          product_id={product_id}
+          fetchQuestionData={fetchQuestionData}
+        />
+      </ButtonContainer>
     </Container>
   );
 };
@@ -121,10 +87,25 @@ const Container = styled.div`
   color: ${(props) => props.theme.textLight};
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  margin-top: 15px;
+`;
+
+const ScrollDiv = styled.div`
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 600px;
+`;
+
 const QuestionText = styled.div`
   font-weight: bold;
   margin-bottom: 10px;
   margin-top: 15px;
+`;
+
+const ListContainer = styled.div`
+  border-bottom: 1px solid ${(props) => props.theme.bgDark};
 `;
 
 export default QuestionList;
