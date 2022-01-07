@@ -45,7 +45,22 @@ var RelatedItems = (props) => {
 
   return (
     <Container>
-      <Header>
+      <h3>Related Products</h3>
+      <RelatedCarousel
+        relatedItems={props.related.related}
+        currentProduct={props.product}
+        relatedRating={props.related.ratings}
+        update={props.updateProduct}
+        updateModal={updateRelated}
+      />
+      <h3>Your Outfit</h3>
+      <OutfitCarousel
+        outfitData={outfit}
+        removeItem={remove}
+        addOutfit={add}
+        currentProduct={props.product}
+      />
+      {/* <Header>
         <h3>Related Products</h3>
       </Header>
       {showing === true && (
@@ -66,37 +81,26 @@ var RelatedItems = (props) => {
         removeItem={remove}
         addOutfit={add}
         currentProduct={props.product}
-      />
+      /> */}
     </Container>
   );
 };
 
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 25px;
-  width: 100%;
-  h3 {
-    margin: 0px;
-    padding: 0px;
-    font-size: 16px;
-    color: ${(props) => props.theme.textDark};
-  }
-  div {
-    margin: 4px 0px 0px 4px;
-    font-size: 11px;
-    color: ${(props) => props.theme.graph};
-    padding: 0px;
-  }
-`;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 5px 50px;
-  color: ${(props) => props.theme.bgLight};
+  color: ${(props) => props.theme.textLight};
+
+  margin-top: 25px;
+  width: 96%;
+  padding: 0% 2%;
+
+  h3 {
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: 13px;
+    margin: 15px 0px;
+  }
 `;
 
 export default RelatedItems;

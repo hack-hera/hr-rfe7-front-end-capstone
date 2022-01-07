@@ -142,10 +142,10 @@ const CartContainer = styled.div`
 `;
 
 const DescriptionContainer = styled.div`
-  width: 90%;
+  width: 96%;
   margin-top: 15px;
   font-size: 0.8em;
-  padding: 0% 5%;
+  padding: 0% 2%;
 `;
 
 export default ProductDetail;
