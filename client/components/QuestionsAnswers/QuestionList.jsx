@@ -10,7 +10,6 @@ import { sortedQuestion, QuestionBody } from './lib/dataFunctions.jsx';
 const QuestionList = ({
   searchText,
   questions,
-  questionShow,
   product_name,
   product_id,
   showMoreA,
@@ -18,7 +17,6 @@ const QuestionList = ({
   clicked,
   showLessA,
   fetchQuestionData,
-  questionClicked,
 }) => {
   const [show, setShow] = useState(2);
 
@@ -59,34 +57,36 @@ const QuestionList = ({
         </ScrollDiv>
       )}
       {searchText.length >= 3 && (
-        <ScrollDiv>
-          {searchQuestions
-            .sort(sortedQuestion)
-            .slice(0, show)
-            .map((question, i) => {
-              const answers = Object.values(question.answers);
-              return (
-                <div key={i}>
-                  <QuestionText>
-                    <span>Q:&nbsp;&nbsp;{question.question_body}</span>
-                    <AddAnswer
-                      product_name={product_name}
-                      question={question}
-                      product_id={product_id}
-                      fetchQuestionData={fetchQuestionData}
+        <Container>
+          <ScrollDiv>
+            {searchQuestions
+              .sort(sortedQuestion)
+              .slice(0, show)
+              .map((question, i) => {
+                const answers = Object.values(question.answers);
+                return (
+                  <ListContainer key={i}>
+                    <QuestionText>
+                      <span>Q:&nbsp;&nbsp;{question.question_body}</span>
+                      <AddAnswer
+                        product_name={product_name}
+                        question={question}
+                        product_id={product_id}
+                        fetchQuestionData={fetchQuestionData}
+                      />
+                      <MarkQuestionHelpfulAndReported question={question} />
+                    </QuestionText>
+                    <AnswersList
+                      answers={answers}
+                      showMoreA={showMoreA}
+                      clicked={clicked}
+                      showLessA={showLessA}
                     />
-                    <MarkQuestionHelpfulAndReported question={question} />
-                  </QuestionText>
-                  <AnswersList
-                    answers={answers}
-                    showMoreA={showMoreA}
-                    clicked={clicked}
-                    showLessA={showLessA}
-                  />
-                </div>
-              );
-            })}
-        </ScrollDiv>
+                  </ListContainer>
+                );
+              })}
+          </ScrollDiv>
+        </Container>
       )}
       <ButtonContainer>
         {questions.length > show && (

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Modal } from '../Shared/Modal.jsx';
 import ModalImage from './ModalImage.jsx';
 
-const ProductImage = ({ currentPhoto, currentStyle }) => {
+const ProductImage = ({ currentPhoto, currentStyle, changePhoto }) => {
   const [showing, setShowing] = useState(false);
 
   if (currentPhoto && currentPhoto.url) {
@@ -43,7 +43,6 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: pink;
 `;
 
 const Image = styled.img`

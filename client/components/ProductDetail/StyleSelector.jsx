@@ -27,8 +27,9 @@ const StyleSelector = (props) => {
     <Container>
       <CarouselContainer>
         {styleIndex > 0 ? (
-          <LeftButton>
-            <FontAwesomeIcon icon={faArrowCircleLeft} onClick={previous} />
+          <LeftButton onClick={previous}>
+            &#171;
+            {/* <FontAwesomeIcon icon={faArrowCircleLeft} onClick={previous} /> */}
           </LeftButton>
         ) : (
           <HiddenButton>
@@ -52,8 +53,9 @@ const StyleSelector = (props) => {
             ))}
           </CarouselContent>
         </CarouselWrapper>
-        <RightButton>
-          <FontAwesomeIcon icon={faArrowCircleRight} onClick={next} />
+        <RightButton onClick={next}>
+          {/* <FontAwesomeIcon icon={faArrowCircleRight} onClick={next} /> */}
+          &#187;
         </RightButton>
       </CarouselContainer>
     </Container>
@@ -107,7 +109,9 @@ const LeftButton = styled.div`
   width: 12px;
   height: 12px;
   left: 0px;
-  transform: translateY(35px);
+  transform: translateY(10px);
+  font-size: larger;
+  cursor: default;
 `;
 
 const HiddenButton = styled.div`
@@ -117,6 +121,8 @@ const HiddenButton = styled.div`
   width: 12px;
   height: 12px;
   left: 0px;
+  transform: translateY(10px);
+  font-size: larger;
 `;
 
 const RightButton = styled.div`
@@ -125,7 +131,9 @@ const RightButton = styled.div`
   z-index: 1;
   width: 12px;
   height: 12px;
-  transform: translateY(35px);
+  transform: translateY(10px);
+  font-size: larger;
+  cursor: default;
 `;
 
 const ImageContainer = styled.div`
