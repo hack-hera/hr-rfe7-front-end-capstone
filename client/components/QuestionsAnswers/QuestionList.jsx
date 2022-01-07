@@ -7,10 +7,19 @@ import { MarkQuestionHelpfulAndReported } from './MarkHelpfulAndReported.jsx';
 import { Button } from '../Shared/Form';
 import { sortedQuestion, QuestionBody } from './lib/dataFunctions.jsx';
 
-
-
-const QuestionList = ({ searchText, questions, questionShow, product_name, product_id, showMoreA, searchQuestions, clicked, showLessA, fetchQuestionData, questionClicked }) => {
-
+const QuestionList = ({
+  searchText,
+  questions,
+  questionShow,
+  product_name,
+  product_id,
+  showMoreA,
+  searchQuestions,
+  clicked,
+  showLessA,
+  fetchQuestionData,
+  questionClicked,
+}) => {
   const [show, setShow] = useState(2);
 
   useEffect(() => {
@@ -18,61 +27,74 @@ const QuestionList = ({ searchText, questions, questionShow, product_name, produ
   }, [product_id]);
 
   return (
-
     <Container>
-      {searchText.length < 3 && <ScrollDiv>
-        {questions.sort(sortedQuestion).slice(0, show).map((question, i) => {
-          const answers = Object.values(question.answers);
-          return (
-            <ListContainer key={i}>
-              <QuestionText>
-                <span>Q:{question.question_body}</span>
-                <AddAnswer
-                  product_name={product_name}
-                  question={question}
-                  product_id={product_id}
-                  fetchQuestionData={fetchQuestionData}
-                />
-                <MarkQuestionHelpfulAndReported question={question}/>
-              </QuestionText>
-              <AnswersList
-                answers={answers}
-                showMoreA={showMoreA}
-                clicked={clicked}
-                showLessA={showLessA}
-              />
-            </ListContainer>
-          );
-        })}
-      </ScrollDiv>}
-      {searchText.length >= 3 && <ScrollDiv>
-        {searchQuestions.sort(sortedQuestion).slice(0, show).map((question, i) => {
-          const answers = Object.values(question.answers);
-          return (
-            <div key={i}>
-              <QuestionText>
-                <span>Q:{question.question_body}</span>
-                <AddAnswer
-                  product_name={product_name}
-                  question={question}
-                  product_id={product_id}
-                  fetchQuestionData={fetchQuestionData}
-                />
-                <MarkQuestionHelpfulAndReported question={question}/>
-              </QuestionText>
-              <AnswersList
-                answers={answers}
-                showMoreA={showMoreA}
-                clicked={clicked}
-                showLessA={showLessA}
-              />
-            </div>
-          );
-        })}
-      </ScrollDiv>}
+      {searchText.length < 3 && (
+        <ScrollDiv>
+          {questions
+            .sort(sortedQuestion)
+            .slice(0, show)
+            .map((question, i) => {
+              const answers = Object.values(question.answers);
+              return (
+                <ListContainer key={i}>
+                  <QuestionText>
+                    <span>Q:&nbsp;&nbsp;{question.question_body}</span>
+                    <AddAnswer
+                      product_name={product_name}
+                      question={question}
+                      product_id={product_id}
+                      fetchQuestionData={fetchQuestionData}
+                    />
+                    <MarkQuestionHelpfulAndReported question={question} />
+                  </QuestionText>
+                  <AnswersList
+                    answers={answers}
+                    showMoreA={showMoreA}
+                    clicked={clicked}
+                    showLessA={showLessA}
+                  />
+                </ListContainer>
+              );
+            })}
+        </ScrollDiv>
+      )}
+      {searchText.length >= 3 && (
+        <ScrollDiv>
+          {searchQuestions
+            .sort(sortedQuestion)
+            .slice(0, show)
+            .map((question, i) => {
+              const answers = Object.values(question.answers);
+              return (
+                <div key={i}>
+                  <QuestionText>
+                    <span>Q:&nbsp;&nbsp;{question.question_body}</span>
+                    <AddAnswer
+                      product_name={product_name}
+                      question={question}
+                      product_id={product_id}
+                      fetchQuestionData={fetchQuestionData}
+                    />
+                    <MarkQuestionHelpfulAndReported question={question} />
+                  </QuestionText>
+                  <AnswersList
+                    answers={answers}
+                    showMoreA={showMoreA}
+                    clicked={clicked}
+                    showLessA={showLessA}
+                  />
+                </div>
+              );
+            })}
+        </ScrollDiv>
+      )}
       <ButtonContainer>
-        {questions.length > show && <Button onClick={() => setShow(questions.length)}>SEE MORE QUESTIONS</Button>}
-        {questions.length === show && <Button onClick={() => setShow(2)}>COLLAPSE QUESTIONS</Button>}
+        {questions.length > show && (
+          <Button onClick={() => setShow(questions.length)}>SEE MORE QUESTIONS</Button>
+        )}
+        {questions.length === show && (
+          <Button onClick={() => setShow(2)}>COLLAPSE QUESTIONS</Button>
+        )}
         <AddQuestion
           product_name={product_name}
           product_id={product_id}
@@ -85,6 +107,7 @@ const QuestionList = ({ searchText, questions, questionShow, product_name, produ
 
 const Container = styled.div`
   color: ${(props) => props.theme.textLight};
+  font-size: 0.8em;
 `;
 
 const ButtonContainer = styled.div`

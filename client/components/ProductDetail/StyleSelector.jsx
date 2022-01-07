@@ -12,37 +12,38 @@ const StyleSelector = (props) => {
   }, [props.productStyles]);
 
   const next = () => {
-    if (styleIndex < (length - 1)) {
-      setStyleIndex(prevState => prevState + 1);
+    if (styleIndex < length - 1) {
+      setStyleIndex((prevState) => prevState + 1);
     }
   };
 
   const previous = () => {
     if (styleIndex > 0) {
-      setStyleIndex(prevState => prevState - 1);
+      setStyleIndex((prevState) => prevState - 1);
     }
   };
 
   return (
     <Container>
-      <b>Select Style</b>
       <CarouselContainer>
         {styleIndex > 0 ? (
           <LeftButton>
-            <FontAwesomeIcon icon={faArrowCircleLeft} onClick={previous}/>
+            <FontAwesomeIcon icon={faArrowCircleLeft} onClick={previous} />
           </LeftButton>
         ) : (
           <HiddenButton>
-            <FontAwesomeIcon icon={faArrowCircleLeft}/>
+            <FontAwesomeIcon icon={faArrowCircleLeft} />
           </HiddenButton>
         )}
         <CarouselWrapper>
-          <CarouselContent
-            style={{ transform: `translateX(-${styleIndex * (100) / 4}%)` }}>
+          <CarouselContent style={{ transform: `translateX(-${(styleIndex * 100) / 4}%)` }}>
             {props.productStyles.map((style, key) => (
               <Thumbnail
                 key={key}
-                src={style.photos[0].thumbnail_url || 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'}
+                src={
+                  style.photos[0].thumbnail_url ||
+                  'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'
+                }
                 onClick={() => {
                   props.changeStyle(style);
                 }}
@@ -51,7 +52,7 @@ const StyleSelector = (props) => {
           </CarouselContent>
         </CarouselWrapper>
         <RightButton>
-          <FontAwesomeIcon icon={faArrowCircleRight} onClick={next}/>
+          <FontAwesomeIcon icon={faArrowCircleRight} onClick={next} />
         </RightButton>
       </CarouselContainer>
     </Container>
@@ -65,6 +66,7 @@ export default StyleSelector;
 }
 
 const Container = styled.div`
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -104,7 +106,7 @@ const LeftButton = styled.div`
   width: 12px;
   height: 12px;
   left: 0px;
-  transform: translateY(35px)
+  transform: translateY(35px);
 `;
 
 const HiddenButton = styled.div`
@@ -122,16 +124,16 @@ const RightButton = styled.div`
   z-index: 1;
   width: 12px;
   height: 12px;
-  transform: translateY(35px)
+  transform: translateY(35px);
 `;
 
 const Thumbnail = styled.img`
   margin-right: 10px;
-  max-height: 100px;
-  max-width: 6vw;
+  height: 4vw;
+  width: 4vw;
   :hover {
     opacity: 0.8;
     cursor: pointer;
   }
+  border-radius: 2vw;
 `;
-

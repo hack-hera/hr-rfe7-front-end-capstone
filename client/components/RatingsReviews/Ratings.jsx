@@ -52,7 +52,7 @@ const Ratings = ({ data, updateFilter, filters }) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 20px 20px 20px;
+  padding: 0px 20px 20px 0px;
 `;
 
 const Link = styled.a`

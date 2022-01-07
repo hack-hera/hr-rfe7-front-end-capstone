@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Search from './Search';
 import Cart from './Cart';
 import localforage from 'localforage';
+import axios from 'axios';
 
 export const Header = ({
   product,
@@ -12,27 +13,34 @@ export const Header = ({
   cart,
   removeItemFromCart,
 }) => {
-  const clearCache = async () => {
-    let sure = confirm('Are you sure?');
-    if (sure) {
-      await localforage.clear();
-      alert('local storage cleared');
-    }
+  const [message, setMessage] = useState('');
+
+  const fetchMessage = async () => {
+    let message = await axios.get('/messages');
+    setMessage(message.data.message);
   };
 
+  useEffect(() => {
+    fetchMessage();
+  }, [product]);
+
   return (
-    <Navbar>
-      <div>
-        <h1>
-          CatWalk <Toggle onClick={toggleColors}>&#9829;</Toggle>
-          <Toggle onClick={clearCache}>&#128465;</Toggle>
-        </h1>
-      </div>
-      <Container>
-        <Cart cart={cart} removeItemFromCart={removeItemFromCart} />
-        <Search items={products} updateProduct={updateProduct} />
-      </Container>
-    </Navbar>
+    <>
+      <Navbar>
+        <div>
+          <h1>
+            CatWalk <Toggle onClick={toggleColors}>&#9829;</Toggle>
+          </h1>
+        </div>
+        <Container>
+          <Cart cart={cart} removeItemFromCart={removeItemFromCart} />
+          <Search items={products} updateProduct={updateProduct} />
+        </Container>
+      </Navbar>
+      <Announcements>
+        <marquee>{message}</marquee>
+      </Announcements>
+    </>
   );
 };
 
@@ -63,6 +71,13 @@ const Navbar = styled.div`
   svg {
     color: ${(props) => props.theme.textInv};
   }
+`;
+
+const Announcements = styled.div`
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+  background-color: ${(props) => props.theme.highlight};
 `;
 
 const Toggle = styled.a`

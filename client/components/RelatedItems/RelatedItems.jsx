@@ -4,10 +4,14 @@ import styled from 'styled-components';
 import ls from 'local-storage';
 import RelatedCarousel from './RelatedCarousel.jsx';
 import OutfitCarousel from './OutfitCarousel.jsx';
+import CompareModal from './CompareModal.jsx';
+import { Modal } from '../Shared/Modal.jsx';
 
 var RelatedItems = (props) => {
   var outfit = ls.get('myoutfit') || [];
   const [outfitData, setOutfit] = useState(outfit);
+  const [showing, setShowing] = useState(false);
+  const [related, setRelated] = useState(null);
 
   const add = () => {
     let product = props.product;
@@ -33,16 +37,28 @@ var RelatedItems = (props) => {
     let update = ls.get('myoutfit') || [];
     setOutfit(update);
   };
+
+  const updateRelated = (relatedObj) => {
+    setRelated(relatedObj);
+    setShowing(true);
+  };
+
   return (
     <Container>
-      <Header>RelatedItems</Header>
+      {showing === true && (
+        <Modal onClose={() => setShowing(false)} width={50} height={40}>
+          <CompareModal related={related} current={props.product} />
+        </Modal>
+      )}
+      <h3>Related Products</h3>
       <RelatedCarousel
         relatedItems={props.related.related}
         currentProduct={props.product}
         relatedRating={props.related.ratings}
         update={props.updateProduct}
+        updateModal={updateRelated}
       />
-      <Header>YourOutfit</Header>
+      <h3>Your Outfit</h3>
       <OutfitCarousel
         outfitData={outfit}
         removeItem={remove}
@@ -53,30 +69,21 @@ var RelatedItems = (props) => {
   );
 };
 
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  h1 {
-    margin: 0px;
-    padding: 0px;
-    color: ${(props) => props.theme.textDark};
-  }
-  div {
-    margin: 4px 0px 0px 4px;
-    font-size: 11px;
-    color: ${(props) => props.theme.graph};
-    padding: 0px;
-  }
-`;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 5px 50px;
-  color: ${(props) => props.theme.bgLight};
+  color: ${(props) => props.theme.textLight};
+
+  margin-top: 25px;
+  width: 96%;
+  padding: 0% 2%;
+
+  h3 {
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: 13px;
+    margin: 15px 0px;
+  }
 `;
 
 export default RelatedItems;
