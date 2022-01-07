@@ -16,7 +16,7 @@ const UpdateCart = ({ style, product, addToCart }) => {
   useEffect(() => {
     setSelectedSize(0);
     setSelectedQuantity(0);
-  }, [style]);
+  }, [style, product]);
 
   //Handle a click on the cart
   let handleAddCartClick = (validation) => {
@@ -31,6 +31,8 @@ const UpdateCart = ({ style, product, addToCart }) => {
         size: style && selectedSize > 0 ? sizes[selectedSize] : null,
         quantity: style && selectedSize > 0 ? availableQuantities[selectedQuantity] : null,
       });
+      setSelectedSize(0);
+      setSelectedQuantity(0);
     }
   };
 

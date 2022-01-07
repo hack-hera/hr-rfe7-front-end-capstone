@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Modal } from '../Shared/Modal.jsx';
 import ModalImage from './ModalImage.jsx';
 
-const ProductImage = ({ currentPhoto, currentStyle }) => {
+const ProductImage = ({ currentPhoto, currentStyle, changePhoto }) => {
   const [showing, setShowing] = useState(false);
 
   if (currentPhoto && currentPhoto.url) {

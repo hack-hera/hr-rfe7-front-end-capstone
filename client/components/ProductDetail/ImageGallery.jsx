@@ -27,8 +27,9 @@ const ImageGallery = (props) => {
     <Container>
       <Carousel_Container>
         {currentImage > 0 ? (
-          <UpArrow>
-            <FontAwesomeIcon icon={faArrowCircleUp} onClick={previous} />
+          <UpArrow onClick={previous}>
+            {/* <FontAwesomeIcon icon={faArrowCircleUp} onClick={previous} /> */}
+            &#94;
           </UpArrow>
         ) : (
           <HiddenArrow>
@@ -54,8 +55,9 @@ const ImageGallery = (props) => {
           </Carousel_Content>
         </Carousel_Wrapper>
         {currentImage < galleryLength - 1 && (
-          <DownArrow>
-            <FontAwesomeIcon icon={faArrowCircleDown} onClick={next} />
+          <DownArrow onClick={next}>
+            {/* <FontAwesomeIcon icon={faArrowCircleDown} onClick={next} /> */}
+            &#709;
           </DownArrow>
         )}
       </Carousel_Container>
@@ -69,14 +71,16 @@ const HiddenArrow = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
-
   visibility: hidden;
+  cursor: default;
 `;
 
 const UpArrow = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
+  font-weight: 600
+  cursor: default;
 `;
 
 const DownArrow = styled.div`
@@ -85,6 +89,8 @@ const DownArrow = styled.div`
   z-index: 1;
   position: absolute;
   transform: translateY(149px);
+  font-size: 30px;
+  cursor: default;
 `;
 
 const Container = styled.div`
