@@ -5,9 +5,17 @@ var CompareModal = ({ related, current }) => {
   let currentFeatures = current ? current.features || [] : [];
   let relatedFeatures = related ? related.features || [] : [];
 
-  let features = currentFeatures.map((x) => x.feature);
+  console.log(related, current);
+
+  let features = [];
+
+  currentFeatures.forEach((x) => {
+    if (x.value && x.value !== 'null') {
+      features.push(x.feature);
+    }
+  });
   relatedFeatures.forEach((x) => {
-    if (!features.includes(x.feature)) {
+    if (x.value && x.value !== 'null' && !features.includes(x.feature)) {
       features.push(x.feature);
     }
   });
@@ -16,8 +24,6 @@ var CompareModal = ({ related, current }) => {
   let relatedDisplay = {};
   currentFeatures.forEach((x) => (currentDisplay[x.feature] = '✓   ' + x.value));
   relatedFeatures.forEach((x) => (relatedDisplay[x.feature] = x.value + '   ✓'));
-
-  console.log(currentDisplay, relatedDisplay);
 
   return (
     <Container>

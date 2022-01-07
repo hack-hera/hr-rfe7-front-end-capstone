@@ -41,7 +41,7 @@ export const AnswerModal = ({ product_name, handleClose, question, submitAnswerF
         </Label>
         <br/>
         <br/>
-        <Button onClick={submitAnswerForm}>Submit your answer</Button>
+        <SubmitButton onClick={submitAnswerForm}>Submit your answer</SubmitButton>
       </BodyContainer>
     </Container>
   );
@@ -71,7 +71,7 @@ export const QuestionModal = ({ product_name, handleClose, submitQuestionForm, q
           <div>For authentication reasons, you will not be emailed.</div>
         </Label>
         <br/>
-        <Button onClick={submitQuestionForm}>Submit your question</Button>
+        <SubmitButton onClick={submitQuestionForm}>Submit your question</SubmitButton>
       </BodyContainer>
     </Container>
   );
@@ -122,5 +122,22 @@ const TextArea = styled.textarea`
   border: 0px;
   margin: 0px 10px 10px 0px;
   outline: 1px solid ${(props) => props.theme.textLight};
+`;
+
+const SubmitButton = styled.button`
+
+  background-color: ${(props) => props.theme.button};
+  color: ${(props) => props.theme.textInv};
+  border: 0px;
+
+  :hover {
+    opacity: 0.8;
+    background-color: ${(props) => props.theme.button}
+  }
+  outline: 1px solid ${(props) => props.theme.textLight};
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 10px;
+  margin-bottom: 20px;
 `;
 
