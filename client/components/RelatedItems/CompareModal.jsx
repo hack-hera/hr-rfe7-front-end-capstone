@@ -79,8 +79,8 @@ var CompareModal = (props) => {
 
 const Container = styled.div`
   height: 100%;
+  color: ${(props) => props.theme.text};
 `;
-// bgLight
 
 const Table = styled.div``;
 
