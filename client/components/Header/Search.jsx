@@ -30,7 +30,7 @@ const Search = ({ items, updateProduct }) => {
                   updateProduct(x.id);
                 }}
               >
-                {x.id} - {x.name}
+                {x.name}
               </li>
             ))}
           </StyledUl>

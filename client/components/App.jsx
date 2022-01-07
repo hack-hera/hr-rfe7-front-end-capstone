@@ -139,9 +139,10 @@ const Container = styled.div`
   min-height: 100%;
   background-color: ${(props) => props.theme.bgLight};
 
-  padding: 0px 80px 80px 80px;
+  padding-left: 15%;
+  padding-right: 15%;
 
-  width: calc(100% - 160px);
+  width: 70%;
 
   @media (max-width: 880px) {
     padding: 0px 30px 80px 30px;

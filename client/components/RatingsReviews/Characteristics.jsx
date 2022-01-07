@@ -34,7 +34,7 @@ const Container = styled.div`
   color: ${(props) => props.theme.textDark};
   display: flex;
   flex-direction: column;
-  padding: 0px 20px 20px 20px;
+  padding: 0px 20px 20px 0px;
   font-size: 0.7em;
 `;
 

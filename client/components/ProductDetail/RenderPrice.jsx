@@ -6,26 +6,22 @@ const RenderPrice = (props) => {
     if (props.currentStyle.sale_price) {
       return (
         <Container>
-          <SalePrice>
-            Price ${props.currentStyle.sale_price}
-          </SalePrice>
-          <OriginalPrice>
-            ${props.currentStyle.original_price}
-          </OriginalPrice>
+          <SalePrice>${props.currentStyle.sale_price}</SalePrice>
+          <OriginalPrice>${props.currentStyle.original_price}</OriginalPrice>
         </Container>
       );
     } else {
       return (
-        <Price>
-          <b>Price:</b> ${props.currentStyle.original_price}
-        </Price>
+        <Container>
+          <Price>${props.currentStyle.original_price}</Price>
+        </Container>
       );
     }
   } else {
     return (
-      <Price>
-        <b>Price:</b> ${props.default_price}
-      </Price>
+      <Container>
+        <Price>${props.default_price}</Price>
+      </Container>
     );
   }
 };
@@ -34,17 +30,18 @@ export default RenderPrice;
 
 const Container = styled.div`
   display: flex;
+  margin: 15px 0px 20px 0px;
+  font-size: 0.8em;
+  color: ${(props) => props.theme.textLight};
 `;
 
 const SalePrice = styled.b`
   margin-right: 10px;
 `;
 
-const Price = styled.div`
-
-`;
+const Price = styled.div``;
 
 const OriginalPrice = styled.div`
-  color: red;
+  color: ${(props) => props.theme.error};
   text-decoration: line-through;
 `;
