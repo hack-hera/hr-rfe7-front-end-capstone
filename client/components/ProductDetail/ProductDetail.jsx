@@ -41,7 +41,15 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
             <ImageGalleryContainer>
               <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />
             </ImageGalleryContainer>
-            <ImageContainer>{photo && <ProductImage currentPhoto={photo} currentStyle={style} changePhoto={(photo) => setPhoto(photo)}/>}</ImageContainer>
+            <ImageContainer>
+              {photo && (
+                <ProductImage
+                  currentPhoto={photo}
+                  currentStyle={style}
+                  changePhoto={(photo) => setPhoto(photo)}
+                />
+              )}
+            </ImageContainer>
           </DisplayContainer>
         )}
         <ProductInfoContainer>
@@ -59,16 +67,13 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
           </p>
           <>
             {style && (
-
               <p>
                 <b>Styles: </b>
                 {style.name}
               </p>
             )}
             {/* TODO - Refactor this to accept default price if there styles.length === 0 */}
-            <RenderPrice
-              currentStyle={style}
-              default_price={product.default_price}/>
+            <RenderPrice currentStyle={style} default_price={product.default_price} />
             {style && (
               <StyleSelector
                 productStyles={product.styles}
@@ -110,7 +115,7 @@ const DisplayContainer = styled.div`
 `;
 
 const Container = styled.div`
-  background-color: ${(props) => props.theme.bg};
+  background-color: ${(props) => props.theme.bgLight};
 `;
 
 const ProductContainer = styled.div`
