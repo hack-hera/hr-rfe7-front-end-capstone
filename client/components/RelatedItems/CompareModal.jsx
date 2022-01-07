@@ -1,134 +1,92 @@
 import React from 'react';
 import styled from 'styled-components';
 
-var CompareModal = (props) => {
-  const relatedFeatArr = props.related.features.reduce(
-    (result, current) => result.concat(current.feature),
-    []
-  );
-  const currentFeatArr = props.current.features.reduce(
-    (result, current) => result.concat(current.feature),
-    []
-  );
+var CompareModal = ({ related, current }) => {
+  let currentFeatures = current ? current.features || [] : [];
+  let relatedFeatures = related ? related.features || [] : [];
 
-  var allFeats = relatedFeatArr.concat(currentFeatArr);
-  var unique = [];
-  for (let i = 0; i < allFeats.length; i++) {
-    if (!unique.includes(allFeats[i])) {
-      unique.push(allFeats[i]);
-    }
-  }
-
-  let hasFeature = false;
-  for (var i = 0; i < relatedFeatArr.length; i++) {
-    if (currentFeatArr.includes(relatedFeatArr[i])) {
-      hasFeature = true;
-      break;
-    }
-  }
-
-  const characteristics = unique.map((char, index) => {
-    var related;
-    var current;
-    if (relatedFeatArr.includes(char)) {
-      var relatedIndex = relatedFeatArr.indexOf(char);
-      related = props.related.features[relatedIndex].value;
-    } else {
-      related = 'none';
-    }
-
-    if (currentFeatArr.includes(char)) {
-      var currentIndex = currentFeatArr.indexOf(char);
-      current = props.current.features[currentIndex].value;
-    } else {
-      current = 'none';
-    }
-    if (hasFeature) {
-      return (
-        <Row key={index}>
-          <Column>{current}</Column>
-          <Column>{char}</Column>
-          <Column>{related}</Column>
-        </Row>
-      );
-    } else {
-      return (
-        <Row key={index}>
-          <Column></Column>
-          <Column>{char}</Column>
-          <Column></Column>
-        </Row>
-      );
+  let features = currentFeatures.map((x) => x.feature);
+  relatedFeatures.forEach((x) => {
+    if (!features.includes(x.feature)) {
+      features.push(x.feature);
     }
   });
 
+  let currentDisplay = {};
+  let relatedDisplay = {};
+  currentFeatures.forEach((x) => (currentDisplay[x.feature] = '✓   ' + x.value));
+  relatedFeatures.forEach((x) => (relatedDisplay[x.feature] = x.value + '   ✓'));
+
+  console.log(currentDisplay, relatedDisplay);
+
   return (
     <Container>
-      <Title>Comparing</Title>
+      <h1>Comparing</h1>
+      <Header>
+        <h2>{current.name}</h2>
+        <h2>{related.name}</h2>
+      </Header>
       <Table>
-        <Header>
-          <Current>{props.current.name}</Current>
-          <Empty />
-          <Related>{props.related.name}</Related>
-        </Header>
-        <RowsContainer>{characteristics}</RowsContainer>
+        <tbody>
+          {features.map((x, i) => (
+            <tr key={i}>
+              <td>{currentDisplay[x] || ''}</td>
+              <td>{x}</td>
+              <td>{relatedDisplay[x] || ''}</td>
+            </tr>
+          ))}
+        </tbody>
       </Table>
     </Container>
   );
 };
 
 const Container = styled.div`
-  height: 100%;
-  color: ${(props) => props.theme.text};
-`;
-
-const Table = styled.div``;
-
-const Title = styled.div`
-  padding: 5px 0px;
-  display: flex;
-  justify-content: center;
+  padding: 20px 40px;
+  color: ${(props) => props.theme.textLight} h1, h2 {
+    margin: 0px;
+    padding: 5px;
+  }
+  h1 {
+    font-size: 0.7em;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+  h2 {
+    font-size: 0.9em;
+    font-weight: bold;
+  }
 `;
 
 const Header = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
   justify-content: space-between;
-  border-bottom: 1px solid black;
-  margin: 10px 0px;
-`;
-
-const Current = styled.div`
-  margin: 0px 40px;
-`;
-
-const Related = styled.div`
-  margin: 0px 40px;
-`;
-
-const RowsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0px;
-`;
-
-const Row = styled.div`
-  margin: 10px 0px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  color: ${(props) => props.theme.textDark};
 `;
 
-const Column = styled.div`
-  display: flex;
-  margin: 0px 40px;
-`;
+const Table = styled.table`
+  width: 100%;
+  font-size: 0.8em;
+  border-collapse: collapse;
+  margin-top: 10px;
+  color: ${(props) => props.theme.textLight};
+  td {
+    width: 33%;
+    padding: 8px 0px;
+    text-align: center;
+    border-bottom: 1px solid ${(props) => props.theme.bgDark};
+  }
+  tr td:first-child {
+    text-align: left;
+  }
+  tr td:last-child {
+    text-align: right;
+  }
 
-const Empty = styled.div`
-  width: 10px;
-  height: 10px;
+  tr:last-child td {
+    border: 0px;
+  }
 `;
 
 export default CompareModal;

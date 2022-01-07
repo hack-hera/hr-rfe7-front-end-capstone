@@ -32,9 +32,7 @@ const RelatedCarousel = (props) => {
       <CarouselContainer>
         {currentIndex > 0 && <LeftButton onClick={prev}>&#171;</LeftButton>}
         <CarouselWrapper>
-          <CarouselContent
-            style={{ transform: `translateX(-${currentIndex * (100 / 4)}%)` }}
-          >
+          <CarouselContent style={{ transform: `translateX(-${currentIndex * (100 / 4)}%)` }}>
             {props.relatedItems.map((item, i) => {
               return (
                 <CardItem
@@ -51,9 +49,7 @@ const RelatedCarousel = (props) => {
             })}
           </CarouselContent>
         </CarouselWrapper>
-        {currentIndex < length - 1 && (
-          <RightButton onClick={next}>&#187;</RightButton>
-        )}
+        {currentIndex < length - 1 && <RightButton onClick={next}>&#187;</RightButton>}
       </CarouselContainer>
     </CarouselComponent>
   );
@@ -81,7 +77,7 @@ const CarouselWrapper = styled.div`
   overflow: hidden;
   display: flex;
   justify-content: center;
-  width: 65%;
+  width: 100%;
   height: 100%;
   padding: 5px;
 `;

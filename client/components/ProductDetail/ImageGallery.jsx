@@ -88,7 +88,7 @@ const DownArrow = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100%;
+  width: 80px;
   display: flex;
   flex-direction: column;
   max-height: 50vh;
@@ -117,21 +117,26 @@ const Carousel_Content = styled.div`
   transition: all 250ms linear;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  height: 25%;
 `;
 
 const Thumbnail_Container = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 10vh;
+  position: relative;
+
+  margin: 6px 12px;
+  height: 5vh;
+  width: 5vh;
+  position: relative;
 `;
 
 const Thumbnail = styled.img`
-  height: 7vh;
-  max-width: 7vh;
-  background-color: red;
+  width: 100%;
+  height: 100%;
   :hover {
     opacity: 0.8;
     cursor: pointer;
   }
+  object-fit: cover;
+  position: absolute;
+  box-shadow: 0px 0px 3px #666;
 `;

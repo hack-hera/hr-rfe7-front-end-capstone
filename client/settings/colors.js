@@ -36,7 +36,7 @@ export const THEMES = {
     success: '#27ae60',
     warning: '#f1c40f',
     button: '#2980b9',
-    highlight: '#4a3f9e',
+    highlight: '#fdcb6e',
     text: '#cccccc',
     textInv: '#dbdbdb',
     textLight: '#aaaaaa',
