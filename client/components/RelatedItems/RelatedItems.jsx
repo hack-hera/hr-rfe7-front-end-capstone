@@ -48,7 +48,6 @@ var RelatedItems = (props) => {
   let ids = props.related.related.map((x) => x.id);
   let displayRelated = [];
   props.related.related.forEach((x, i) => {
-    console.log(x.id, i, ids.indexOf(x.id));
     if (ids.indexOf(x.id) === i && x.id !== props.product.id) {
       displayRelated.push(x);
     }
