@@ -12,14 +12,14 @@ const ImageGallery = (props) => {
   }, [props.currentStyle.photos]);
 
   const next = () => {
-    if (currentImage < (galleryLength - 1)) {
-      setCurrentImage(prevState => prevState + 1);
+    if (currentImage < galleryLength - 1) {
+      setCurrentImage((prevState) => prevState + 1);
     }
   };
 
   const previous = () => {
     if (currentImage > 0) {
-      setCurrentImage(prevState => prevState - 1);
+      setCurrentImage((prevState) => prevState - 1);
     }
   };
 
@@ -28,20 +28,22 @@ const ImageGallery = (props) => {
       <Carousel_Container>
         {currentImage > 0 ? (
           <UpArrow>
-            <FontAwesomeIcon icon = {faArrowCircleUp} onClick = {previous}/>
+            <FontAwesomeIcon icon={faArrowCircleUp} onClick={previous} />
           </UpArrow>
         ) : (
           <HiddenArrow>
-            <FontAwesomeIcon icon = {faArrowCircleUp}/>
+            <FontAwesomeIcon icon={faArrowCircleUp} />
           </HiddenArrow>
         )}
         <Carousel_Wrapper>
-          <Carousel_Content style={{ transform: `translateY(-${currentImage * (10)}vh)` }}>
+          <Carousel_Content style={{ transform: `translateY(-${currentImage * 10}vh)` }}>
             {props.currentStyle.photos.map((photo, key) => (
-
               <Thumbnail_Container key={key}>
                 <Thumbnail
-                  src={photo.thumbnail_url || 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'}
+                  src={
+                    photo.thumbnail_url ||
+                    'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'
+                  }
                   onClick={() => {
                     props.changePhoto(photo);
                     setCurrentImage(key);
@@ -51,11 +53,11 @@ const ImageGallery = (props) => {
             ))}
           </Carousel_Content>
         </Carousel_Wrapper>
-        {currentImage < (galleryLength - 1) &&
-        <DownArrow>
-          <FontAwesomeIcon icon = {faArrowCircleDown} onClick = {next}/>
-        </DownArrow>
-        }
+        {currentImage < galleryLength - 1 && (
+          <DownArrow>
+            <FontAwesomeIcon icon={faArrowCircleDown} onClick={next} />
+          </DownArrow>
+        )}
       </Carousel_Container>
     </Container>
   );

@@ -21,6 +21,26 @@ const getCache = async (key, id) => {
   return obj[id];
 };
 
+const logAPICall = async () => {
+  let now = new Date().getTime() / 1000;
+  let arr = (await localforage.getItem('apicalls')) || [];
+  arr.push(now);
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > now - 60) {
+      arr = arr.slice(i);
+      break;
+    }
+  }
+  await localforage.setItem('apicalls', arr);
+};
+
+export const getAPICallsWithinLastMinute = async () => {
+  let now = new Date().getTime() / 1000;
+  let arr = (await localforage.getItem('apicalls')) || [];
+
+  return arr.filter((x) => x > now - 60).length;
+};
+
 const host = `https://app-hrsei-api.herokuapp.com/api/fec2/${campus}`;
 
 const api = {
@@ -28,26 +48,20 @@ const api = {
    * Get All
    ******************************************************************************/
 
-  getAllData: async function (params = {}) {
+  getAllData: async function (params = {}, useCache = true) {
     const { product_id } = params;
-
-    let cachedData = await getCache('data', product_id);
-    if (cachedData) {
-      return cachedData;
-    }
 
     let obj = {};
     obj.currentProduct = await this.getProductData({ product_id });
-    obj.reviewData = await this.getReviewData({ product_id });
+    obj.reviewData = await this.getReviewData({ product_id }, useCache);
     obj.relatedProducts = await this.getRelatedProductData({ product_id });
-    obj.questionData = await this.getQuestionData({ product_id });
+    obj.questionData = await this.getQuestionData({ product_id }, useCache);
 
-    await cache('data', product_id, obj);
     return obj;
   },
 
   isProductCached: async function ({ product_id }) {
-    let cachedProduct = await getCache('data', parseInt(product_id));
+    let cachedProduct = await getCache('product', product_id);
     return !!cachedProduct;
   },
 
@@ -63,6 +77,7 @@ const api = {
     let url = `${host}/products?page=${page}&count=${count}`;
     try {
       let res = await axios.get(url, headers);
+      await logAPICall();
       return res.data;
     } catch (err) {
       return {};
@@ -75,12 +90,15 @@ const api = {
     let stylesUrl = `${host}/products/${product_id}/styles`;
     try {
       let cachedProduct = await getCache('product', product_id);
+
       if (cachedProduct) {
         return cachedProduct;
       }
       let productRes = await axios.get(productUrl, headers);
+      await logAPICall();
       let obj = productRes.data;
       let stylesRes = await axios.get(stylesUrl, headers);
+      await logAPICall();
       obj.styles = stylesRes.data.results;
       await cache('product', product_id, obj);
       return obj;
@@ -99,6 +117,7 @@ const api = {
       let related = await getCache('related', product_id);
       if (!related) {
         let res = await axios.get(url, headers);
+        await logAPICall();
         await cache('related', product_id, res.data);
         related = res.data;
       }
@@ -171,7 +190,9 @@ const api = {
       }
 
       let resMeta = await axios.get(metaUrl, headers);
+      await logAPICall();
       let resReviews = await axios.get(reviewUrl, headers);
+      await logAPICall();
       let data = resMeta.data;
 
       data.reviews = resReviews.data.results;
@@ -291,6 +312,7 @@ const api = {
         }
       }
       let questionRes = await axios.get(host + url, headers);
+      await logAPICall();
       await cache('questions', product_id, questionRes.data);
       return questionRes.data;
     } catch (err) {
