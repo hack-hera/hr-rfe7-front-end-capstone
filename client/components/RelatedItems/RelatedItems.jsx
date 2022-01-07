@@ -45,6 +45,11 @@ var RelatedItems = (props) => {
 
   return (
     <Container>
+      {showing === true && (
+        <Modal onClose={() => setShowing(false)} width={50} height={40}>
+          <CompareModal related={related} current={props.product} />
+        </Modal>
+      )}
       <h3>Related Products</h3>
       <RelatedCarousel
         relatedItems={props.related.related}
