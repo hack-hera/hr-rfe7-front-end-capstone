@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const Modal = ({ children, onClose, width = 50, height = 50 }) => {
+export const Modal = ({ children, onClose, width = 50, height = 50, id = 'modal' }) => {
   const [z, setZ] = useState(100000);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export const Modal = ({ children, onClose, width = 50, height = 50 }) => {
   width = Math.max(10, Math.min(90, width));
   height = Math.max(10, Math.min(90, height));
   return (
-    <Container width={width} height={height} z={z}>
+    <Container width={width} height={height} z={z} id={id}>
       <CloseButton onClick={onClose}>×</CloseButton>
       {children}
     </Container>
@@ -31,6 +31,7 @@ const Container = styled.div`
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   background-color: ${(props) => props.theme.bgLight};
+  scroll-behavior: smooth;
 `;
 
 const CloseButton = styled.button`
