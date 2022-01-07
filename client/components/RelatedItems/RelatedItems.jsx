@@ -60,28 +60,6 @@ var RelatedItems = (props) => {
         addOutfit={add}
         currentProduct={props.product}
       />
-      {/* <Header>
-        <h3>Related Products</h3>
-      </Header>
-      {showing === true && (
-        <Modal onClose={() => setShowing(false)} width={50} height={40}>
-          <CompareModal related={related} current={props.product} />
-        </Modal>
-      )}
-      <RelatedCarousel
-        relatedItems={props.related.related}
-        currentProduct={props.product}
-        relatedRating={props.related.ratings}
-        update={props.updateProduct}
-        updateModal={updateRelated}
-      />
-      <Header>YourOutfit</Header>
-      <OutfitCarousel
-        outfitData={outfit}
-        removeItem={remove}
-        addOutfit={add}
-        currentProduct={props.product}
-      /> */}
     </Container>
   );
 };
