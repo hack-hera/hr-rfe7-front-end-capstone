@@ -7,6 +7,11 @@ self.addEventListener(
   'message',
   async function (e) {
     let ids = e.data.map((x) => x.id);
+    console.log(`    Team Hera all day
+      _____________
+    _/_|[][][][][] | - - - - - -
+   (Data Fetch Bus | - - - - - -
+   =--OO-------OO--`);
 
     for (let i = 0; i < ids.length; i++) {
       let isCached = await api.isProductCached({ product_id: ids[i] });

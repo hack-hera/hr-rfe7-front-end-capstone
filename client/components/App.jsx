@@ -50,7 +50,7 @@ class App extends Component {
       console.log('Message from Worker: ' + e.data);
     });
 
-    api.getProducts({ count: 100 }).then((products) => {
+    api.getProducts({ count: 25 }).then((products) => {
       this.setState({ products: products }, () => {
         backgroundCacher.postMessage(products);
         this.updateProduct(products[0].id);
