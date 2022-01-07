@@ -131,6 +131,7 @@ const ByUser = styled.div`
   clear: both;
   font-size: smaller;
   margin-bottom: 20px;
+  margin-top: 5px;
 `;
 
 const AnswerContainer = styled.div`
