@@ -40,7 +40,11 @@ var CardItem = (props) => {
 
   var button;
   if (!props.inOutfit) {
-    button = <Button onClick={() => compare()}>&#9734;</Button>;
+    button = (
+      <Button info={true} onClick={() => compare()}>
+        &#8505;
+      </Button>
+    );
   } else {
     button = <Button onClick={() => remove()}>&#10008;</Button>;
   }
@@ -118,10 +122,25 @@ const Picture = styled.div`
 `;
 
 const Button = styled.div`
+  display: flex;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  justify-content: center;
+  font-style: bold;
   z-index: 1;
   position: absolute;
   right: 0px;
   cursor: pointer;
+  right: 3px;
+  top: 3px;
+  color: ${(props) => (props.info ? props.theme.textInv : props.theme.textInv)};
+  background-color: ${(props) => (props.info ? props.theme.bgNav : props.theme.error)};
+  :hover {
+    opacity: 0.8;
+  }
+  border-radius: 12px;
+  box-shadow: 0px 0px 3px #666;
 `;
 
 const AddCard = styled.div`

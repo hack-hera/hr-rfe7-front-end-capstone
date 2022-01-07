@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ProductDescription = (props) => {
-  console.log(props.currentProduct);
   if (props.currentProduct.features) {
     return (
       <Container>
@@ -40,7 +39,7 @@ const Container = styled.div`
 
 const Description = styled.div`
   width: 55%;
-  border-right: 1px solid ${(props) => props.theme.textDark};
+  border-right: 1px solid ${(props) => props.theme.bgDark};
 `;
 
 const Features = styled.div`
