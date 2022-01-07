@@ -50,6 +50,7 @@ const Image = styled.img`
   height: 100%;
   object-fit: cover;
   position: absolute;
+  cursor: zoom-in;
 `;
 
 export default ProductImage;
