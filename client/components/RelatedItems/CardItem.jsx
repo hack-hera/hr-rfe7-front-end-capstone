@@ -34,8 +34,7 @@ var CardItem = (props) => {
   if (props.item.styles[0].photos[0].thumbnail_url) {
     pictureSrc = props.item.styles[0].photos[0].thumbnail_url;
   } else {
-    pictureSrc =
-      'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg';
+    pictureSrc = 'https://res.cloudinary.com/dkit4ixkx/image/upload/v1641530491/dog_jxwvea.png';
   }
 
   var button;
