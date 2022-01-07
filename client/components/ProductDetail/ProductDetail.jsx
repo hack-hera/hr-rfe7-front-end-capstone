@@ -92,7 +92,7 @@ const LeftContainer = styled.div`
   flex-direction: row;
   height: 65vh;
   margin: 0px;
-  width: 50%;
+  width: 60%;
 
   overflow: hidden;
 `;
@@ -101,7 +101,7 @@ const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0px;
-  width: calc(50% - 25px);
+  width: calc(40% - 25px);
   padding-left: 25px;
 `;
 
