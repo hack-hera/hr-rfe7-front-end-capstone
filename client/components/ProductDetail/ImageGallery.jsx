@@ -24,19 +24,26 @@ const ImageGallery = (props) => {
   };
 
   return (
-    <Carousel_Container>
-      <Carousel_Wrapper>
-        {currentImage > 0 && (
+    <Container>
+      <Carousel_Container>
+        {currentImage > 0 ? (
           <UpArrow>
             <FontAwesomeIcon icon={faArrowCircleUp} onClick={previous} />
           </UpArrow>
+        ) : (
+          <HiddenArrow>
+            <FontAwesomeIcon icon={faArrowCircleUp} />
+          </HiddenArrow>
         )}
-        <Carousel_content_wrapper>
-          <Carousel_content style={{ transform: `translateY(-${currentImage * 41}px)` }}>
+        <Carousel_Wrapper>
+          <Carousel_Content style={{ transform: `translateY(-${currentImage * 10}vh)` }}>
             {props.currentStyle.photos.map((photo, key) => (
               <Thumbnail_Container key={key}>
                 <Thumbnail
-                  src={photo.thumbnail_url}
+                  src={
+                    photo.thumbnail_url ||
+                    'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'
+                  }
                   onClick={() => {
                     props.changePhoto(photo);
                     setCurrentImage(key);
@@ -44,45 +51,51 @@ const ImageGallery = (props) => {
                 />
               </Thumbnail_Container>
             ))}
-          </Carousel_content>
-        </Carousel_content_wrapper>
+          </Carousel_Content>
+        </Carousel_Wrapper>
         {currentImage < galleryLength - 1 && (
           <DownArrow>
             <FontAwesomeIcon icon={faArrowCircleDown} onClick={next} />
           </DownArrow>
         )}
-      </Carousel_Wrapper>
-    </Carousel_Container>
+      </Carousel_Container>
+    </Container>
   );
 };
 
 export default ImageGallery;
 
-const UpArrow = styled.div`
+const HiddenArrow = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
 
-  width: 30px;
-  height: 30px;
+  visibility: hidden;
+`;
+
+const UpArrow = styled.div`
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
 `;
 
 const DownArrow = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
-  transform: translateY(60px);
-  width: 30px;
-  height: 30px;
+  position: absolute;
+  transform: translateY(149px);
 `;
 
-const Carousel_Container = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  max-height: 50vh;
+  overflow: hidden;
 `;
 
-const Carousel_Wrapper = styled.div`
+const Carousel_Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -90,7 +103,7 @@ const Carousel_Wrapper = styled.div`
   justify-content: center;
 `;
 
-const Carousel_content_wrapper = styled.div`
+const Carousel_Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -98,27 +111,24 @@ const Carousel_content_wrapper = styled.div`
   height: 100%;
 `;
 
-const Carousel_content = styled.div`
+const Carousel_Content = styled.div`
   display: flex;
   flex-direction: column;
   transition: all 250ms linear;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  height: 25%;
 `;
 
 const Thumbnail_Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 10vh;
 `;
 
 const Thumbnail = styled.img`
-  margin: 3px;
-  border: 6px;
-
-  border-color: blue;
-
-  max-height: 55px;
-  width: 35px;
+  height: 7vh;
+  max-width: 7vh;
   background-color: red;
   :hover {
     opacity: 0.8;

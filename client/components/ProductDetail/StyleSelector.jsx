@@ -27,18 +27,22 @@ const StyleSelector = (props) => {
     <Container>
       <b>Select Style</b>
       <CarouselContainer>
-        {styleIndex > 0 &&
+        {styleIndex > 0 ? (
           <LeftButton>
             <FontAwesomeIcon icon={faArrowCircleLeft} onClick={previous}/>
           </LeftButton>
-        }
+        ) : (
+          <HiddenButton>
+            <FontAwesomeIcon icon={faArrowCircleLeft}/>
+          </HiddenButton>
+        )}
         <CarouselWrapper>
           <CarouselContent
             style={{ transform: `translateX(-${styleIndex * (100) / 4}%)` }}>
             {props.productStyles.map((style, key) => (
               <Thumbnail
                 key={key}
-                src={style.photos[0].thumbnail_url}
+                src={style.photos[0].thumbnail_url || 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg'}
                 onClick={() => {
                   props.changeStyle(style);
                 }}
@@ -69,13 +73,13 @@ const Container = styled.div`
 
 const CarouselContainer = styled.div`
   display: flex;
+  flex-direction: row;
   width: 100%;
   position: relative;
   justify-content: center;
 `;
 
 const CarouselWrapper = styled.div`
-  margin-left: 12px;
   overflow: hidden;
   width: 200%;
   height: 100%;
@@ -94,28 +98,37 @@ const Checkmark = styled.img`
 `;
 
 const LeftButton = styled.div`
-  display: inline;
-  position: absolute;
+  display: flex;
+  flex-direction: row;
   z-index: 1;
-  transform: translateY(50%);
-  width: 100%;
-  height: 100%;
+  width: 12px;
+  height: 12px;
+  left: 0px;
+  transform: translateY(35px)
+`;
+
+const HiddenButton = styled.div`
+  visibility: hidden;
+  display: flex;
+  flex-direction: row;
+  width: 12px;
+  height: 12px;
   left: 0px;
 `;
 
 const RightButton = styled.div`
-  display: inline
-  position: absolute;
+  display: flex;
+  flex-direction: row;
   z-index: 1;
-  width: 100%;
-  height: 100%;
-  align-items: right;
+  width: 12px;
+  height: 12px;
+  transform: translateY(35px)
 `;
 
 const Thumbnail = styled.img`
   margin-right: 10px;
-  max-height: 55px;
-  width: 35px;
+  max-height: 100px;
+  max-width: 6vw;
   :hover {
     opacity: 0.8;
     cursor: pointer;

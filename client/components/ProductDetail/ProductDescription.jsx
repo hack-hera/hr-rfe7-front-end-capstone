@@ -6,7 +6,9 @@ const ProductDescription = (props) => {
     return (
       <Container>
         <Description>
-          <b>Description:  </b>
+          <br></br>
+          <b>Description</b>
+          <br></br>
           {props.currentProduct.description}
         </Description>
         <Features>
@@ -35,9 +37,9 @@ const Container = styled.div`
 `;
 
 const Description = styled.div`
-  width: 50%
+  width: 55%
 `;
 
 const Features = styled.ul`
-  width: 50%
+  width: 45%
 `;

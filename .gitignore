@@ -25,6 +25,7 @@ build/
 dist/
 
 public/*.js
+public/*.js.gz
 
 #Test Snapshots
 tests/__snapshots__

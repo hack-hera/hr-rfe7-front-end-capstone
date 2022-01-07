@@ -41,8 +41,8 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  max-width: 400px;
-  max-height: 440px;
+  max-width: 40vw;
+  max-height: 50vh;
   cursor: zoom-in;
 `;
 

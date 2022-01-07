@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowCircleRight, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import CardItem from './CardItem.jsx';
 
 const RelatedCarousel = (props) => {
@@ -31,13 +30,11 @@ const RelatedCarousel = (props) => {
   return (
     <CarouselComponent>
       <CarouselContainer>
-        {currentIndex > 0 && (
-          <LeftButton onClick={prev}>
-            &#171;
-          </LeftButton>
-        )}
+        {currentIndex > 0 && <LeftButton onClick={prev}>&#171;</LeftButton>}
         <CarouselWrapper>
-          <CarouselContent style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}>
+          <CarouselContent
+            style={{ transform: `translateX(-${currentIndex * (100 / 4)}%)` }}
+          >
             {props.relatedItems.map((item, i) => {
               return (
                 <CardItem
@@ -54,9 +51,7 @@ const RelatedCarousel = (props) => {
           </CarouselContent>
         </CarouselWrapper>
         {currentIndex < length - 1 && (
-          <RightButton onClick={next}>
-            &#187;
-          </RightButton>
+          <RightButton onClick={next}>&#187;</RightButton>
         )}
       </CarouselContainer>
     </CarouselComponent>
@@ -92,42 +87,31 @@ const CarouselWrapper = styled.div`
 
 const CarouselContent = styled.div`
   display: flex;
-  transition: all 400ms linear;
+  transition: all 250ms linear;
   width: 100%;
   padding: 5px;
 `;
 
 const LeftButton = styled.div`
   cursor: pointer;
-  position: absolute;
-  font-size: 25px;
+  font-size: 50px;
   z-index: 1;
   top: 50%;
-  transform: translateY(-50%);
-  width: 13px;
-  height: 100%;
   left: 220px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to left, rgba(247, 247, 247, 0), rgba(247, 247, 247, 1));
 `;
-
 
 const RightButton = styled.div`
   cursor: pointer;
-  position: absolute;
-  font-size: 25px;
+  font-size: 50px;
   z-index: 1;
   top: 50%;
-  transform: translateY(-50%);
-  width: 13px;
-  height: 100%;
   right: 220px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to right, rgba(247, 247, 247, 0), rgba(247, 247, 247, 1));
 `;
 
 export default RelatedCarousel;
