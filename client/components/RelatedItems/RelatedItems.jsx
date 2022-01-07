@@ -45,7 +45,9 @@ var RelatedItems = (props) => {
 
   return (
     <Container>
-      <Header>RelatedItems</Header>
+      <Header>
+        <h3>Related Products</h3>
+      </Header>
       {showing === true && (
         <Modal onClose={() => setShowing(false)} width={50} height={40}>
           <CompareModal related={related} current={props.product} />
@@ -72,10 +74,12 @@ var RelatedItems = (props) => {
 const Header = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: 25px;
   width: 100%;
-  h1 {
+  h3 {
     margin: 0px;
     padding: 0px;
+    font-size: 16px;
     color: ${(props) => props.theme.textDark};
   }
   div {

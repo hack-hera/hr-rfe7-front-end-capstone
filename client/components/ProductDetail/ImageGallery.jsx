@@ -88,7 +88,7 @@ const DownArrow = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100%;
+  width: 80px;
   display: flex;
   flex-direction: column;
   max-height: 50vh;
@@ -123,13 +123,15 @@ const Carousel_Content = styled.div`
 const Thumbnail_Container = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 6px 12px;
   height: 10vh;
+  max-width: 8vh;
+  border: 1px solid black;
 `;
 
 const Thumbnail = styled.img`
-  height: 7vh;
-  max-width: 7vh;
-  background-color: red;
+  height: 8vh;
+  max-width: 8vh;
   :hover {
     opacity: 0.8;
     cursor: pointer;

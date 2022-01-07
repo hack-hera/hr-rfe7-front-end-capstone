@@ -34,123 +34,176 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
 
   return (
     <Container id='ProductDetail'>
-      <h3>Product Details</h3>
-      <ProductContainer>
+      <LeftContainer>
+        <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />
+        <ProductImage
+          currentPhoto={photo}
+          currentStyle={style}
+          changePhoto={(photo) => setPhoto(photo)}
+        />
+      </LeftContainer>
+      <RightContainer>
+        <ReviewsHeader>
+          <Stars number={rating} size={16} />
+          <ScrollToReviews allRatings={allRatings} />
+        </ReviewsHeader>
+        <ProductHeader>
+          <h3>{product.category}</h3>
+          <h1>{product.name}</h1>
+          <RenderPrice currentStyle={style} default_price={product.default_price} />
+          <span>
+            <b>Style &gt;</b> {style.name}
+          </span>
+        </ProductHeader>
         {style && (
-          <DisplayContainer>
-            <ImageGalleryContainer>
-              <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />
-            </ImageGalleryContainer>
-            <ImageContainer>
-              {photo && (
-                <ProductImage
-                  currentPhoto={photo}
-                  currentStyle={style}
-                  changePhoto={(photo) => setPhoto(photo)}
-                />
-              )}
-            </ImageContainer>
-          </DisplayContainer>
+          <StyleSelector
+            productStyles={product.styles}
+            changeStyle={(style) => {
+              setStyle(style);
+              setPhoto(style.photos[0]);
+            }}
+          />
         )}
-        <ProductInfoContainer>
-          <ReviewsContainer>
-            <Stars number={rating} />
-            <ScrollToReviews allRatings={allRatings} />
-          </ReviewsContainer>
-          <br></br>
-          <div>
-            <b>Category:</b> {product.category}
-          </div>
-          <p>
-            <b>Product Name: </b>
-            {product.name}
-          </p>
-          <>
-            {style && (
-              <p>
-                <b>Styles: </b>
-                {style.name}
-              </p>
-            )}
-            {/* TODO - Refactor this to accept default price if there styles.length === 0 */}
-            <RenderPrice currentStyle={style} default_price={product.default_price} />
-            {style && (
-              <StyleSelector
-                productStyles={product.styles}
-                changeStyle={(style) => {
-                  setStyle(style);
-                  setPhoto(style.photos[0]);
-                }}
-              />
-            )}
-          </>
-
-          <Cart>
-            <UpdateCart style={style} product={product} addToCart={addToCart} />
-          </Cart>
-          <ShareButtons />
-        </ProductInfoContainer>
-      </ProductContainer>
-      <ProductDescription currentProduct={product} />
+        <CartContainer>
+          <UpdateCart style={style} product={product} addToCart={addToCart} />
+        </CartContainer>
+        <ShareButtons />
+      </RightContainer>
+      <DescriptionContainer>
+        <ProductDescription currentProduct={product} />
+      </DescriptionContainer>
     </Container>
   );
 };
 
-const ReviewsContainer = styled.div`
-  display: flex;
-`;
-
-const Cart = styled.div`
-  display: flex;
-  margin-bottom: 5px;
-`;
-
-const ProductDescriptionContainer = styled.div`
-  display: block;
-`;
-
-const DisplayContainer = styled.div`
-  display: flex;
-  width: 60%;
-`;
-
 const Container = styled.div`
-  background-color: ${(props) => props.theme.bgLight};
-`;
-
-const ProductContainer = styled.div`
   display: flex;
   flex-direction: row;
-  font-size: 0.8em;
+  flex-wrap: wrap;
+  background-color: ${(props) => props.theme.bgLight};
+  margin-top: 30px;
+  color: ${(props) => props.theme.textLight};
 `;
 
-const ImageGalleryContainer = styled.div`
-  display: inline-block;
-  width: 10%;
-  height: 440px;
-  margin-right: 30px;
-`;
-
-const ImageContainer = styled.div`
+const LeftContainer = styled.div`
   display: flex;
-  width: 40%;
+  flex-direction: row;
+  height: 65vh;
+  margin: 0px;
+  width: 50%;
+
+  overflow: hidden;
 `;
 
-const Thumbnail = styled.img`
-  margin-top: 3px;
-  margin-bottom: 3px;
-  max-height: 55px;
-  max-width: 33px;
-  :hover {
+const RightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  width: calc(50% - 25px);
+  padding-left: 25px;
+`;
+
+const ReviewsHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  a {
+    font-size: 0.7em;
+    color: ${(props) => props.theme.graph};
+  }
+  a:hover {
     opacity: 0.8;
-    cursor: pointer;
   }
 `;
 
-const ProductInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 35%;
+const ProductHeader = styled.div`
+  width: 100%;
+  h3 {
+    font-size: 0.9em;
+    margin-top: 20px;
+    font-weight: normal;
+    text-transform: capitalize;
+  }
+
+  h1 {
+    font-size: 1.5em;
+    margin: 0px;
+    color: ${(props) => props.theme.textDark};
+  }
+
+  span {
+    color: ${(props) => props.theme.textLight};
+    font-size: 0.8em;
+    text-transform: capitalize;
+  }
+`;
+
+const CartContainer = styled.div`
+  margin: 20px 0px;
+`;
+
+const DescriptionContainer = styled.div`
+  width: 90%;
+  margin-top: 15px;
+  font-size: 0.8em;
+  padding: 0% 5%;
 `;
 
 export default ProductDetail;
+
+// <ProductContainer>
+//         {style && (
+//           <DisplayContainer>
+//             <ImageGalleryContainer>
+//               <ImageGallery currentStyle={style} changePhoto={(photo) => setPhoto(photo)} />
+//             </ImageGalleryContainer>
+//             <ImageContainer>
+//               {photo && (
+// <ProductImage
+//   currentPhoto={photo}
+//   currentStyle={style}
+//   changePhoto={(photo) => setPhoto(photo)}
+// />
+//               )}
+//             </ImageContainer>
+//           </DisplayContainer>
+//         )}
+//         <ProductInfoContainer>
+// <ReviewsContainer>
+//   <Stars number={rating} size={16} />
+//   <ScrollToReviews allRatings={allRatings} />
+// </ReviewsContainer>
+//           <br></br>
+//           <div>
+//             <b>Category:</b> {product.category}
+//           </div>
+//           <p>
+//             <b>Product Name: </b>
+//             {product.name}
+//           </p>
+//           <>
+//             {style && (
+//               <p>
+//                 <b>Styles: </b>
+//                 {style.name}
+//               </p>
+//             )}
+//             {/* TODO - Refactor this to accept default price if there styles.length === 0 */}
+//             <RenderPrice currentStyle={style} default_price={product.default_price} />
+//             {style && (
+//               <StyleSelector
+//                 productStyles={product.styles}
+//                 changeStyle={(style) => {
+//                   setStyle(style);
+//                   setPhoto(style.photos[0]);
+//                 }}
+//               />
+//             )}
+//           </>
+
+// <Cart>
+//   <UpdateCart style={style} product={product} addToCart={addToCart} />
+// </Cart>
+// <ShareButtons />
+//         </ProductInfoContainer>
+//       </ProductContainer>
+//
