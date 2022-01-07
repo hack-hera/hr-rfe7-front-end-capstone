@@ -138,8 +138,8 @@ const RightButton = styled.div`
 
 const ImageContainer = styled.div`
   margin-right: 10px;
-  height: 4vw;
-  width: 4vw;
+  height: 40px;
+  width: 40px;
   position: relative;
 `;
 
@@ -150,7 +150,7 @@ const Thumbnail = styled.img`
   }
   width: 100%;
   height: 100%;
-  border-radius: 2vw;
+  border-radius: 20px;
   object-fit: cover;
   position: absolute;
   box-shadow: 0px 0px 3px #666;

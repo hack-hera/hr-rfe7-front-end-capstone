@@ -43,7 +43,6 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: pink;
 `;
 
 const Image = styled.img`
@@ -51,6 +50,7 @@ const Image = styled.img`
   height: 100%;
   object-fit: cover;
   position: absolute;
+  cursor: zoom-in;
 `;
 
 export default ProductImage;

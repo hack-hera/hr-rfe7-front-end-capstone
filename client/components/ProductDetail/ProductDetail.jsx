@@ -67,7 +67,7 @@ const ProductDetail = ({ product, productReviews, addToCart }) => {
           />
         )}
         <CartContainer>
-          {style && product && <UpdateCart style={style} product={product} addToCart={addToCart} />}
+          {product && <UpdateCart style={style} product={product} addToCart={addToCart} />}
         </CartContainer>
         <ShareButtons />
       </RightContainer>
@@ -92,7 +92,7 @@ const LeftContainer = styled.div`
   flex-direction: row;
   height: 65vh;
   margin: 0px;
-  width: 50%;
+  width: 55%;
 
   overflow: hidden;
 `;
@@ -101,7 +101,7 @@ const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0px;
-  width: calc(50% - 25px);
+  width: calc(45% - 25px);
   padding-left: 25px;
 `;
 

@@ -75,7 +75,7 @@ const MainContainer = styled.div`
 `;
 
 const LeftContainer = styled.div`
-  width: 30%;
+  width: 25%;
   display: flex;
   flex-direction: column;
 
@@ -89,7 +89,7 @@ const LeftContainer = styled.div`
 `;
 
 const RightContainer = styled.div`
-  width: 70%;
+  width: 75%;
   display: flex;
   flex-direction: column;
 

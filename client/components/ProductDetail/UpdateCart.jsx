@@ -20,30 +20,27 @@ const UpdateCart = ({ style, product, addToCart }) => {
 
   //Handle a click on the cart
   let handleAddCartClick = (validation) => {
-    console.log(selectedSize);
     if (selectedSize === 0 && validation === true) {
       setWarning(true);
     } else {
       addToCart({
-        product_id: product.id,
-        style_id: style ? style.style_id : null,
-        sku_id: style ? Object.keys(style.skus)[selectedSize] : null,
-        size: style && selectedSize > 0 ? sizes[selectedSize] : null,
-        quantity: style && selectedSize > 0 ? availableQuantities[selectedQuantity] : null,
+        style_id: style.style_id,
+        name: product.name,
+        url: style.photos && style.photos[0] ? style.photos[0].thumbnail_url : '',
       });
       setSelectedSize(0);
       setSelectedQuantity(0);
     }
   };
-
   //If the style is not defined, then we simply return a Button
   if (!style || !style.skus || Object.keys(style.skus)[0] === 'null') {
-    return <Button onClick={() => handleAddCartClick(false)}>Add to Cart</Button>;
+    return <Button>OUT OF STOCK</Button>;
   }
 
   //Update the sizes/quantities/available quantities
   sizes = Object.keys(style.skus).map((x) => style.skus[x].size);
   sizes.unshift('Select Size');
+
   quantities = Object.keys(style.skus).map((x) => style.skus[x].quantity);
 
   availableQuantities = new Array(Math.min(15, quantities[Math.max(0, selectedSize - 1)]))

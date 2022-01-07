@@ -28,8 +28,9 @@ class App extends Component {
   }
 
   addToCart(obj) {
-    if (!this.state.cart.map((x) => x.id).includes(this.state.currentProduct.id)) {
-      this.setState({ cart: [...this.state.cart, this.state.currentProduct] });
+    console.log('>>>>adding to cart', obj);
+    if (!this.state.cart.map((x) => x.style_id).includes(obj.style_id)) {
+      this.setState({ cart: [...this.state.cart, obj] });
     }
   }
 
@@ -89,7 +90,7 @@ class App extends Component {
           updateProduct={(id) => this.updateProduct(id)}
           cart={cart}
           removeItemFromCart={(id) =>
-            this.setState({ cart: this.state.cart.filter((x) => x.id !== id) })
+            this.setState({ cart: this.state.cart.filter((x) => x.style_id !== id) })
           }
         />
         {loading === true && (

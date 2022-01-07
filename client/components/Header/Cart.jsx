@@ -15,10 +15,9 @@ const Cart = ({ cart = [], removeItemFromCart }) => {
       {showing && (
         <Items>
           {cart.map((p, i) => (
-            <Item key={i} onClick={() => removeItemFromCart(p.id)}>
-              <p>{p.default_price}</p>
+            <Item key={i} onClick={() => removeItemFromCart(p.style_id)}>
               <p>{p.name}</p>
-              <img src={p.styles[0].photos[0].thumbnail_url} />
+              <img src={p.url} />
             </Item>
           ))}
         </Items>
