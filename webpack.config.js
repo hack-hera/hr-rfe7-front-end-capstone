@@ -1,4 +1,5 @@
 const path = require('path');
+var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -15,7 +16,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-react', '@babel/preset-env'],
-            plugins: ['babel-plugin-react-generate-property', '@babel/plugin-transform-runtime']
+            plugins: ['babel-plugin-react-generate-property', '@babel/plugin-transform-runtime'],
           },
         },
       },
@@ -26,4 +27,5 @@ module.exports = {
     filename: '[name].js',
   },
   resolve: { extensions: ['.jsx', '.js'] },
+  plugins: [new CompressionPlugin()],
 };
