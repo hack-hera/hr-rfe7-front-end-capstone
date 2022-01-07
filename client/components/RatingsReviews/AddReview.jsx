@@ -55,6 +55,9 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
         });
     } else {
       setErrors(currentErrors);
+      console.log('Scrolling to top!!!');
+      let el = document.getElementById('addReviewModal');
+      el.scrollTop = 0;
     }
   };
 
@@ -62,7 +65,7 @@ const AddReview = ({ onClose, meta, product, onSubmit }) => {
 
   return (
     <Container fade={fading}>
-      <Modal onClose={onClose} width={60} height={90}>
+      <Modal onClose={onClose} width={60} height={90} id='addReviewModal'>
         {submitted ? (
           <Submitted>Thanks for your review! You are an awesome customer 😀</Submitted>
         ) : (
