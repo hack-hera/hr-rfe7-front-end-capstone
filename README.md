@@ -27,6 +27,16 @@ Product Details displays the currently selected product:
 
 ## Related Items
 
+Related Items displays the related items based on the current selected products and an outfit component:
+
+- Two carousels: Top carousel displays related items, bottom carousel displays the users outfit.
+- Each item's picture and name can be clicked to change the current product
+- The add to outfit card holds a button that can be clicked to add the current outfit to the outfit list
+- The outfit carousel keeps a user's outfit regardless of refresh or revisiting page
+- Each item holds a button and the button's functionality changes depending on which list the item is in.
+- The button renders a modal when clicked within the related items list
+- The button deletes the item from the outfit list
+
 ## Questions & Answers
 
 ## Ratings and Reviews
