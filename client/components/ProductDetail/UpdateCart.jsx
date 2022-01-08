@@ -20,7 +20,6 @@ const UpdateCart = ({ style, product, addToCart }) => {
 
   //Handle a click on the cart
   let handleAddCartClick = (validation) => {
-    console.log(selectedSize);
     if (selectedSize === 0 && validation === true) {
       setWarning(true);
     } else {
