@@ -1,6 +1,8 @@
-# Project Name
+# Project Catwalk
 
-Front End Capstone. Team Hera: Manny, Daniel, Jinyan and Alex S.
+Front End Capstone Project at Hack Reactor.
+
+Team Hera: Emmanuel Garcia, Daniel Gonzalezmoreno, Jinyan Li and Alex Sieke.
 
 [Link to Trello Board](https://trello.com/b/PS0E1PSC/front-end-capstone)
 
@@ -9,6 +11,25 @@ Front End Capstone. Team Hera: Manny, Daniel, Jinyan and Alex S.
 [Business Requirements Doc](https://docs.google.com/document/d/1KAqduzY8ae3DYrSoCL1i23qHe95zJRYFulqMk-sGLWY/edit#)
 
 [API Documentation](https://learn-2.galvanize.com/cohorts/3052/blocks/94/content_files/Front%20End%20Capstone/project-atelier-catwalk/API_Overview.md)
+
+# Components
+
+## Product Details
+
+![Product Detail Capture](https://user-images.githubusercontent.com/90647863/148652101-b046d871-32b3-45ed-8123-8ed1a3a62aaf.PNG)
+
+Product Details displays the currently selected product:
+
+- Image Gallery to scroll through all available images.
+- Selected image display with zoom-in capabilities.
+- Thumbnail images for each available style for the current product.
+- Dropdown menus to select desired size and quantity to add to the cart.
+
+## Related Items
+
+## Questions & Answers
+
+## Ratings and Reviews
 
 ## Installation and helpful commands
 
