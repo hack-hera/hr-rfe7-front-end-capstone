@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const AddPhotos = ({ upload, photos, removePhoto }) => {
-
   return (
     <div>
       <div>Add Images</div>

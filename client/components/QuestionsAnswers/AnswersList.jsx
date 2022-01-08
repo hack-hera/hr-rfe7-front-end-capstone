@@ -14,61 +14,24 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
     setUrl(e.target.src);
   };
 
-  if (clicked === false) {
-    return (
-      <Container>
-        {show === true && (
-          <LargerContainer>
-            <img src={url} onClick={() => setShow(false)} />
-          </LargerContainer>
-        )}
-        <AnswerContainer>
-          {answers.length > 0 && <TitleA>A:&nbsp;&nbsp;</TitleA>}
-          <AnswerContent>
-            {answers
-              .sort(sortedAnswer)
-              .slice(0, 2)
-              .map((answer, i) => {
-                let timeArr = answer.date.split('T')[0].split('-');
-                return (
-                  <div key={i}>
-                    <div>{answer.body}</div>
-                    <div>
-                      {answer.photos.map((photo, i) => {
-                        return (
-                          <Photos key={i}>
-                            <img src={photo} alt='photo' onClick={(e) => largerPhoto(e)}/>
-                          </Photos>
-                        );
-                      })}
-                    </div>
-                    <ByUser>
-                      <span>
-                        by {answer.answerer_name}, {months[timeArr[1]]} {timeArr[2]}, {timeArr[0]}
-                        &emsp;|&emsp;
-                      </span>
-                      <MarkAnswerHelpfulAndReported answer={answer} />
-                    </ByUser>
-                  </div>
-                );
-              })}
-            {answers.length > 2 && <LoadMA onClick={showMoreA}>See more answers</LoadMA>}
-          </AnswerContent>
-        </AnswerContainer>
-      </Container>
-    );
-  } else {
-    return (
-      <Container>
-        {show === true && (
-          <LargerContainer>
-            <img src={url} onClick={() => setShow(false)} />
-          </LargerContainer>
-        )}
-        <AnswerContainer>
-          {answers.length > 0 && <TitleA>A:&nbsp;&nbsp;</TitleA>}
-          <AnswerContent>
-            {answers.sort(sortedAnswer).map((answer, i) => {
+  let answersToShow = answers.sort(sortedAnswer).slice(0, 2);
+
+  if (clicked === true) {
+    answersToShow = answers.sort(sortedAnswer);
+  }
+
+  return (
+    <Container>
+      {show === true && (
+        <LargerContainer>
+          <img src={url} onClick={() => setShow(false)} />
+        </LargerContainer>
+      )}
+      <AnswerContainer>
+        {answers.length > 0 && <TitleA>A:&nbsp;&nbsp;</TitleA>}
+        <AnswerContent>
+          {answersToShow
+            .map((answer, i) => {
               let timeArr = answer.date.split('T')[0].split('-');
               return (
                 <div key={i}>
@@ -76,7 +39,7 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
                   <div>
                     {answer.photos.map((photo, i) => {
                       return (
-                        <Photos key={i} >
+                        <Photos key={i}>
                           <img src={photo} alt='photo' onClick={(e) => largerPhoto(e)}/>
                         </Photos>
                       );
@@ -92,12 +55,12 @@ const AnswersList = ({ answers, showMoreA, clicked, showLessA }) => {
                 </div>
               );
             })}
-            <LoadMA onClick={showLessA}>Collapse answers</LoadMA>
-          </AnswerContent>
-        </AnswerContainer>
-      </Container>
-    );
-  }
+          {answers.length > 2 && clicked === false && <LoadMA onClick={showMoreA}>See more answers</LoadMA>}
+          {clicked === true && <LoadMA onClick={showLessA}>Collapse answers</LoadMA>}
+        </AnswerContent>
+      </AnswerContainer>
+    </Container>
+  );
 };
 
 const Photos = styled.div`

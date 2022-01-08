@@ -3,21 +3,14 @@ import styled from 'styled-components';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-class SearchBar extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
-  render() {
-    return (
-      <div>
-        <SearchBox type='search' placeholder='Have a question? Search for answers...' onChange={this.props.searchInput}></SearchBox>
-        <SearchButton type='submit'><FontAwesomeIcon icon={faSearch} /></SearchButton>
-      </div>
-    );
-  }
-}
+const SearchBar = ({searchInput}) => {
+  return (
+    <div>
+      <SearchBox type='search' placeholder='Have a question? Search for answers...' onChange={searchInput}></SearchBox>
+      <SearchButton type='submit'><FontAwesomeIcon icon={faSearch} /></SearchButton>
+    </div>
+  );
+};
 
 const Container = styled.div`
   display: inline-block;
