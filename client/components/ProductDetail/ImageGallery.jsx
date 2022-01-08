@@ -28,7 +28,6 @@ const ImageGallery = (props) => {
       <Carousel_Container>
         {currentImage > 0 ? (
           <UpArrow onClick={previous}>
-            {/* <FontAwesomeIcon icon={faArrowCircleUp} onClick={previous} /> */}
             &#94;
           </UpArrow>
         ) : (
@@ -56,7 +55,6 @@ const ImageGallery = (props) => {
         </Carousel_Wrapper>
         {currentImage < galleryLength - 1 && (
           <DownArrow onClick={next}>
-            {/* <FontAwesomeIcon icon={faArrowCircleDown} onClick={next} /> */}
             &#709;
           </DownArrow>
         )}

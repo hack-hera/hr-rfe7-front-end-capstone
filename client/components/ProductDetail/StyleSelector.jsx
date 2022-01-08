@@ -29,7 +29,6 @@ const StyleSelector = (props) => {
         {styleIndex > 0 ? (
           <LeftButton onClick={previous}>
             &#171;
-            {/* <FontAwesomeIcon icon={faArrowCircleLeft} onClick={previous} /> */}
           </LeftButton>
         ) : (
           <HiddenButton>
@@ -54,7 +53,6 @@ const StyleSelector = (props) => {
           </CarouselContent>
         </CarouselWrapper>
         <RightButton onClick={next}>
-          {/* <FontAwesomeIcon icon={faArrowCircleRight} onClick={next} /> */}
           &#187;
         </RightButton>
       </CarouselContainer>
@@ -63,10 +61,6 @@ const StyleSelector = (props) => {
 };
 
 export default StyleSelector;
-
-{
-  /* <a href="http://clipart-library.com/clip-art/check-mark-with-transparent-background-13.htm"><img src="http://clipart-library.com/images_k/check-mark-with-transparent-background/check-mark-with-transparent-background-13.png" width="192" height="120" /></a> */
-}
 
 const Container = styled.div`
   margin-top: 25px;
@@ -138,8 +132,8 @@ const RightButton = styled.div`
 
 const ImageContainer = styled.div`
   margin-right: 10px;
-  height: 4vw;
-  width: 4vw;
+  height: 40px;
+  width: 40px;
   position: relative;
 `;
 
@@ -150,7 +144,7 @@ const Thumbnail = styled.img`
   }
   width: 100%;
   height: 100%;
-  border-radius: 2vw;
+  border-radius: 20px;
   object-fit: cover;
   position: absolute;
   box-shadow: 0px 0px 3px #666;
