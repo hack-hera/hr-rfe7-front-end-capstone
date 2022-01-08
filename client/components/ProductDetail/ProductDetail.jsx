@@ -13,14 +13,14 @@ import ShareButtons from './ShareButtons.jsx';
 import ProductDescription from './ProductDescription.jsx';
 import ScrollToReviews from './ScrollToReviews.jsx';
 
-const ProductDetail = ({ product, productReviews, addToCart }) => {
+const ProductDetail = ({ product = {}, productReviews = {}, addToCart }) => {
   const [style, setStyle] = useState(product.styles.length > 0 ? product.styles[0] : null);
   const [photo, setPhoto] = useState(
     product.styles.length > 0 ? product.styles[0].photos[0] : null
   );
 
-  let rating = totalRating(productReviews.ratings);
-  let allRatings = productReviews.numReviews;
+  let rating = totalRating(productReviews.ratings || {});
+  let allRatings = productReviews.numReviews || 0;
 
   useEffect(() => {
     if (product.styles.length > 0) {

@@ -4,6 +4,7 @@ import { Modal } from '../Shared/Modal';
 import { Stars } from '../Shared/Stars';
 import { Highlighter } from '../Shared/Highlighter';
 import { MarkHelpfulReport } from './MarkHelpfulReport';
+import { urlIsValid } from '../../lib/ratingFunctions';
 
 //TODO - add some better date parsing logic
 
@@ -58,22 +59,24 @@ const ReviewItem = ({ review, product, keyword }) => {
           </Response>
         )}
         <ImageContainer>
-          {review.photos.map((p, i) => (
-            <img
-              key={i}
-              src={p.url}
-              onClick={(e) => {
-                setUrl(p.url);
-                setShowing(true);
+          {review.photos
+            .filter((x) => urlIsValid(x.url))
+            .map((p, i) => (
+              <img
+                key={i}
+                src={p.url}
+                onClick={(e) => {
+                  setUrl(p.url);
+                  setShowing(true);
 
-                let x =
-                  (80 * window.innerHeight * e.target.width) /
-                  (window.innerWidth * e.target.height);
-                console.log(x);
-                setDimensions([x, 80]);
-              }}
-            />
-          ))}
+                  let x =
+                    (80 * window.innerHeight * e.target.width) /
+                    (window.innerWidth * e.target.height);
+                  console.log(x);
+                  setDimensions([x, 80]);
+                }}
+              />
+            ))}
         </ImageContainer>
         <MarkHelpfulReport review={review} product={product} />
       </Body>

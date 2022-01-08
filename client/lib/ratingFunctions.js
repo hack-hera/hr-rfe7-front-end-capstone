@@ -83,3 +83,16 @@ export const filtersToText = (currentObj) => {
     return 'showing: ' + temp.join(', ');
   }
 };
+
+export const urlIsValid = (url) => {
+  if (!url || !typeof url === 'String') return false;
+
+  if (url.substr(0, 4) !== 'http') {
+    return false;
+  }
+  if (url.includes('localhost')) {
+    return false;
+  }
+
+  return true;
+};

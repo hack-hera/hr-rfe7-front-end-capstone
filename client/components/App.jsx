@@ -8,7 +8,7 @@ import { RatingsReviews } from './RatingsReviews';
 import { RelatedItems } from './RelatedItems';
 import { Header } from './Header/Header';
 import { Loader } from './Shared/Loader';
-import api from '../api';
+import axios from 'axios';
 
 const backgroundCacher = new Worker(new URL('../worker.js', import.meta.url));
 
@@ -19,10 +19,9 @@ class App extends Component {
       products: [],
       currentProduct: null,
       relatedProducts: null,
-      questionData: null,
       reviewData: null,
+      questionData: null,
       darkMode: false,
-      loading: false,
       cart: [],
     };
   }
@@ -46,41 +45,48 @@ class App extends Component {
     });
   }
 
+  async fetchProductData() {
+    let res = await axios.get('/products');
+    this.setState({ products: res.data });
+    this.updateProduct(res.data[0].id);
+  }
+
   componentDidMount() {
     backgroundCacher.addEventListener('message', function (e) {
       console.log('Message from Worker: ' + e.data);
     });
 
-    api.getProducts({ count: 25 }).then((products) => {
-      this.setState({ products: products }, () => {
-        backgroundCacher.postMessage(products);
-        this.updateProduct(products[0].id);
-      });
-    });
+    this.fetchProductData();
   }
 
   //Handler to update the main product
   async updateProduct(id) {
-    let isCached = await api.isProductCached({ product_id: id });
+    console.log('fetching new product', id);
+    // backgroundCacher.postMessage('HI');
+    let res = await axios.get('/products/' + id);
+    this.setState({ currentProduct: res.data });
 
-    if (!isCached) {
-      await this.setState({ loading: true });
-    }
+    res = await axios.get('reviews/' + id);
+    this.setState({ reviewData: res.data });
 
-    let data = await api.getAllData({ product_id: id });
+    res = await axios.get('related/' + id);
+    this.setState({ relatedProducts: res.data });
 
-    this.setState({
-      currentProduct: data.currentProduct,
-      relatedProducts: data.relatedProducts,
-      questionData: data.questionData,
-      reviewData: data.reviewData,
-      loading: false,
-    });
+    res = await axios.get('questions/' + id);
+    this.setState({ questionData: res.data });
   }
 
   render() {
-    const { products, currentProduct, relatedProducts, reviewData, darkMode, loading, cart } =
-      this.state;
+    const {
+      products,
+      currentProduct,
+      relatedProducts,
+      reviewData,
+      questionData,
+      darkMode,
+      loading,
+      cart,
+    } = this.state;
     return (
       <ThemeProvider theme={THEMES[darkMode ? 'darkMode' : 'default']}>
         <Header
@@ -93,41 +99,39 @@ class App extends Component {
             this.setState({ cart: this.state.cart.filter((x) => x.style_id !== id) })
           }
         />
-        {loading === true && (
-          <Container>
-            <Loader />
-          </Container>
-        )}
-        {currentProduct && loading === false && (
-          <Container>
+        <Container>
+          {currentProduct && (
             <ProductDetail
               product={currentProduct}
+              productReviews={reviewData || {}}
               updateProduct={(id) => this.updateProduct(id)}
-              productReviews={reviewData}
               addToCart={(obj) => this.addToCart(obj)}
             />
-            {this.state.relatedProducts && (
-              <RelatedItems
-                product={currentProduct}
-                related={this.state.relatedProducts}
-                updateProduct={(id) => this.updateProduct(id)}
-                rating={this.state.reviewData}
-              />
-            )}
+          )}
+          {relatedProducts && reviewData && currentProduct && (
+            <RelatedItems
+              product={currentProduct}
+              related={relatedProducts}
+              updateProduct={(id) => this.updateProduct(id)}
+              rating={reviewData}
+            />
+          )}
+          {questionData && (
             <QuestionsAnswers
-              data={this.state.questionData}
+              data={questionData}
               product={currentProduct}
               updateProduct={(id) => this.updateProduct(id)}
               fetchQuestionData={(params) => this.fetchQuestionData(params)}
             />
-            {reviewData && (
-              <RatingsReviews
-                data={reviewData}
-                product={currentProduct}
-                fetch={(params) => this.fetchReviewData(params)}
-              />
-            )}
-          </Container>
+          )}
+          {reviewData && (
+            <RatingsReviews
+              data={reviewData}
+              product={currentProduct}
+              fetch={(params) => this.fetchReviewData(params)}
+            />
+          )}
+        </Container>
         )}
       </ThemeProvider>
     );

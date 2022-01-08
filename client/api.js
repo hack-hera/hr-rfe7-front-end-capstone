@@ -153,10 +153,10 @@ const api = {
       return Promise.reject(new Error('must provide product_id'));
     }
 
-    const url = `/reviews?product_id=${product_id}&count=${count}&page=${page}&sort=${sort}`;
+    const url = `${host}/reviews?product_id=${product_id}&count=${count}&page=${page}&sort=${sort}`;
 
     return axios
-      .get(host + url, headers)
+      .get(url, headers)
       .then((res) => Promise.resolve(res.data))
       .catch((err) => Promise.reject(new Error(err)));
   },
