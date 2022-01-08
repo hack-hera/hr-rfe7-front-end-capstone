@@ -27,6 +27,10 @@ Product Details displays the currently selected product:
 
 ## Related Items
 
+![Screen Shot 2022-01-08 at 3 48 53 PM](https://user-images.githubusercontent.com/91332685/148659548-42b64317-c4c9-4fe4-a473-283deb95391c.png)
+
+![RelatedItemsScreenRecord_AdobeCreativeCloudExpress (1)](https://user-images.githubusercontent.com/91332685/148659507-178dea96-900c-4f4c-b3ad-e37d61fde765.gif)
+
 Related Items displays the related items based on the current selected products and an outfit component:
 
 - Two carousels: Top carousel displays related items, bottom carousel displays the users outfit.
