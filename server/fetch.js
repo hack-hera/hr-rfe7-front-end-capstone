@@ -13,8 +13,19 @@ const logAPICall = () => apiCalls.push(new Date().getTime() / 1000);
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const fetchData = async (url) => {
-  console.log('...api call', apiCalls.length);
   logAPICall();
+  let current = new Date().getTime() / 1000;
+  let numCalls = apiCalls.filter((x) => x > current - 60).length;
+
+  console.log('...api call', numCalls, apiCalls.length);
+
+  while (numCalls > 100) {
+    console.log('......throttling');
+    await sleep(30000);
+    current = new Date().getTime() / 1000;
+    numCalls = apiCalls.filter((x) => x > current - 60).length;
+  }
+
   let res = await axios.get(url, headers);
   return res.data;
 };
@@ -34,7 +45,7 @@ const insertOrUpdate = async (model, product_id, data) => {
 
 const getProducts = async () => {
   let cached = await sequelize.query(
-    `select product_id as id, name, description from "Products" order by product_id limit 100;`
+    'select product_id as id, name, description from "Products" order by product_id limit 100;'
   );
   return cached[0];
 };
@@ -58,7 +69,7 @@ const getProduct = async ({ product_id }) => {
     await insertOrUpdate(Product, product_id, productData);
     return productData;
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 };
 
@@ -81,7 +92,7 @@ getReview = async ({ product_id }) => {
 
     return data;
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 };
 
@@ -114,7 +125,7 @@ getRelated = async ({ product_id }) => {
     await insertOrUpdate(Related, product_id, obj);
     return obj;
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 };
 
@@ -130,7 +141,7 @@ getQuestions = async ({ product_id }) => {
     await insertOrUpdate(Question, product_id, data);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 };
 
