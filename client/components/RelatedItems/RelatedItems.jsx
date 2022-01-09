@@ -8,6 +8,8 @@ import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
 
 var RelatedItems = (props) => {
+  console.log(props);
+
   var outfit = ls.get('myoutfit') || [];
   const [outfitData, setOutfit] = useState(outfit);
   const [showing, setShowing] = useState(false);
@@ -20,7 +22,7 @@ var RelatedItems = (props) => {
     if (outfit.length === 0) {
       ls.set('myoutfit', [...outfit, product]);
     } else {
-      let ids = outfit.reduce((items, current) => items.concat(current.id), []);
+      let ids = outfit.reduce((items, current) => items.concat(current.product_id), []);
       if (ids.indexOf(id) === -1) {
         ls.set('myoutfit', [...outfit, product]);
       }
@@ -43,16 +45,6 @@ var RelatedItems = (props) => {
     setShowing(true);
   };
 
-  //Dedupe the to show every product id only once
-  //dedupe to NOT show the main product in related
-  let ids = props.related.related.map((x) => x.id);
-  let displayRelated = [];
-  props.related.related.forEach((x, i) => {
-    if (ids.indexOf(x.id) === i && x.id !== props.product.id) {
-      displayRelated.push(x);
-    }
-  });
-
   return (
     <Container>
       {showing === true && (
@@ -62,7 +54,7 @@ var RelatedItems = (props) => {
       )}
       <h3>Related Products</h3>
       <RelatedCarousel
-        relatedItems={displayRelated}
+        relatedItems={props.related.related}
         currentProduct={props.product}
         relatedRating={props.related.ratings}
         update={props.updateProduct}

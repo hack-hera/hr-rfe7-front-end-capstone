@@ -7,12 +7,13 @@ import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
 
 var CardItem = (props) => {
+  console.log(props.item);
   const compare = () => {
     props.updateModal(props.item);
   };
 
   const updateCurrentProduct = () => {
-    props.updateCurrent(props.item.id);
+    props.updateCurrent(props.item.product_id);
   };
 
   const remove = () => {

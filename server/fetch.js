@@ -18,9 +18,12 @@ const fetchData = async (url) => {
   let numCalls = apiCalls.filter((x) => x > current - 60).length;
 
   console.log('...api call', numCalls, apiCalls.length);
+  if (numCalls > 100) {
+    process.stdout.write('throttling');
+  }
 
   while (numCalls > 100) {
-    console.log('......throttling');
+    process.stdout.write('');
     await sleep(30000);
     current = new Date().getTime() / 1000;
     numCalls = apiCalls.filter((x) => x > current - 60).length;

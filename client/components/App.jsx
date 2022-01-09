@@ -64,6 +64,7 @@ class App extends Component {
     console.log('fetching new product', id);
     // backgroundCacher.postMessage('HI');
     let res = await axios.get('/products/' + id);
+    res.data.id = res.data.product_id;
     this.setState({ currentProduct: res.data });
 
     res = await axios.get('reviews/' + id);
@@ -132,7 +133,6 @@ class App extends Component {
             />
           )}
         </Container>
-        )}
       </ThemeProvider>
     );
   }
