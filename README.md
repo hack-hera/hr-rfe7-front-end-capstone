@@ -7,9 +7,9 @@ Team Hera: Emmanuel Garcia, Daniel Gonzalezmoreno, Jinyan Li and Alex Sieke.
 
 ## Tech Stack
 
-This project is a react client powered by and express/nodejs server for hosting static files.
+This project is a react client powered by an express/nodejs server for hosting static files.
 
-To improve page load time, the client makes use of an javascript API wrapper that fetches and caches data locally using IndexedDB.  So that the page is not loading stale data, a service worker pre-fetches fresh data for related products, questions and reviews from the server as the user is browsing the page.
+To improve page load time, the client makes use of a javascript API wrapper that fetches and caches data locally using IndexedDB.  So that the page is not loading stale data, a service worker pre-fetches fresh data for related products, questions and reviews from the server as the user is browsing the page.
 
 To further optimize performance, we used express/webpack compression libraries to reduce the bundle size from 3-4mb to ~700k which decreased time to first pain from 4s to <1s.
 
