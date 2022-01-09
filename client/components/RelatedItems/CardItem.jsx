@@ -7,7 +7,6 @@ import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
 
 var CardItem = (props) => {
-  console.log(props.item);
   const compare = () => {
     props.updateModal(props.item);
   };

@@ -76,13 +76,13 @@ const getProduct = async ({ product_id }) => {
   }
 };
 
-getReview = async ({ product_id }) => {
+getReview = async ({ product_id }, useCache = true) => {
   const metaUrl = `${host}/reviews/meta?product_id=${product_id}`;
   const reviewUrl = `${host}/reviews?product_id=${product_id}&count=100&page=1&sort=newest`;
 
   try {
     let cached = await Review.findOne({ where: { product_id } });
-    if (cached) {
+    if (cached && useCache) {
       return cached.dataValues;
     }
 
@@ -132,12 +132,12 @@ getRelated = async ({ product_id }) => {
   }
 };
 
-getQuestions = async ({ product_id }) => {
+getQuestions = async ({ product_id }, useCache = true) => {
   const url = `${host}/qa/questions?product_id=${product_id}&count=100&page=1`;
 
   try {
     let cached = await Question.findOne({ where: { product_id } });
-    if (cached) {
+    if (cached && useCache) {
       return cached.dataValues;
     }
     const data = await fetchData(url);

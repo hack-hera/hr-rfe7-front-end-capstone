@@ -40,7 +40,7 @@ app.get('/reviews/:id', async (req, res) => {
   let product_id = req.params.id;
 
   try {
-    let data = await getReview({ product_id });
+    let data = await getReview({ product_id }, false);
     res.json(data);
   } catch (err) {
     res.sendStatus(500);
@@ -60,7 +60,7 @@ app.get('/related/:id', async (req, res) => {
 app.get('/questions/:id', async (req, res) => {
   let product_id = req.params.id;
   try {
-    let data = await getQuestions({ product_id });
+    let data = await getQuestions({ product_id }, false);
     res.json(data);
   } catch (err) {
     res.sendStatus(500);

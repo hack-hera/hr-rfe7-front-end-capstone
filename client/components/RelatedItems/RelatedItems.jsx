@@ -8,8 +8,6 @@ import CompareModal from './CompareModal.jsx';
 import { Modal } from '../Shared/Modal.jsx';
 
 var RelatedItems = (props) => {
-  console.log(props);
-
   var outfit = ls.get('myoutfit') || [];
   const [outfitData, setOutfit] = useState(outfit);
   const [showing, setShowing] = useState(false);

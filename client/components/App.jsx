@@ -27,22 +27,19 @@ class App extends Component {
   }
 
   addToCart(obj) {
-    console.log('>>>>adding to cart', obj);
     if (!this.state.cart.map((x) => x.style_id).includes(obj.style_id)) {
       this.setState({ cart: [...this.state.cart, obj] });
     }
   }
 
-  fetchReviewData({ product_id, page = 1, count = 100, sort = 'newest' }) {
-    api.getReviewData({ product_id, page, count, sort }, false).then((res) => {
-      this.setState({ reviewData: res });
-    });
+  async fetchReviewData({ product_id, page = 1, count = 100, sort = 'newest' }) {
+    let res = await axios.get('reviews/' + product_id);
+    this.setState({ reviewData: res.data });
   }
 
-  fetchQuestionData({ product_id, page = 1, count = 100 }) {
-    api.getQuestionData({ product_id, page, count }, false).then((res) => {
-      this.setState({ questionData: res });
-    });
+  async fetchQuestionData({ product_id, page = 1, count = 100 }) {
+    let res = await axios.get('/questions/' + product_id);
+    this.setState({ questionData: res.data });
   }
 
   async fetchProductData() {
@@ -61,7 +58,6 @@ class App extends Component {
 
   //Handler to update the main product
   async updateProduct(id) {
-    console.log('fetching new product', id);
     // backgroundCacher.postMessage('HI');
     let res = await axios.get('/products/' + id);
     res.data.id = res.data.product_id;
@@ -113,7 +109,14 @@ class App extends Component {
             <RelatedItems
               product={currentProduct}
               related={relatedProducts}
-              updateProduct={(id) => this.updateProduct(id)}
+              updateProduct={(id) => {
+                window.scrollTo({
+                  top: 0,
+                  left: 0,
+                  behavior: 'smooth',
+                });
+                this.updateProduct(id);
+              }}
               rating={reviewData}
             />
           )}
