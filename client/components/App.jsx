@@ -61,16 +61,22 @@ class App extends Component {
     // backgroundCacher.postMessage('HI');
     let res = await axios.get('/products/' + id);
     res.data.id = res.data.product_id;
-    this.setState({ currentProduct: res.data });
+    await this.setState({ currentProduct: res.data });
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
 
     res = await axios.get('reviews/' + id);
-    this.setState({ reviewData: res.data });
+    await this.setState({ reviewData: res.data });
 
     res = await axios.get('related/' + id);
-    this.setState({ relatedProducts: res.data });
+    await this.setState({ relatedProducts: res.data });
 
     res = await axios.get('questions/' + id);
-    this.setState({ questionData: res.data });
+    await this.setState({ questionData: res.data });
   }
 
   render() {
@@ -109,14 +115,7 @@ class App extends Component {
             <RelatedItems
               product={currentProduct}
               related={relatedProducts}
-              updateProduct={(id) => {
-                window.scrollTo({
-                  top: 0,
-                  left: 0,
-                  behavior: 'smooth',
-                });
-                this.updateProduct(id);
-              }}
+              updateProduct={(id) => this.updateProduct(id)}
               rating={reviewData}
             />
           )}
