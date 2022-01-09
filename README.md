@@ -28,7 +28,7 @@ Most React components are functional and make use of hooks for basic state manag
 
 ## Product Details
 
-![Product Detail Capture](https://user-images.githubusercontent.com/90647863/148652101-b046d871-32b3-45ed-8123-8ed1a3a62aaf.PNG)
+<img width="640" src="https://user-images.githubusercontent.com/90647863/148652101-b046d871-32b3-45ed-8123-8ed1a3a62aaf.PNG">
 
 Product Details displays the currently selected product:
 
@@ -39,9 +39,9 @@ Product Details displays the currently selected product:
 
 ## Related Items
 
-![Screen Shot 2022-01-08 at 3 48 53 PM](https://user-images.githubusercontent.com/91332685/148659548-42b64317-c4c9-4fe4-a473-283deb95391c.png)
+<img width="640" src="https://user-images.githubusercontent.com/91332685/148659548-42b64317-c4c9-4fe4-a473-283deb95391c.png">
 
-![RelatedItemsScreenRecord_AdobeCreativeCloudExpress (1)](https://user-images.githubusercontent.com/91332685/148659507-178dea96-900c-4f4c-b3ad-e37d61fde765.gif)
+<img width="400" src="https://user-images.githubusercontent.com/91332685/148659507-178dea96-900c-4f4c-b3ad-e37d61fde765.gif">
 
 Related Items displays the related items based on the current selected products and an outfit component:
 
@@ -57,7 +57,7 @@ Related Items displays the related items based on the current selected products 
 
 ## Ratings and Reviews
 
-![ezgif-7-4dba7ae39e](https://user-images.githubusercontent.com/4070885/148698188-bc6fade0-1cd1-4c16-839a-f49878d90455.gif)
+<img width="640" src="https://user-images.githubusercontent.com/4070885/148698188-bc6fade0-1cd1-4c16-839a-f49878d90455.gif">
 
 This section allows the user to see reviews and ratings submitted by previous users.
 
