@@ -31,3 +31,4 @@ public/*.js.gz
 tests/__snapshots__
 
 config.js
+.env
