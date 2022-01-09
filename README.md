@@ -45,6 +45,28 @@ Related Items displays the related items based on the current selected products 
 
 ## Ratings and Reviews
 
+![ezgif-7-4dba7ae39e](https://user-images.githubusercontent.com/4070885/148698188-bc6fade0-1cd1-4c16-839a-f49878d90455.gif)
+
+This section allows the user to see reviews and ratings submitted by previous users.
+
+- Users can sort by helpfulness, ratings or relevance
+- Users can see the ratings and characteristics of the product
+- Users can add a new review including uploading photos
+- Users can infinitely scroll all the reviews
+
+## Tech Stack
+
+This project is a react client powered by and express/nodejs server for hosting static files.
+
+To improve page load time, the client makes use of an javascript API wrapper that fetches and caches data locally using IndexedDB.  So that the page is not loading stale data, a service worker pre-fetches fresh data for related products, questions and reviews from the server as the user is browsing the page.
+
+To further optimize performance, we used express/webpack compression libraries to reduce the bundle size from 3-4mb to ~700k which decreased time to first pain from 4s to <1s.
+
+The CSS is driven by styled components and a theme provider that allows simple theme switching and color changing.
+
+Most React components are functional and make use of hooks for basic state management.
+
+
 ## Installation and helpful commands
 
 ```bash
