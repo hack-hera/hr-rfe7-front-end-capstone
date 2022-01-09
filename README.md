@@ -4,15 +4,27 @@ Front End Capstone Project at Hack Reactor.
 
 Team Hera: Emmanuel Garcia, Daniel Gonzalezmoreno, Jinyan Li and Alex Sieke.
 
-[Link to Trello Board](https://trello.com/b/PS0E1PSC/front-end-capstone)
 
-[Mocks](https://xd.adobe.com/view/e600dc0f-454c-44e3-5075-7872d04189ff-9031/?fullscreen)
+## Tech Stack
 
-[Business Requirements Doc](https://docs.google.com/document/d/1KAqduzY8ae3DYrSoCL1i23qHe95zJRYFulqMk-sGLWY/edit#)
+This project is a react client powered by and express/nodejs server for hosting static files.
 
-[API Documentation](https://learn-2.galvanize.com/cohorts/3052/blocks/94/content_files/Front%20End%20Capstone/project-atelier-catwalk/API_Overview.md)
+To improve page load time, the client makes use of an javascript API wrapper that fetches and caches data locally using IndexedDB.  So that the page is not loading stale data, a service worker pre-fetches fresh data for related products, questions and reviews from the server as the user is browsing the page.
+
+To further optimize performance, we used express/webpack compression libraries to reduce the bundle size from 3-4mb to ~700k which decreased time to first pain from 4s to <1s.
+
+The CSS is driven by styled components and a theme provider that allows simple theme switching and color changing.
+
+Most React components are functional and make use of hooks for basic state management.
 
 # Components
+
+<p float="left">
+<img width="224" alt="Overview" src="https://user-images.githubusercontent.com/4070885/148698510-aa23af78-ce55-41d7-b1a5-04690f488e8a.png">
+<img width="224" alt="Related" src="https://user-images.githubusercontent.com/4070885/148698509-9756112a-9ca8-44c9-b1ab-9ffa67824db6.png">
+<img width="224" alt="Questions" src="https://user-images.githubusercontent.com/4070885/148698508-f39f5063-86ef-4b3f-bdae-ee55b8047fc8.png">
+<img width="224" alt="Reviews" src="https://user-images.githubusercontent.com/4070885/148698507-60adae1e-7c79-4ed3-9180-defaeeeaf45d.png">
+</p>
 
 ## Product Details
 
@@ -53,18 +65,6 @@ This section allows the user to see reviews and ratings submitted by previous us
 - Users can see the ratings and characteristics of the product
 - Users can add a new review including uploading photos
 - Users can infinitely scroll all the reviews
-
-## Tech Stack
-
-This project is a react client powered by and express/nodejs server for hosting static files.
-
-To improve page load time, the client makes use of an javascript API wrapper that fetches and caches data locally using IndexedDB.  So that the page is not loading stale data, a service worker pre-fetches fresh data for related products, questions and reviews from the server as the user is browsing the page.
-
-To further optimize performance, we used express/webpack compression libraries to reduce the bundle size from 3-4mb to ~700k which decreased time to first pain from 4s to <1s.
-
-The CSS is driven by styled components and a theme provider that allows simple theme switching and color changing.
-
-Most React components are functional and make use of hooks for basic state management.
 
 
 ## Installation and helpful commands
