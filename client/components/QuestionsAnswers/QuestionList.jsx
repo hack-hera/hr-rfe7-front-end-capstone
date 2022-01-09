@@ -19,75 +19,44 @@ const QuestionList = ({
   fetchQuestionData,
 }) => {
   const [show, setShow] = useState(2);
+  let questionsToShow = questions.sort(sortedQuestion).slice(0, show);
 
   useEffect(() => {
     setShow(2);
   }, [product_id]);
 
+  if (searchText.length >= 3) {
+    questionsToShow = searchQuestions.sort(sortedQuestion).slice(0, show);
+  }
+
   return (
     <Container>
-      {searchText.length < 3 && (
-        <ScrollDiv>
-          {questions
-            .sort(sortedQuestion)
-            .slice(0, show)
-            .map((question, i) => {
-              const answers = Object.values(question.answers);
-              return (
-                <ListContainer key={i}>
-                  <QuestionText>
-                    <span>Q:&nbsp;&nbsp;{question.question_body}</span>
-                    <AddAnswer
-                      product_name={product_name}
-                      question={question}
-                      product_id={product_id}
-                      fetchQuestionData={fetchQuestionData}
-                    />
-                    <MarkQuestionHelpfulAndReported question={question} />
-                  </QuestionText>
-                  <AnswersList
-                    answers={answers}
-                    showMoreA={showMoreA}
-                    clicked={clicked}
-                    showLessA={showLessA}
+      <ScrollDiv>
+        {questionsToShow
+          .map((question, i) => {
+            const answers = Object.values(question.answers);
+            return (
+              <ListContainer key={i}>
+                <QuestionText>
+                  <span>Q:&nbsp;&nbsp;{question.question_body}</span>
+                  <AddAnswer
+                    product_name={product_name}
+                    question={question}
+                    product_id={product_id}
+                    fetchQuestionData={fetchQuestionData}
                   />
-                </ListContainer>
-              );
-            })}
-        </ScrollDiv>
-      )}
-      {searchText.length >= 3 && (
-        <Container>
-          <ScrollDiv>
-            {searchQuestions
-              .sort(sortedQuestion)
-              .slice(0, show)
-              .map((question, i) => {
-                const answers = Object.values(question.answers);
-                return (
-                  <ListContainer key={i}>
-                    <QuestionText>
-                      <span>Q:&nbsp;&nbsp;{question.question_body}</span>
-                      <AddAnswer
-                        product_name={product_name}
-                        question={question}
-                        product_id={product_id}
-                        fetchQuestionData={fetchQuestionData}
-                      />
-                      <MarkQuestionHelpfulAndReported question={question} />
-                    </QuestionText>
-                    <AnswersList
-                      answers={answers}
-                      showMoreA={showMoreA}
-                      clicked={clicked}
-                      showLessA={showLessA}
-                    />
-                  </ListContainer>
-                );
-              })}
-          </ScrollDiv>
-        </Container>
-      )}
+                  <MarkQuestionHelpfulAndReported question={question} />
+                </QuestionText>
+                <AnswersList
+                  answers={answers}
+                  showMoreA={showMoreA}
+                  clicked={clicked}
+                  showLessA={showLessA}
+                />
+              </ListContainer>
+            );
+          })}
+      </ScrollDiv>
       <ButtonContainer>
         {questions.length > show && (
           <Button onClick={() => setShow(questions.length)}>SEE MORE QUESTIONS</Button>
