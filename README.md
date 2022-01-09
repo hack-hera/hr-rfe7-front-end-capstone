@@ -27,6 +27,20 @@ Product Details displays the currently selected product:
 
 ## Related Items
 
+![Screen Shot 2022-01-08 at 3 48 53 PM](https://user-images.githubusercontent.com/91332685/148659548-42b64317-c4c9-4fe4-a473-283deb95391c.png)
+
+![RelatedItemsScreenRecord_AdobeCreativeCloudExpress (1)](https://user-images.githubusercontent.com/91332685/148659507-178dea96-900c-4f4c-b3ad-e37d61fde765.gif)
+
+Related Items displays the related items based on the current selected products and an outfit component:
+
+- Two carousels: Top carousel displays related items, bottom carousel displays the users outfit.
+- Each item's picture and name can be clicked to change the current product
+- The add to outfit card holds a button that can be clicked to add the current outfit to the outfit list
+- The outfit carousel keeps a user's outfit regardless of refresh or revisiting page
+- Each item holds a button and the button's functionality changes depending on which list the item is in.
+- The button renders a modal when clicked within the related items list
+- The button deletes the item from the outfit list
+
 ## Questions & Answers
 
 ## Ratings and Reviews
