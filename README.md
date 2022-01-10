@@ -55,6 +55,15 @@ Related Items displays the related items based on the current selected products 
 
 ## Questions & Answers
 
+<img width="640" src="https://user-images.githubusercontent.com/68970133/148711436-f711bad6-81a9-49b8-ad16-07d43ded4a34.gif">
+
+This section allows user to view and search questions, ask questions, answer questions and provide feedback on questions about the current product.
+
+- Search terms entered will filter the list for matching results.
+- The questions and their corresponding answers display in an expanding and collapsing accordion.
+- Users can support or report questions and answers.
+- Users can ask new questions and add new answers including uploading photos.
+
 ## Ratings and Reviews
 
 <img width="640" src="https://user-images.githubusercontent.com/4070885/148698188-bc6fade0-1cd1-4c16-839a-f49878d90455.gif">

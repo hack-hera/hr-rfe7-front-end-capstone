@@ -19,7 +19,6 @@ const QuestionList = ({
   fetchQuestionData,
 }) => {
   const [show, setShow] = useState(2);
-  let questionsToShow = questions.sort(sortedQuestion).slice(0, show);
 
   let questionsToShow = questions.sort(sortedQuestion).slice(0, show);
 
